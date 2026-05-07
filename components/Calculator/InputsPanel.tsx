@@ -66,10 +66,17 @@ export function InputsPanel({
           </span>
         </label>
 
-        <fieldset className="space-y-2.5 rounded-lg bg-cream-100 p-3.5">
-          <legend className="text-sm font-medium text-patina-800">
+        <div
+          role="group"
+          aria-labelledby="ads-group-label"
+          className="space-y-2.5 rounded-lg bg-cream-100 p-3.5"
+        >
+          <p
+            id="ads-group-label"
+            className="text-sm font-medium text-patina-800"
+          >
             Off-Site Ads
-          </legend>
+          </p>
           <p id="ads-10k-help" className="text-xs text-patina-muted">
             Etsy charges 15% under $10k trailing revenue (opt-in) or 12% at/above
             (mandatory).
@@ -99,7 +106,7 @@ export function InputsPanel({
               </span>
             </label>
           )}
-        </fieldset>
+        </div>
       </div>
     </div>
   );

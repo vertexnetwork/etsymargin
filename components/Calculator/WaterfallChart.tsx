@@ -184,15 +184,28 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
                   ? "var(--color-loss-700)"
                   : "var(--color-patina-900)";
 
-            // Place value label to the right of bar end; if bar is too far
-            // right, place inside on the left side.
-            const labelEndX = barX + barW + 6;
-            const valueAnchor: "start" | "end" =
-              labelEndX > VIEW_W - 8 ? "end" : "start";
-            const valueX =
-              valueAnchor === "end" ? barX + barW - 6 : labelEndX;
-            const valueFill =
-              valueAnchor === "end" && barW > 60 ? "#ffffff" : valueColor;
+            // Place value label: prefer to the right of the bar; if it would
+            // overflow the SVG, try to the left of the bar; if that also
+            // doesn't fit, place inside the bar right-aligned.
+            const estTextW = valueText.length * 7 + 4;
+            const rightX = barX + barW + 6;
+            const leftX = barX - 6;
+            const fitsRight = rightX + estTextW <= VIEW_W - 4;
+            const fitsLeft = leftX - estTextW >= LABEL_W + 4;
+            let valueAnchor: "start" | "end";
+            let valueX: number;
+            let valueFill: string = valueColor;
+            if (fitsRight) {
+              valueAnchor = "start";
+              valueX = rightX;
+            } else if (fitsLeft) {
+              valueAnchor = "end";
+              valueX = leftX;
+            } else {
+              valueAnchor = "end";
+              valueX = barX + barW - 6;
+              if (barW > estTextW + 8) valueFill = "#ffffff";
+            }
 
             return (
               <g
