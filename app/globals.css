@@ -38,3 +38,17 @@ h4 {
   font-family: var(--font-display);
   letter-spacing: -0.01em;
 }
+
+/* Surface treatment for white cards: subtle vertical gradient + layered
+   shadow so cards feel like surfaces rather than flat boxes. Pair with
+   ring-1 ring-patina-100 for the brand stroke. */
+@utility quiet-card {
+  background-image: linear-gradient(
+    180deg,
+    #ffffff 0%,
+    rgba(251, 250, 243, 0.5) 100%
+  );
+  box-shadow:
+    0 1px 2px rgba(31, 61, 64, 0.04),
+    0 8px 24px -12px rgba(31, 61, 64, 0.08);
+}

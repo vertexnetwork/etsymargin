@@ -13,7 +13,13 @@ export default function Home() {
       <SoftwareApplicationJsonLd />
 
       <header className="mb-6 sm:mb-14">
-        <h1 className="text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-5xl">
+        <span className="inline-flex items-center gap-2 rounded-full bg-lime-cream/70 px-3 py-1 text-xs font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/50">
+          <span className="font-display text-sm font-bold">4–6 fees</span>
+          <span className="font-medium normal-case tracking-normal text-patina-800">
+            stacked per Etsy sale
+          </span>
+        </span>
+        <h1 className="mt-3 text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-5xl">
           Don&apos;t lose money on the mandatory 15% Offsite Ads.
         </h1>
         <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
@@ -46,12 +52,12 @@ export default function Home() {
             <li key={e.slug}>
               <Link
                 href={`/etsy-profit-margin/${e.slug}`}
-                className="block rounded-xl bg-white px-4 py-3 ring-1 ring-patina-100 transition hover:ring-patina-300"
+                className="quiet-card block rounded-xl px-4 py-3.5 ring-1 ring-patina-100/80 transition hover:ring-patina-300"
               >
-                <span className="block text-xs uppercase tracking-wider text-patina-600">
+                <span className="inline-flex items-center rounded-full bg-lime-cream/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
                   {e.category}
                 </span>
-                <span className="mt-1 block font-semibold text-patina-900">
+                <span className="mt-2 block font-semibold text-patina-900">
                   {e.title.replace(/\s*\(2026\)$/, "")}
                 </span>
               </Link>

@@ -109,7 +109,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
     : `Net profit ${usd(result.netProfit)} from gross ${usd(result.gross)} after fees and cost of goods.`;
 
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-patina-100 sm:p-6">
+    <div className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6">
       <h2 className="mb-1 text-lg font-semibold text-patina-900">
         Loss path: gross → net
       </h2>

@@ -32,7 +32,7 @@ export function InputsPanel({
   onCountryChange,
 }: Props) {
   return (
-    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-patina-100 sm:p-6">
+    <div className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6">
       <h2 className="mb-5 text-lg font-semibold text-patina-900">Your numbers</h2>
 
       <div className="space-y-4">

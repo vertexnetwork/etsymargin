@@ -114,7 +114,7 @@ export default async function PseoPage({
           {entry.faq.map((f) => (
             <details
               key={f.q}
-              className="rounded-2xl bg-white p-5 ring-1 ring-patina-100"
+              className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80"
             >
               <summary className="cursor-pointer text-base font-semibold text-patina-900">
                 {f.q}

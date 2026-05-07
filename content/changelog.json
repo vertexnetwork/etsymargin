@@ -1,0 +1,81 @@
+[
+  {
+    "hash": "653dbae3fd3e4e5f9fe6bfdbb23fb0f95838d108",
+    "date": "2026-05-07",
+    "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets",
+    "summary": "",
+    "changes": [
+      "New OG/Twitter image routes + favicon/apple-icon + theme-color so social shares stop rendering blank cards",
+      "Margin display shows two decimals under 1% so a -0.04% loss no longer reads as \"0.0%\"",
+      "Mobile hamburger and form inputs hit the 44px touch target",
+      "New --color-patina-muted token replaces a dozen sub-AA muted-text patterns site-wide",
+      "Waterfall chart loss colors moved into @theme tokens; sub-penny fees no longer render as \"−$0.00\" bars",
+      "pSEO pages fire pseo_page_viewed via a tiny client wrapper; hero gets a 3-point trust strip",
+      "Off-Site Ads fieldset reads context-first; \\$10k+ checkbox conditionally renders",
+      "localStorage payload gains version + migrate() so future schema bumps don't reset returning visitors",
+      "Footer trims the Sitemap link"
+    ]
+  },
+  {
+    "hash": "8b548c61ae980e0da7df25390dbba75bc37dfebd",
+    "date": "2026-05-07",
+    "title": "Add site chrome, About/Changelog/Embed pages, and Chrome extension",
+    "summary": "",
+    "changes": [
+      "(site) route group owns SiteHeader (sticky, wordmark + Categories/Embed/About,",
+      "Inline brand mark — five descending bars in patina, no asset pipeline.",
+      "Root layout slimmed to <html><body>; analytics moved into (site)/layout",
+      "/about — what this is, fee math (rates pulled live from lib/fees.ts",
+      "/changelog — TS-array source of truth, two seed entries.",
+      "/embed — info page with copy-paste iframe snippet, URL-param schema,",
+      "/embed/widget — bare Calculator with embedded prop. Disables analytics",
+      "next.config.mjs sets Content-Security-Policy: frame-ancestors * for",
+      "Searchparams-driven prefill (p, s, m, as, c, ads, t10).",
+      "noindex via metadata.robots so it doesn't compete with /embed in search.",
+      "Manifest V3 popup under extension/. Vite + React + Tailwind v4, @/ alias",
+      "post-build.mjs copies manifest.json + icons/ into dist/ after vite build.",
+      "Build verified: 66KB gzipped, fully offline-capable.",
+      "README documents local install + Web Store submission checklist.",
+      "llms.txt: new Tools & integrations section (embed page, widget URL with",
+      "llms-full.txt: prepends canonical About content (with live fee constants)",
+      "pSEO pages: new \"Writing about {category} on Etsy?\" CTA between MDX",
+      "sitemap adds /about, /embed, /changelog. /embed/widget excluded.",
+      "npm run typecheck: clean",
+      "npm test: 10/10 fee tests pass",
+      "npm run build: 32 prerendered routes (was 28)",
+      "/embed/widget headers confirmed: frame-ancestors * + X-Frame-Options ALLOWALL",
+      "extension build: 66KB gzipped, manifest + icons copied to dist/"
+    ]
+  },
+  {
+    "hash": "a4ba686a6a13f2235d09309e9cd0a00394b785a5",
+    "date": "2026-05-07",
+    "title": "UX forensic pass: fix loss-path rendering, kill mobile fold friction, wire Clarity",
+    "summary": "",
+    "changes": [
+      "WaterfallChart: SVG-based, horizontal layout, signed end bar, a11y title/desc + sr-only table mirror",
+      "Calculator: lazy useState merges URL+storage on first render; copy button width-locked",
+      "InputsPanel: string-state numeric inputs (no leading-0 trap, select-on-focus); $10k checkbox disabled when ads off",
+      "Pages: tighter mobile hero, \"see my real profit\" anchor, trust strip, all 20 pSEO entries linked, ads gated to env flag",
+      "lib/fees: smart percent formatter; lib/countries: rename EU to \"Other (EU country)\"",
+      "Clarity: conditional script in layout, gated on NEXT_PUBLIC_CLARITY_PROJECT_ID",
+      "Recharts removed from package.json (~90KB gzipped saved); add loading.tsx skeleton"
+    ]
+  },
+  {
+    "hash": "cda3be18b30c0492ef9dfcdd8ef9e7920f7499ca",
+    "date": "2026-05-07",
+    "title": "Initial commit: Etsy Margin calculator MVP",
+    "summary": "",
+    "changes": [
+      "lib/fees.ts: pure fee math, 5 country processors (US/UK/CA/AU/EU)",
+      "10 Vitest unit tests covering every fee path and threshold",
+      "Recharts waterfall + URL-shareable inputs + localStorage defaults",
+      "20 prerendered pSEO pages with unique long-form MDX content",
+      "sitemap.ts, robots.ts, JSON-LD (FAQPage + SoftwareApplication)",
+      "llms.txt and llms-full.txt for AI crawler discovery",
+      "GA4 + Mediavine slots scaffolded (env-gated)",
+      "GitHub Actions CI: test + typecheck + build on every PR"
+    ]
+  }
+]
