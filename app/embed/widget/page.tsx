@@ -45,7 +45,7 @@ export default async function EmbedWidgetPage({
   return (
     <div className="mx-auto max-w-4xl">
       <Calculator initialInputs={initial} embedded />
-      <p className="mt-4 text-center text-xs text-patina-700/60">
+      <p className="mt-4 text-center text-xs text-patina-muted">
         Powered by{" "}
         <a
           href="https://etsymargin.tools"

@@ -11,10 +11,14 @@
   --color-patina-700: #28565b;
   --color-patina-800: #23484c;
   --color-patina-900: #1f3d40;
+  --color-patina-muted: #4a6f73;
   --color-cream-50: #fbfaf3;
   --color-cream-100: #f5f1de;
   --color-cream-200: #ebe2b8;
   --color-lime-cream: #d8e89a;
+  --color-loss-300: #d49a9a;
+  --color-loss-500: #b94a4a;
+  --color-loss-700: #a83232;
   --color-ink: #1a2326;
   --font-display: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
   --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;

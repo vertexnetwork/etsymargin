@@ -67,7 +67,7 @@ export default function ChangelogPage() {
               </span>
               <time
                 dateTime={entry.date}
-                className="text-xs text-patina-700/60"
+                className="text-xs text-patina-muted"
               >
                 {new Date(entry.date).toLocaleDateString("en-US", {
                   year: "numeric",

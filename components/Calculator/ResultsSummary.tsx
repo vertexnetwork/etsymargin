@@ -8,8 +8,13 @@ const usd = (n: number) =>
     currency: "USD",
   }).format(n);
 
-const pct = (n: number) =>
-  `${(n * 100).toFixed(1)}%`;
+const pct = (n: number) => {
+  const v = n * 100;
+  // Sub-1% margins (especially negative ones near zero) round to "0.0%" and
+  // read like a UI bug next to a clearly-negative dollar amount. Bump to
+  // two decimals when |v| < 1 so the loss is honestly shown.
+  return `${Math.abs(v) < 1 ? v.toFixed(2) : v.toFixed(1)}%`;
+};
 
 type Props = {
   result: CalculatorResult;

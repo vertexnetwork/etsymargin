@@ -5,6 +5,8 @@ import { MDXRemote } from "next-mdx-remote/rsc";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { MediavineSlot } from "@/components/ads/MediavineSlot";
 import { FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { PseoPageView } from "@/components/analytics/PseoPageView";
+import { TrustStrip } from "@/components/layout/TrustStrip";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, getPseoEntry } from "@/lib/pseo/data";
 import { loadPseoMdx } from "@/lib/mdx";
@@ -49,13 +51,14 @@ export default async function PseoPage({
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
       <SoftwareApplicationJsonLd />
       <FaqJsonLd faq={entry.faq} />
+      <PseoPageView slug={entry.slug} />
 
       <nav className="mb-4 text-sm sm:mb-6">
         <Link href="/" className="text-patina-700 hover:text-patina-900">
           ← Etsy Margin
         </Link>
         <span className="mx-2 text-patina-300">/</span>
-        <span className="text-patina-700/60">{entry.category}</span>
+        <span className="text-patina-muted">{entry.category}</span>
       </nav>
 
       <header className="mb-6 sm:mb-10">
@@ -65,6 +68,8 @@ export default async function PseoPage({
         <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
           {entry.heroSubcopy}
         </p>
+
+        <TrustStrip />
 
         <a
           href="#results"

@@ -14,12 +14,12 @@ createRoot(root).render(
         <span className="font-display text-sm font-semibold text-patina-900">
           Etsy Margin
         </span>
-        <span className="ml-auto text-[10px] uppercase tracking-widest text-patina-700/60">
+        <span className="ml-auto text-[10px] uppercase tracking-widest text-patina-muted">
           Offline
         </span>
       </header>
       <Calculator embedded />
-      <p className="mt-3 text-center text-[10px] text-patina-700/60">
+      <p className="mt-3 text-center text-[10px] text-patina-muted">
         <a
           href="https://etsymargin.tools"
           target="_blank"

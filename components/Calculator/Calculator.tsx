@@ -140,7 +140,7 @@ export function Calculator({
           >
             {copied ? "Link copied" : "Copy share link"}
           </button>
-          <span className="text-xs text-patina-700/60">
+          <span className="text-xs text-patina-muted">
             Bookmark or share this scenario — every input is in the URL.
           </span>
         </div>

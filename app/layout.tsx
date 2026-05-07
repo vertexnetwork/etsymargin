@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Urbanist, Poppins } from "next/font/google";
 import "./globals.css";
 
@@ -28,6 +28,16 @@ export const metadata: Metadata = {
     siteName: "Etsy Margin",
     type: "website",
   },
+  twitter: {
+    card: "summary_large_image",
+    title: "Etsy Margin — Find your true profit before you price",
+    description:
+      "Free Etsy profit calculator. See the loss path from gross to net at a glance.",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#28565b",
 };
 
 export default function RootLayout({

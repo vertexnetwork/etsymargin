@@ -26,6 +26,8 @@ function buildSteps(result: CalculatorResult): Step[] {
   });
   let running = start;
   for (const fee of result.fees) {
+    // Skip sub-penny fees: they render as "−$0.00" bars and read like a glitch.
+    if (fee.amount < 0.005) continue;
     const next = running - fee.amount;
     steps.push({
       label: fee.label,
@@ -66,10 +68,10 @@ const usd = (n: number) =>
   }).format(n);
 
 const COLORS = {
-  start: "#3d8389",
-  deduction: "#d97373",
-  end: "#5a9ca2",
-  endLoss: "#b94a4a",
+  start: "var(--color-patina-500)",
+  deduction: "var(--color-loss-300)",
+  end: "var(--color-patina-400)",
+  endLoss: "var(--color-loss-500)",
 };
 
 const ROW_H = 38;
@@ -111,7 +113,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
       <h2 className="mb-1 text-lg font-semibold text-patina-900">
         Loss path: gross → net
       </h2>
-      <p className="mb-5 text-sm text-patina-700/70">
+      <p className="mb-5 text-sm text-patina-muted">
         Each red bar is a fee Etsy takes before you pay product cost. Tap a bar
         for details.
       </p>
@@ -133,7 +135,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
               x2={zeroX}
               y1={PAD_TOP - 4}
               y2={totalH - PAD_BOTTOM + 4}
-              stroke="#28565b"
+              stroke="var(--color-patina-700)"
               strokeOpacity={0.25}
               strokeDasharray="3 3"
             />
@@ -177,10 +179,10 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
                 : usd(step.value);
             const valueColor =
               step.type === "deduction"
-                ? "#a83232"
+                ? "var(--color-loss-700)"
                 : step.type === "end" && step.value < 0
-                  ? "#a83232"
-                  : "#1f3d40";
+                  ? "var(--color-loss-700)"
+                  : "var(--color-patina-900)";
 
             // Place value label to the right of bar end; if bar is too far
             // right, place inside on the left side.
@@ -209,7 +211,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
                   textAnchor="end"
                   fontSize={12}
                   fontWeight={step.type === "end" ? 600 : 500}
-                  fill="#23484c"
+                  fill="var(--color-patina-800)"
                 >
                   {step.label}
                 </text>
@@ -256,7 +258,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
               y={totalH - 6}
               textAnchor="middle"
               fontSize={10}
-              fill="#28565b"
+              fill="var(--color-patina-700)"
               opacity={0.7}
             >
               $0
@@ -268,7 +270,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
       {/* Hover/focus tooltip detail (under chart, mobile-friendly) */}
       <div
         aria-live="polite"
-        className="mt-3 min-h-[1.5rem] text-xs text-patina-800/75"
+        className="mt-3 min-h-[1.5rem] text-xs text-patina-muted"
       >
         {hoverIdx !== null && steps[hoverIdx] && (
           <span>

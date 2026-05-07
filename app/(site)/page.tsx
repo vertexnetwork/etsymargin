@@ -2,6 +2,7 @@ import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { MediavineSlot } from "@/components/ads/MediavineSlot";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
 
 const adsEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
@@ -20,6 +21,8 @@ export default function Home() {
           the way Etsy charges them, with the loss path visible at a glance.
         </p>
 
+        <TrustStrip />
+
         <a
           href="#results"
           className="mt-5 inline-flex items-center gap-1 rounded-full bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-patina-800 sm:hidden"
@@ -35,7 +38,7 @@ export default function Home() {
         <h2 className="mb-2 text-2xl font-bold text-patina-900">
           Profit math by Etsy category
         </h2>
-        <p className="mb-6 text-patina-800/70">
+        <p className="mb-6 text-patina-muted">
           Pre-filled scenarios for the most common Etsy seller niches.
         </p>
         <ul className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">

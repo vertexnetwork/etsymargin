@@ -2,16 +2,37 @@ import type { CalculatorInputs } from "./fees";
 import type { CountryCode } from "./countries";
 
 const KEY = "etsymargin:v1";
+const CURRENT_VERSION = 1;
 
 type StoredDefaults = Partial<CalculatorInputs>;
+
+type StoredPayloadV1 = {
+  version: 1;
+  defaults: StoredDefaults;
+};
+
+// Legacy (pre-version) payloads were the raw defaults map. Treat any
+// versionless object as v0 so returning visitors don't get reset.
+function migrate(raw: unknown): StoredDefaults | null {
+  if (!raw || typeof raw !== "object") return null;
+  const obj = raw as Record<string, unknown>;
+  if (typeof obj.version !== "number") {
+    return obj as StoredDefaults;
+  }
+  switch (obj.version) {
+    case 1:
+      return (obj.defaults as StoredDefaults) ?? null;
+    default:
+      return null;
+  }
+}
 
 export function loadDefaults(): StoredDefaults | null {
   if (typeof window === "undefined") return null;
   try {
     const raw = window.localStorage.getItem(KEY);
     if (!raw) return null;
-    const parsed = JSON.parse(raw) as StoredDefaults;
-    return parsed;
+    return migrate(JSON.parse(raw));
   } catch {
     return null;
   }
@@ -20,12 +41,15 @@ export function loadDefaults(): StoredDefaults | null {
 export function saveDefaults(inputs: CalculatorInputs) {
   if (typeof window === "undefined") return;
   try {
-    const toStore: StoredDefaults = {
-      country: inputs.country,
-      offsiteAdsEnabled: inputs.offsiteAdsEnabled,
-      atOrAbove10k: inputs.atOrAbove10k,
+    const payload: StoredPayloadV1 = {
+      version: CURRENT_VERSION,
+      defaults: {
+        country: inputs.country,
+        offsiteAdsEnabled: inputs.offsiteAdsEnabled,
+        atOrAbove10k: inputs.atOrAbove10k,
+      },
     };
-    window.localStorage.setItem(KEY, JSON.stringify(toStore));
+    window.localStorage.setItem(KEY, JSON.stringify(payload));
   } catch {
     /* quota or disabled — silent */
   }

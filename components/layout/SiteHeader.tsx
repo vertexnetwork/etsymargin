@@ -38,7 +38,7 @@ export function SiteHeader() {
         <details className="relative sm:hidden">
           <summary
             aria-label="Open menu"
-            className="flex h-9 w-9 cursor-pointer list-none items-center justify-center rounded-md text-patina-800 [&::-webkit-details-marker]:hidden"
+            className="flex h-11 w-11 -mr-2 cursor-pointer list-none items-center justify-center rounded-md text-patina-800 [&::-webkit-details-marker]:hidden"
           >
             <svg
               width="22"

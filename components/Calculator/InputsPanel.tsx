@@ -52,7 +52,7 @@ export function InputsPanel({
           <select
             value={inputs.country}
             onChange={(e) => onCountryChange(e.target.value as CountryCode)}
-            className="mt-1.5 w-full rounded-lg border border-patina-100 bg-cream-50 px-3 py-2 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
+            className="mt-1.5 block min-h-[44px] w-full rounded-lg border border-patina-100 bg-cream-50 px-3 py-2 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
           >
             {countries.map((c) => (
               <option key={c.code} value={c.code}>
@@ -60,7 +60,7 @@ export function InputsPanel({
               </option>
             ))}
           </select>
-          <span className="mt-1 block text-xs text-patina-700/60">
+          <span className="mt-1 block text-xs text-patina-muted">
             All math runs in USD. Country drives Etsy&apos;s payment-processing
             and regulatory fees.
           </span>
@@ -70,6 +70,10 @@ export function InputsPanel({
           <legend className="text-sm font-medium text-patina-800">
             Off-Site Ads
           </legend>
+          <p id="ads-10k-help" className="text-xs text-patina-muted">
+            Etsy charges 15% under $10k trailing revenue (opt-in) or 12% at/above
+            (mandatory).
+          </p>
           <label className="flex cursor-pointer items-start gap-2.5">
             <input
               type="checkbox"
@@ -81,26 +85,20 @@ export function InputsPanel({
               Include Off-Site Ads fee on this order
             </span>
           </label>
-          <label
-            className={`flex items-start gap-2.5 pl-6 ${inputs.offsiteAdsEnabled ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
-          >
-            <input
-              type="checkbox"
-              checked={inputs.atOrAbove10k}
-              disabled={!inputs.offsiteAdsEnabled}
-              onChange={(e) => onChange("atOrAbove10k", e.target.checked)}
-              className="mt-0.5 h-4 w-4 accent-patina-600"
-              aria-describedby="ads-10k-help"
-            />
-            <span className="text-sm text-patina-800">
-              My shop has $10k+ in trailing 12-mo revenue (12% rate)
-            </span>
-          </label>
-          <p id="ads-10k-help" className="pl-6 text-xs text-patina-700/60">
-            {inputs.offsiteAdsEnabled
-              ? "Under $10k: 15% (opt-in). At/over $10k: 12% (mandatory)."
-              : "Enable Off-Site Ads above to apply a rate."}
-          </p>
+          {inputs.offsiteAdsEnabled && (
+            <label className="flex cursor-pointer items-start gap-2.5 pl-6">
+              <input
+                type="checkbox"
+                checked={inputs.atOrAbove10k}
+                onChange={(e) => onChange("atOrAbove10k", e.target.checked)}
+                className="mt-0.5 h-4 w-4 accent-patina-600"
+                aria-describedby="ads-10k-help"
+              />
+              <span className="text-sm text-patina-800">
+                My shop has $10k+ in trailing 12-mo revenue (12% rate)
+              </span>
+            </label>
+          )}
         </fieldset>
       </div>
     </div>
@@ -134,10 +132,10 @@ function NumericField({
     <label htmlFor={id} className="block">
       <span className="text-sm font-medium text-patina-800">{label}</span>
       {hint && (
-        <span className="mt-0.5 block text-xs text-patina-700/60">{hint}</span>
+        <span className="mt-0.5 block text-xs text-patina-muted">{hint}</span>
       )}
       <div className="relative mt-1.5">
-        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-patina-700/60">
+        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-patina-muted">
           $
         </span>
         <input
@@ -167,7 +165,7 @@ function NumericField({
               else if (raw === "") onChange(0);
             }
           }}
-          className="w-full rounded-lg border border-patina-100 bg-cream-50 py-2 pl-7 pr-3 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
+          className="block min-h-[44px] w-full rounded-lg border border-patina-100 bg-cream-50 py-2 pl-7 pr-3 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
         />
       </div>
     </label>

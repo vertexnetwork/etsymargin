@@ -134,7 +134,7 @@ export default function AboutPage() {
         </p>
       </section>
 
-      <p className="mt-12 text-xs text-patina-700/60">
+      <p className="mt-12 text-xs text-patina-muted">
         Etsy is a registered trademark of Etsy, Inc. Etsy Margin is an
         independent tool and is not endorsed by, affiliated with, or sponsored
         by Etsy.

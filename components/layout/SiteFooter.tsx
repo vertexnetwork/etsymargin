@@ -13,11 +13,11 @@ export function SiteFooter() {
               Etsy Margin
             </span>
           </Link>
-          <p className="mt-3 max-w-xs text-sm text-patina-700/75">
+          <p className="mt-3 max-w-xs text-sm text-patina-muted">
             Find your true profit before you price. 2026 fee schedule, math runs
             in your browser.
           </p>
-          <p className="mt-3 text-xs text-patina-700/60">
+          <p className="mt-3 text-xs text-patina-muted">
             Not affiliated with Etsy. © {year} Etsy Margin.
           </p>
         </div>
@@ -71,14 +71,6 @@ export function SiteFooter() {
               >
                 Changelog
               </Link>
-            </li>
-            <li>
-              <a
-                href="/sitemap.xml"
-                className="text-patina-800 hover:text-patina-600"
-              >
-                Sitemap
-              </a>
             </li>
           </ul>
         </div>
