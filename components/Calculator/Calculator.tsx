@@ -39,8 +39,10 @@ function readClientOverrides(): Partial<CalculatorInputs> {
 
 export function Calculator({
   initialInputs,
+  embedded = false,
 }: {
   initialInputs?: Partial<CalculatorInputs>;
+  embedded?: boolean;
 }) {
   // Lazy initializer: SSR returns base; client merges localStorage + URL on
   // first render so we hydrate with the right values from the start instead
@@ -65,12 +67,13 @@ export function Calculator({
   }, [inputs, hydrated]);
 
   // Keep URL in sync with current inputs (replaceState — no history spam).
+  // Skip in embedded mode: mutating the iframe URL surprises the host page.
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || embedded) return;
     const qs = inputsToQuery(inputs);
     const url = `${window.location.pathname}?${qs}`;
     window.history.replaceState(null, "", url);
-  }, [inputs, hydrated]);
+  }, [inputs, hydrated, embedded]);
 
   const result = useMemo(() => calculate(inputs), [inputs]);
 
@@ -79,26 +82,32 @@ export function Calculator({
     value: CalculatorInputs[K],
   ) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
+    if (embedded) return;
     if (key === "offsiteAdsEnabled") events.offsiteAdsToggled(value as boolean);
     if (key === "country") events.countryChanged(value as string);
   };
 
   // Fire calculator_calculated once per stable input set.
   useEffect(() => {
-    if (!hydrated) return;
+    if (!hydrated || embedded) return;
     events.calculatorCalculated({
       country: inputs.country,
       offsiteAds: inputs.offsiteAdsEnabled,
       netProfit: result.netProfit,
     });
-  }, [hydrated, inputs.country, inputs.offsiteAdsEnabled, result.netProfit]);
+  }, [hydrated, embedded, inputs.country, inputs.offsiteAdsEnabled, result.netProfit]);
 
   const onShare = async () => {
-    const url = `${window.location.origin}${window.location.pathname}?${inputsToQuery(inputs)}`;
+    // In embedded mode, point the share URL at the canonical site, not the
+    // iframe origin (which is the embedder's page).
+    const base = embedded
+      ? "https://etsymargin.tools/"
+      : `${window.location.origin}${window.location.pathname}`;
+    const url = `${base}?${inputsToQuery(inputs)}`;
     try {
       await navigator.clipboard.writeText(url);
       setCopied(true);
-      events.shareUrlCopied();
+      if (!embedded) events.shareUrlCopied();
       if (copyTimer.current) clearTimeout(copyTimer.current);
       copyTimer.current = setTimeout(() => setCopied(false), 2000);
     } catch {

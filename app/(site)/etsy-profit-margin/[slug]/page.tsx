@@ -83,6 +83,24 @@ export default async function PseoPage({
         </article>
       )}
 
+      <aside className="mt-12 rounded-2xl bg-patina-50 p-5 ring-1 ring-patina-100 sm:p-6">
+        <h2 className="text-lg font-bold text-patina-900">
+          Writing about {entry.category.toLowerCase()} on Etsy?
+        </h2>
+        <p className="mt-2 text-patina-800/85">
+          Drop this exact calculator — pre-filled with the {entry.category.toLowerCase()}{" "}
+          scenario above — into your post or supplier page with a single iframe.
+          Free, no signup.
+        </p>
+        <Link
+          href="/embed"
+          className="mt-3 inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800"
+        >
+          Get the embed snippet
+          <span aria-hidden="true">→</span>
+        </Link>
+      </aside>
+
       <section className="mt-16">
         <h2 className="mb-6 text-2xl font-bold text-patina-900">
           Frequently asked questions

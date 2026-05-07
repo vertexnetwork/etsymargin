@@ -12,9 +12,6 @@ export default function Home() {
       <SoftwareApplicationJsonLd />
 
       <header className="mb-6 sm:mb-14">
-        <p className="mb-2 text-xs font-medium uppercase tracking-widest text-patina-600 sm:text-sm">
-          Etsy Margin
-        </p>
         <h1 className="text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-5xl">
           Don&apos;t lose money on the mandatory 15% Offsite Ads.
         </h1>
@@ -22,14 +19,6 @@ export default function Home() {
           Find your true profit before you price. Every Etsy fee, layered exactly
           the way Etsy charges them, with the loss path visible at a glance.
         </p>
-
-        <ul className="mt-4 flex flex-wrap gap-x-4 gap-y-1 text-xs text-patina-700/75 sm:text-sm">
-          <li>2026 fee schedule</li>
-          <li aria-hidden="true" className="opacity-40">·</li>
-          <li>Math runs in your browser — nothing is sent anywhere</li>
-          <li aria-hidden="true" className="opacity-40">·</li>
-          <li>Not affiliated with Etsy</li>
-        </ul>
 
         <a
           href="#results"
@@ -42,7 +31,7 @@ export default function Home() {
 
       <Calculator />
 
-      <section className="mt-12 sm:mt-16">
+      <section id="categories" className="mt-12 scroll-mt-20 sm:mt-16">
         <h2 className="mb-2 text-2xl font-bold text-patina-900">
           Profit math by Etsy category
         </h2>
@@ -69,13 +58,6 @@ export default function Home() {
       </section>
 
       {adsEnabled && <MediavineSlot slot="in-content" className="my-12" />}
-
-      <footer className="mt-16 border-t border-patina-100 pt-6 text-sm text-patina-700/70">
-        <p>
-          Numbers reflect Etsy&apos;s 2026 published fee schedule. We are not
-          affiliated with Etsy.
-        </p>
-      </footer>
     </main>
   );
 }

@@ -19,7 +19,9 @@ export function GET() {
   lines.push("");
 
   lines.push("## Calculator");
-  lines.push(`- [Etsy Margin Calculator](${BASE_URL}): Live calculator with waterfall chart, fee breakdown, and shareable URL state.`);
+  lines.push(
+    `- [Etsy Margin Calculator](${BASE_URL}): Live calculator with waterfall chart, fee breakdown, and shareable URL state.`,
+  );
   lines.push("");
 
   lines.push("## Profit math by Etsy category");
@@ -28,6 +30,24 @@ export function GET() {
       `- [${entry.title}](${BASE_URL}/etsy-profit-margin/${entry.slug}): ${entry.metaDescription}`,
     );
   }
+  lines.push("");
+
+  lines.push("## Tools & integrations");
+  lines.push(
+    `- [Embed on your site](${BASE_URL}/embed): Free iframe embed of the calculator for blogs, supplier sites, and seller courses. Supports URL-param prefill (\`?p=24&s=5.5&m=11&as=5.5&ads=1\`). No signup, no analytics inside the embed.`,
+  );
+  lines.push(
+    `- Embed widget endpoint: ${BASE_URL}/embed/widget — bare calculator route, \`Content-Security-Policy: frame-ancestors *\`, accepts \`p\` (item price), \`s\` (shipping charged), \`m\` (manufacturing cost), \`as\` (actual shipping cost), \`c\` (country: US/UK/CA/AU/EU), \`ads\` (off-site ads 1/0), \`t10\` ($10k+ revenue 1/0).`,
+  );
+  lines.push(
+    "- Chrome extension: Manifest V3 popup that ships the full calculator offline. Toolbar click opens a 380px-wide popup with the same inputs and waterfall. Same fee math, no internet required after install. Web Store listing pending.",
+  );
+  lines.push("");
+
+  lines.push("## Site");
+  lines.push(`- [About](${BASE_URL}/about): What this is, how the math works (with the 2026 fee constants), privacy posture, contact.`);
+  lines.push(`- [Changelog](${BASE_URL}/changelog): Version history for the calculator and fee math.`);
+  lines.push(`- [Sitemap](${BASE_URL}/sitemap.xml): All indexable URLs.`);
   lines.push("");
 
   lines.push("## Fee reference (2026)");
@@ -44,7 +64,9 @@ export function GET() {
   lines.push("");
 
   lines.push("## Optional");
-  lines.push(`- [llms-full.txt](${BASE_URL}/llms-full.txt): Full long-form content for all category pages.`);
+  lines.push(
+    `- [llms-full.txt](${BASE_URL}/llms-full.txt): Full long-form content for all category pages plus the About page.`,
+  );
 
   return new Response(lines.join("\n"), {
     headers: {
