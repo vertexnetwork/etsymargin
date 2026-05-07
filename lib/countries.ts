@@ -44,7 +44,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
   },
   EU: {
     code: "EU",
-    label: "European Union",
+    label: "Other (EU country)",
     currencySymbol: "€",
     paymentPercent: 0.04,
     paymentFlat: 0.30,

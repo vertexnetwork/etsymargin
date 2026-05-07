@@ -34,6 +34,12 @@ export type CalculatorResult = {
 
 const round2 = (n: number) => Math.round(n * 100) / 100;
 
+const formatPct = (rate: number) => {
+  const v = rate * 100;
+  const rounded = Math.round(v * 10) / 10;
+  return Number.isInteger(rounded) ? `${rounded.toFixed(0)}%` : `${rounded.toFixed(1)}%`;
+};
+
 export function calculate(inputs: CalculatorInputs): CalculatorResult {
   const {
     itemPrice,
@@ -79,7 +85,7 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
     {
       label: "Payment Processing",
       amount: round2(paymentProcessingFee),
-      detail: `${(countrySpec.paymentPercent * 100).toFixed(0)}% + ${countrySpec.currencySymbol}${countrySpec.paymentFlat.toFixed(2)}`,
+      detail: `${formatPct(countrySpec.paymentPercent)} + ${countrySpec.currencySymbol}${countrySpec.paymentFlat.toFixed(2)}`,
     },
   ];
 
@@ -87,7 +93,7 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
     fees.push({
       label: "Regulatory Operating Fee",
       amount: round2(regulatoryOperatingFee),
-      detail: `${(countrySpec.regulatoryOperatingPercent * 100).toFixed(2)}% (${countrySpec.code})`,
+      detail: `${formatPct(countrySpec.regulatoryOperatingPercent)} (${countrySpec.code})`,
     });
   }
 
@@ -100,8 +106,8 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
       label: "Off-Site Ads Fee",
       amount: round2(offsiteAdsFee),
       detail: capped
-        ? `${(rate * 100).toFixed(0)}% capped at $100`
-        : `${(rate * 100).toFixed(0)}% of order`,
+        ? `${formatPct(rate)} capped at $100`
+        : `${formatPct(rate)} of order`,
     });
   }
 

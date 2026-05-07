@@ -24,26 +24,37 @@ const DEFAULT_INPUTS: CalculatorInputs = {
   atOrAbove10k: false,
 };
 
+function readClientOverrides(): Partial<CalculatorInputs> {
+  if (typeof window === "undefined") return {};
+  try {
+    const fromUrl = inputsFromQuery(
+      new URLSearchParams(window.location.search),
+    );
+    const fromStorage = loadDefaults() ?? {};
+    return { ...fromStorage, ...fromUrl };
+  } catch {
+    return {};
+  }
+}
+
 export function Calculator({
   initialInputs,
 }: {
   initialInputs?: Partial<CalculatorInputs>;
 }) {
-  const [inputs, setInputs] = useState<CalculatorInputs>({
+  // Lazy initializer: SSR returns base; client merges localStorage + URL on
+  // first render so we hydrate with the right values from the start instead
+  // of flashing defaults.
+  const [inputs, setInputs] = useState<CalculatorInputs>(() => ({
     ...DEFAULT_INPUTS,
     ...initialInputs,
-  });
+    ...readClientOverrides(),
+  }));
   const [hydrated, setHydrated] = useState(false);
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
-  // Hydrate from URL > localStorage > defaults, once on mount.
   useEffect(() => {
-    const fromUrl = inputsFromQuery(
-      new URLSearchParams(window.location.search),
-    );
-    const fromStorage = loadDefaults() ?? {};
-    setInputs((prev) => ({ ...prev, ...fromStorage, ...fromUrl }));
     setHydrated(true);
   }, []);
 
@@ -72,7 +83,7 @@ export function Calculator({
     if (key === "country") events.countryChanged(value as string);
   };
 
-  // Fire calculator_calculated once per stable input set (debounced via effect coalescing).
+  // Fire calculator_calculated once per stable input set.
   useEffect(() => {
     if (!hydrated) return;
     events.calculatorCalculated({
@@ -96,7 +107,11 @@ export function Calculator({
   };
 
   return (
-    <section className="grid gap-8 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
+    <section
+      id="calculator"
+      className="grid gap-8 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]"
+      suppressHydrationWarning
+    >
       <InputsPanel
         inputs={inputs}
         countries={COUNTRY_LIST}
@@ -104,16 +119,17 @@ export function Calculator({
         onCountryChange={(code: CountryCode) => update("country", code)}
       />
 
-      <div className="space-y-6">
+      <div id="results" className="space-y-6">
         <ResultsSummary result={result} itemPrice={inputs.itemPrice} />
         <WaterfallChart result={result} />
         <div className="flex flex-wrap items-center gap-3">
           <button
             type="button"
             onClick={onShare}
-            className="rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 focus:outline-none focus:ring-2 focus:ring-patina-300"
+            aria-live="polite"
+            className="inline-flex min-w-[148px] items-center justify-center rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 focus:outline-none focus:ring-2 focus:ring-patina-300"
           >
-            {copied ? "Link copied ✓" : "Copy share link"}
+            {copied ? "Link copied" : "Copy share link"}
           </button>
           <span className="text-xs text-patina-700/60">
             Bookmark or share this scenario — every input is in the URL.

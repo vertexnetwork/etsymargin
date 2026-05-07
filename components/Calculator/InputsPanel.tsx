@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import type { CalculatorInputs } from "@/lib/fees";
 import type { Country, CountryCode } from "@/lib/countries";
 
@@ -14,7 +15,7 @@ type Props = {
 };
 
 const numericFields: Array<{
-  key: keyof CalculatorInputs;
+  key: "itemPrice" | "shippingCharged" | "manufacturingCost" | "actualShippingCost";
   label: string;
   hint?: string;
 }> = [
@@ -31,36 +32,19 @@ export function InputsPanel({
   onCountryChange,
 }: Props) {
   return (
-    <div className="rounded-2xl bg-white p-6 shadow-sm ring-1 ring-patina-100">
+    <div className="rounded-2xl bg-white p-5 shadow-sm ring-1 ring-patina-100 sm:p-6">
       <h2 className="mb-5 text-lg font-semibold text-patina-900">Your numbers</h2>
 
       <div className="space-y-4">
         {numericFields.map(({ key, label, hint }) => (
-          <label key={key} className="block">
-            <span className="text-sm font-medium text-patina-800">{label}</span>
-            {hint && (
-              <span className="mt-0.5 block text-xs text-patina-700/60">
-                {hint}
-              </span>
-            )}
-            <div className="relative mt-1.5">
-              <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-patina-700/60">
-                $
-              </span>
-              <input
-                type="number"
-                inputMode="decimal"
-                min={0}
-                step="0.01"
-                value={Number.isFinite(inputs[key] as number) ? (inputs[key] as number) : 0}
-                onChange={(e) => {
-                  const v = parseFloat(e.target.value);
-                  onChange(key, (Number.isFinite(v) ? v : 0) as CalculatorInputs[typeof key]);
-                }}
-                className="w-full rounded-lg border border-patina-100 bg-cream-50 py-2 pl-7 pr-3 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
-              />
-            </div>
-          </label>
+          <NumericField
+            key={key}
+            id={`field-${key}`}
+            label={label}
+            hint={hint}
+            value={inputs[key] as number}
+            onChange={(v) => onChange(key, v as CalculatorInputs[typeof key])}
+          />
         ))}
 
         <label className="block">
@@ -76,6 +60,10 @@ export function InputsPanel({
               </option>
             ))}
           </select>
+          <span className="mt-1 block text-xs text-patina-700/60">
+            All math runs in USD. Country drives Etsy&apos;s payment-processing
+            and regulatory fees.
+          </span>
         </label>
 
         <fieldset className="space-y-2.5 rounded-lg bg-cream-100 p-3.5">
@@ -93,19 +81,102 @@ export function InputsPanel({
               Include Off-Site Ads fee on this order
             </span>
           </label>
-          <label className="flex cursor-pointer items-start gap-2.5">
+          <label
+            className={`flex items-start gap-2.5 pl-6 ${inputs.offsiteAdsEnabled ? "cursor-pointer" : "cursor-not-allowed opacity-50"}`}
+          >
             <input
               type="checkbox"
               checked={inputs.atOrAbove10k}
+              disabled={!inputs.offsiteAdsEnabled}
               onChange={(e) => onChange("atOrAbove10k", e.target.checked)}
               className="mt-0.5 h-4 w-4 accent-patina-600"
+              aria-describedby="ads-10k-help"
             />
             <span className="text-sm text-patina-800">
               My shop has $10k+ in trailing 12-mo revenue (12% rate)
             </span>
           </label>
+          <p id="ads-10k-help" className="pl-6 text-xs text-patina-700/60">
+            {inputs.offsiteAdsEnabled
+              ? "Under $10k: 15% (opt-in). At/over $10k: 12% (mandatory)."
+              : "Enable Off-Site Ads above to apply a rate."}
+          </p>
         </fieldset>
       </div>
     </div>
   );
+}
+
+function NumericField({
+  id,
+  label,
+  hint,
+  value,
+  onChange,
+}: {
+  id: string;
+  label: string;
+  hint?: string;
+  value: number;
+  onChange: (v: number) => void;
+}) {
+  // Local string state lets the user clear/type without fighting a coerced 0.
+  // Sync external value changes (e.g. URL hydration, prefilled scenario swap)
+  // into the local string when not focused.
+  const [text, setText] = useState<string>(formatForInput(value));
+  const [focused, setFocused] = useState(false);
+
+  useEffect(() => {
+    if (!focused) setText(formatForInput(value));
+  }, [value, focused]);
+
+  return (
+    <label htmlFor={id} className="block">
+      <span className="text-sm font-medium text-patina-800">{label}</span>
+      {hint && (
+        <span className="mt-0.5 block text-xs text-patina-700/60">{hint}</span>
+      )}
+      <div className="relative mt-1.5">
+        <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-patina-700/60">
+          $
+        </span>
+        <input
+          id={id}
+          type="text"
+          inputMode="decimal"
+          autoComplete="off"
+          value={text}
+          onFocus={(e) => {
+            setFocused(true);
+            e.target.select();
+          }}
+          onBlur={() => {
+            setFocused(false);
+            const n = parseFloat(text);
+            const safe = Number.isFinite(n) && n >= 0 ? n : 0;
+            setText(formatForInput(safe));
+            onChange(safe);
+          }}
+          onChange={(e) => {
+            const raw = e.target.value;
+            // Allow empty or partial decimals during typing.
+            if (raw === "" || /^\d*\.?\d*$/.test(raw)) {
+              setText(raw);
+              const n = parseFloat(raw);
+              if (Number.isFinite(n) && n >= 0) onChange(n);
+              else if (raw === "") onChange(0);
+            }
+          }}
+          className="w-full rounded-lg border border-patina-100 bg-cream-50 py-2 pl-7 pr-3 text-base text-patina-900 outline-none transition focus:border-patina-400 focus:ring-2 focus:ring-patina-200"
+        />
+      </div>
+    </label>
+  );
+}
+
+function formatForInput(n: number): string {
+  if (!Number.isFinite(n)) return "";
+  if (n === 0) return "0";
+  // Drop trailing zeros so prefilled "5.00" reads as "5".
+  return String(Math.round(n * 100) / 100);
 }

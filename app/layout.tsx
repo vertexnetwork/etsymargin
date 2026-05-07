@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Urbanist, Poppins } from "next/font/google";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { Clarity } from "@/components/analytics/Clarity";
 import "./globals.css";
 
 const urbanist = Urbanist({
@@ -37,11 +38,13 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
+  const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
   return (
     <html lang="en" className={`${urbanist.variable} ${poppins.variable}`}>
       <body className="min-h-screen antialiased">
         {children}
         {gaId && <GoogleAnalytics gaId={gaId} />}
+        {clarityId && <Clarity projectId={clarityId} />}
       </body>
     </html>
   );

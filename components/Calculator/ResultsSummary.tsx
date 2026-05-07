@@ -25,7 +25,7 @@ export function ResultsSummary({ result, itemPrice }: Props) {
       : "bg-patina-50 text-patina-900 ring-patina-200";
 
   return (
-    <div className={`rounded-2xl p-6 shadow-sm ring-1 ${tone}`}>
+    <div className={`rounded-2xl p-5 shadow-sm ring-1 sm:p-6 ${tone}`}>
       <p className="text-sm font-medium uppercase tracking-wide opacity-70">
         True Net Profit
       </p>
@@ -43,7 +43,8 @@ export function ResultsSummary({ result, itemPrice }: Props) {
         </p>
       ) : itemPrice > 0 ? (
         <p className="mt-3 text-sm opacity-75">
-          Etsy keeps {pct(result.effectiveFeeRate)} of every dollar before you cover product cost.
+          Etsy takes {pct(result.effectiveFeeRate)} of revenue in fees before
+          any product cost.
         </p>
       ) : null}
 

@@ -9,6 +9,8 @@ import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, getPseoEntry } from "@/lib/pseo/data";
 import { loadPseoMdx } from "@/lib/mdx";
 
+const adsEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
+
 export function generateStaticParams() {
   return PSEO_ENTRIES.map((e) => ({ slug: e.slug }));
 }
@@ -44,11 +46,11 @@ export default async function PseoPage({
   const mdxSource = await loadPseoMdx(slug);
 
   return (
-    <main className="mx-auto max-w-5xl px-5 py-10 sm:py-16">
+    <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
       <SoftwareApplicationJsonLd />
       <FaqJsonLd faq={entry.faq} />
 
-      <nav className="mb-6 text-sm">
+      <nav className="mb-4 text-sm sm:mb-6">
         <Link href="/" className="text-patina-700 hover:text-patina-900">
           ← Etsy Margin
         </Link>
@@ -56,16 +58,21 @@ export default async function PseoPage({
         <span className="text-patina-700/60">{entry.category}</span>
       </nav>
 
-      <header className="mb-10">
-        <p className="mb-3 text-sm font-medium uppercase tracking-widest text-patina-600">
-          {entry.category}
-        </p>
-        <h1 className="text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-4xl">
+      <header className="mb-6 sm:mb-10">
+        <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
           {entry.heroHeadline}
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-patina-800/80">
+        <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
           {entry.heroSubcopy}
         </p>
+
+        <a
+          href="#results"
+          className="mt-5 inline-flex items-center gap-1 rounded-full bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-patina-800 sm:hidden"
+        >
+          See profit for this scenario
+          <span aria-hidden="true">↓</span>
+        </a>
       </header>
 
       <Calculator initialInputs={entry.prefilledScenario} />
@@ -75,8 +82,6 @@ export default async function PseoPage({
           <MDXRemote source={mdxSource} components={mdxComponents} />
         </article>
       )}
-
-      <MediavineSlot slot="in-content" className="my-12" />
 
       <section className="mt-16">
         <h2 className="mb-6 text-2xl font-bold text-patina-900">
@@ -102,20 +107,20 @@ export default async function PseoPage({
           More Etsy profit math
         </h2>
         <ul className="grid gap-2 sm:grid-cols-2">
-          {PSEO_ENTRIES.filter((e) => e.slug !== entry.slug)
-            .slice(0, 8)
-            .map((e) => (
-              <li key={e.slug}>
-                <Link
-                  href={`/etsy-profit-margin/${e.slug}`}
-                  className="text-patina-700 hover:text-patina-900 hover:underline"
-                >
-                  {e.title}
-                </Link>
-              </li>
-            ))}
+          {PSEO_ENTRIES.filter((e) => e.slug !== entry.slug).map((e) => (
+            <li key={e.slug}>
+              <Link
+                href={`/etsy-profit-margin/${e.slug}`}
+                className="text-patina-700 hover:text-patina-900 hover:underline"
+              >
+                {e.title}
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
+
+      {adsEnabled && <MediavineSlot slot="in-content" className="my-12" />}
     </main>
   );
 }
