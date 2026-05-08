@@ -15,6 +15,8 @@ const poppins = Poppins({
   display: "swap",
 });
 
+const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
+
 export const metadata: Metadata = {
   title: "Etsy Margin — Find your true profit before you price",
   description:
@@ -34,6 +36,12 @@ export const metadata: Metadata = {
     description:
       "Free Etsy profit calculator. See the loss path from gross to net at a glance.",
   },
+  // Emit the AdSense ownership meta tag whenever a client ID is configured —
+  // this is AdSense's preferred verification path and is independent of the
+  // on/off serving flag, so verification stays durable across env changes.
+  ...(adsenseClientId
+    ? { other: { "google-adsense-account": adsenseClientId } }
+    : {}),
 };
 
 export const viewport: Viewport = {
