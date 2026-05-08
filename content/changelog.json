@@ -120,5 +120,16 @@
       "sitemap.ts adds /network at priority 0.5",
       "llms.txt gains a Vertex Network section; llms-full.txt gains a full network description block so AI crawlers ingest the hub"
     ]
+  },
+  {
+    "hash": "87b505c4161e35d811b029f8ef76c1b4038988a4",
+    "date": "2026-05-07",
+    "title": "Wire Vercel Analytics and Mediavine Grow alongside the existing Clarity hook",
+    "summary": "",
+    "changes": [
+      "@vercel/analytics installed and <Analytics /> mounted in (site)/layout so /embed/widget stays analytics-free",
+      "MediavineGrow component mirrors the Clarity pattern: data-grow-initializer attribute preserved, afterInteractive strategy, env-gated on NEXT_PUBLIC_GROW_ME_SITE_ID",
+      "Set these env vars in Vercel: NEXT_PUBLIC_CLARITY_PROJECT_ID=wnovcghgyg and NEXT_PUBLIC_GROW_ME_SITE_ID=U2l0ZToyNjdjZDA1OS01MDJhLTRiODgtYTk3Zi1hZDU1ZTZjOWVlNTA="
+    ]
   }
 ]
