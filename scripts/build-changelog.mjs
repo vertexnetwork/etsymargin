@@ -1,6 +1,11 @@
-// Build content/changelog.json from `git log`. Idempotent + merge-safe:
-// re-running on a shallow clone (e.g., Vercel) won't drop entries the
-// committed JSON already has — we union by commit hash.
+// Build content/changelog.json from `git log`. Subjects only — we never
+// read commit bodies into the JSON, so a secret accidentally pasted into a
+// commit body can't reach the public changelog page. Subjects stay short
+// and scoped to "what changed" by convention.
+//
+// Idempotent + merge-safe: rebased commits get pruned from the JSON,
+// while shallow-clone fallback (Vercel) keeps older entries the build
+// container can't see.
 //
 // Usage: `node scripts/build-changelog.mjs` (also wired as `prebuild`).
 
@@ -14,7 +19,8 @@ const FIELD = "\x1f";
 const RECORD = "\x1e";
 
 function readGitLog() {
-  const fmt = `%H${FIELD}%aI${FIELD}%s${FIELD}%b${RECORD}`;
+  // Subject only (%s). Body deliberately excluded.
+  const fmt = `%H${FIELD}%aI${FIELD}%s${RECORD}`;
   let raw;
   try {
     raw = execSync(
@@ -29,21 +35,9 @@ function readGitLog() {
     .map((s) => s.trim())
     .filter(Boolean)
     .map((rec) => {
-      const [hash, date, subject, body = ""] = rec.split(FIELD);
-      return { hash, date, subject, body };
+      const [hash, date, subject = ""] = rec.split(FIELD);
+      return { hash, date, subject };
     });
-}
-
-function parseBody(body) {
-  const lines = body
-    .split("\n")
-    .map((s) => s.trim())
-    .filter((s) => s && !/^Co-Authored-By:/i.test(s));
-  const bullets = lines
-    .filter((l) => /^[-*•]\s+/.test(l))
-    .map((l) => l.replace(/^[-*•]\s+/, ""));
-  if (bullets.length) return { summary: "", changes: bullets };
-  return { summary: lines.join(" "), changes: [] };
 }
 
 function readExisting() {
@@ -71,22 +65,22 @@ function build() {
   const merged = new Map();
   // Carry forward existing entries only when (a) git still recognises them,
   // or (b) they predate git's window (shallow-clone fallback). Anything else
-  // was rewritten/dropped from history and should not survive.
+  // was rewritten/dropped from history and must not survive.
   for (const e of readExisting()) {
+    // Strip any legacy fields (summary, changes) from older JSON shape so
+    // they can never re-enter the rendered page.
+    const slim = { hash: e.hash, date: e.date, title: e.title };
     if (fromGitHashes.has(e.hash)) {
-      merged.set(e.hash, e);
+      merged.set(e.hash, slim);
     } else if (oldestGitDate && e.date && e.date < oldestGitDate) {
-      merged.set(e.hash, e);
+      merged.set(e.hash, slim);
     }
   }
   for (const c of fromGit) {
-    const { summary, changes } = parseBody(c.body);
     merged.set(c.hash, {
       hash: c.hash,
       date: (c.date || "").slice(0, 10),
       title: c.subject,
-      summary,
-      changes,
     });
   }
   return Array.from(merged.values()).sort((a, b) =>

@@ -2,140 +2,56 @@
   {
     "hash": "653dbae3fd3e4e5f9fe6bfdbb23fb0f95838d108",
     "date": "2026-05-07",
-    "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets",
-    "summary": "",
-    "changes": [
-      "New OG/Twitter image routes + favicon/apple-icon + theme-color so social shares stop rendering blank cards",
-      "Margin display shows two decimals under 1% so a -0.04% loss no longer reads as \"0.0%\"",
-      "Mobile hamburger and form inputs hit the 44px touch target",
-      "New --color-patina-muted token replaces a dozen sub-AA muted-text patterns site-wide",
-      "Waterfall chart loss colors moved into @theme tokens; sub-penny fees no longer render as \"−$0.00\" bars",
-      "pSEO pages fire pseo_page_viewed via a tiny client wrapper; hero gets a 3-point trust strip",
-      "Off-Site Ads fieldset reads context-first; \\$10k+ checkbox conditionally renders",
-      "localStorage payload gains version + migrate() so future schema bumps don't reset returning visitors",
-      "Footer trims the Sitemap link"
-    ]
+    "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets"
   },
   {
     "hash": "8b548c61ae980e0da7df25390dbba75bc37dfebd",
     "date": "2026-05-07",
-    "title": "Add site chrome, About/Changelog/Embed pages, and Chrome extension",
-    "summary": "",
-    "changes": [
-      "(site) route group owns SiteHeader (sticky, wordmark + Categories/Embed/About,",
-      "Inline brand mark — five descending bars in patina, no asset pipeline.",
-      "Root layout slimmed to <html><body>; analytics moved into (site)/layout",
-      "/about — what this is, fee math (rates pulled live from lib/fees.ts",
-      "/changelog — TS-array source of truth, two seed entries.",
-      "/embed — info page with copy-paste iframe snippet, URL-param schema,",
-      "/embed/widget — bare Calculator with embedded prop. Disables analytics",
-      "next.config.mjs sets Content-Security-Policy: frame-ancestors * for",
-      "Searchparams-driven prefill (p, s, m, as, c, ads, t10).",
-      "noindex via metadata.robots so it doesn't compete with /embed in search.",
-      "Manifest V3 popup under extension/. Vite + React + Tailwind v4, @/ alias",
-      "post-build.mjs copies manifest.json + icons/ into dist/ after vite build.",
-      "Build verified: 66KB gzipped, fully offline-capable.",
-      "README documents local install + Web Store submission checklist.",
-      "llms.txt: new Tools & integrations section (embed page, widget URL with",
-      "llms-full.txt: prepends canonical About content (with live fee constants)",
-      "pSEO pages: new \"Writing about {category} on Etsy?\" CTA between MDX",
-      "sitemap adds /about, /embed, /changelog. /embed/widget excluded.",
-      "npm run typecheck: clean",
-      "npm test: 10/10 fee tests pass",
-      "npm run build: 32 prerendered routes (was 28)",
-      "/embed/widget headers confirmed: frame-ancestors * + X-Frame-Options ALLOWALL",
-      "extension build: 66KB gzipped, manifest + icons copied to dist/"
-    ]
+    "title": "Add site chrome, About/Changelog/Embed pages, and Chrome extension"
   },
   {
     "hash": "a4ba686a6a13f2235d09309e9cd0a00394b785a5",
     "date": "2026-05-07",
-    "title": "UX forensic pass: fix loss-path rendering, kill mobile fold friction, wire Clarity",
-    "summary": "",
-    "changes": [
-      "WaterfallChart: SVG-based, horizontal layout, signed end bar, a11y title/desc + sr-only table mirror",
-      "Calculator: lazy useState merges URL+storage on first render; copy button width-locked",
-      "InputsPanel: string-state numeric inputs (no leading-0 trap, select-on-focus); $10k checkbox disabled when ads off",
-      "Pages: tighter mobile hero, \"see my real profit\" anchor, trust strip, all 20 pSEO entries linked, ads gated to env flag",
-      "lib/fees: smart percent formatter; lib/countries: rename EU to \"Other (EU country)\"",
-      "Clarity: conditional script in layout, gated on NEXT_PUBLIC_CLARITY_PROJECT_ID",
-      "Recharts removed from package.json (~90KB gzipped saved); add loading.tsx skeleton"
-    ]
+    "title": "UX forensic pass: fix loss-path rendering, kill mobile fold friction, wire Clarity"
   },
   {
     "hash": "cda3be18b30c0492ef9dfcdd8ef9e7920f7499ca",
     "date": "2026-05-07",
-    "title": "Initial commit: Etsy Margin calculator MVP",
-    "summary": "",
-    "changes": [
-      "lib/fees.ts: pure fee math, 5 country processors (US/UK/CA/AU/EU)",
-      "10 Vitest unit tests covering every fee path and threshold",
-      "Recharts waterfall + URL-shareable inputs + localStorage defaults",
-      "20 prerendered pSEO pages with unique long-form MDX content",
-      "sitemap.ts, robots.ts, JSON-LD (FAQPage + SoftwareApplication)",
-      "llms.txt and llms-full.txt for AI crawler discovery",
-      "GA4 + Mediavine slots scaffolded (env-gated)",
-      "GitHub Actions CI: test + typecheck + build on every PR"
-    ]
+    "title": "Initial commit: Etsy Margin calculator MVP"
   },
   {
     "hash": "e2dbf8f0d8730735088497ab92239f56b7f4f68c",
     "date": "2026-05-07",
-    "title": "Keep URL clean until the user actually edits an input",
-    "summary": "A bare visit to etsymargin.tools was being rewritten to ?p=25&s=5&m=4&as=5&c=US&ads=1&t10=0 because the URL-sync effect fired with the default inputs on hydration. Gate the sync on a userEditedRef so the address bar stays clean until either an input is touched or the visit started with query params (a shared link, in which case we keep tracking).",
-    "changes": []
+    "title": "Keep URL clean until the user actually edits an input"
   },
   {
     "hash": "39e1837c0d29d15bb529cdaf2cafbfcfc85ccb05",
     "date": "2026-05-07",
-    "title": "Fix Off-Site Ads box not surrounding legend and waterfall value cutoff",
-    "summary": "",
-    "changes": [
-      "Replace fieldset/legend with div role=group + label paragraph; the legend's anonymous browser layout left the cream surface starting below the label text instead of around it",
-      "Waterfall value placement now estimates text width and tries right-of-bar → left-of-bar → inside-right-aligned, so narrow bars near the right edge no longer push their dollar amount past the SVG edge"
-    ]
+    "title": "Fix Off-Site Ads box not surrounding legend and waterfall value cutoff"
   },
   {
     "hash": "359be48f57e8d860e81bbf438ac0cadb3da79deb",
     "date": "2026-05-07",
-    "title": "Auto-generate changelog from git log; add lime-cream accents and card depth",
-    "summary": "",
-    "changes": [
-      "scripts/build-changelog.mjs reads git log into content/changelog.json on every prebuild; merges with existing JSON so shallow Vercel clones never lose history",
-      "Changelog page is now a static render of the JSON — no more hand-typed entries",
-      "Lime-cream accent moments: editorial kicker on the home hero (\"4–6 fees stacked per Etsy sale\") and category chips on the home grid",
-      "New `quiet-card` utility (subtle vertical gradient + layered shadow) applied to calculator panels, changelog, pSEO FAQ, and category cards so surfaces feel like surfaces, not flat boxes"
-    ]
+    "title": "Auto-generate changelog from git log; add lime-cream accents and card depth"
   },
   {
     "hash": "01228e22b6f5f3c41e51dab234f4ac290989bfeb",
     "date": "2026-05-07",
-    "title": "Add Vertex Network hub page and blind footer link",
-    "summary": "",
-    "changes": [
-      "New /network page introduces the Vertex Network and lists sibling tools (currently shopifont.app); statically prerendered, canonical, OG metadata, CollectionPage JSON-LD with hasPart entries per tool",
-      "lib/network.ts is the single source of truth — sitemap, JSON-LD, and llms files all read from it, so adding a new tool only requires editing one array",
-      "Footer gets a subtle bottom row \"Part of the Vertex Network\" linking to /network (centered, muted text, no nofollow so equity flows)",
-      "Outbound tool links use target=_blank rel=noopener (no nofollow, no noreferrer — we want the SEO and the referer)",
-      "sitemap.ts adds /network at priority 0.5",
-      "llms.txt gains a Vertex Network section; llms-full.txt gains a full network description block so AI crawlers ingest the hub"
-    ]
+    "title": "Add Vertex Network hub page and blind footer link"
   },
   {
     "hash": "88367c4778bc3402866687ae8a057c79a56ed4e4",
     "date": "2026-05-07",
-    "title": "Render Mediavine Grow as a plain <script> tag for SSR verification",
-    "summary": "Next's <Script> wrapper rewrites the data-grow-initializer attribute Mediavine's verifier scrapes for, and afterInteractive defers the inline IIFE past the verification window. Drop the wrapper and emit a plain server-rendered <script data-grow-initializer=\"\" dangerouslySetInnerHTML=...> so the snippet lands in the SSR HTML byte-for-byte.",
-    "changes": []
+    "title": "Render Mediavine Grow as a plain <script> tag for SSR verification"
   },
   {
     "hash": "a2291c4a3c23214f910bbb31c7a42e47f9921969",
     "date": "2026-05-07",
-    "title": "Wire Vercel Analytics and Mediavine Grow alongside the existing Clarity hook",
-    "summary": "",
-    "changes": [
-      "@vercel/analytics installed and <Analytics /> mounted in (site)/layout so /embed/widget stays analytics-free",
-      "MediavineGrow component mirrors the Clarity pattern: data-grow-initializer attribute preserved, afterInteractive strategy, env-gated on NEXT_PUBLIC_GROW_ME_SITE_ID"
-    ]
+    "title": "Wire Vercel Analytics and Mediavine Grow alongside the existing Clarity hook"
+  },
+  {
+    "hash": "bc3e5ab863b25058ce60b93050f0ad80974e401e",
+    "date": "2026-05-07",
+    "title": "Prune rebased commits from changelog and regenerate"
   }
 ]
