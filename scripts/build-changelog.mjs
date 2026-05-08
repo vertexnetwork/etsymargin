@@ -58,8 +58,27 @@ function readExisting() {
 
 function build() {
   const fromGit = readGitLog();
+  const fromGitHashes = new Set(fromGit.map((c) => c.hash));
+  // Oldest commit date currently in git's view. On a shallow clone this is
+  // recent; on a full clone it's the repo's first commit.
+  const oldestGitDate = fromGit.length
+    ? fromGit.reduce(
+        (min, c) => (c.date && c.date < min ? c.date : min),
+        fromGit[0].date,
+      ).slice(0, 10)
+    : null;
+
   const merged = new Map();
-  for (const e of readExisting()) merged.set(e.hash, e);
+  // Carry forward existing entries only when (a) git still recognises them,
+  // or (b) they predate git's window (shallow-clone fallback). Anything else
+  // was rewritten/dropped from history and should not survive.
+  for (const e of readExisting()) {
+    if (fromGitHashes.has(e.hash)) {
+      merged.set(e.hash, e);
+    } else if (oldestGitDate && e.date && e.date < oldestGitDate) {
+      merged.set(e.hash, e);
+    }
+  }
   for (const c of fromGit) {
     const { summary, changes } = parseBody(c.body);
     merged.set(c.hash, {

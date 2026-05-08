@@ -122,14 +122,20 @@
     ]
   },
   {
-    "hash": "87b505c4161e35d811b029f8ef76c1b4038988a4",
+    "hash": "88367c4778bc3402866687ae8a057c79a56ed4e4",
+    "date": "2026-05-07",
+    "title": "Render Mediavine Grow as a plain <script> tag for SSR verification",
+    "summary": "Next's <Script> wrapper rewrites the data-grow-initializer attribute Mediavine's verifier scrapes for, and afterInteractive defers the inline IIFE past the verification window. Drop the wrapper and emit a plain server-rendered <script data-grow-initializer=\"\" dangerouslySetInnerHTML=...> so the snippet lands in the SSR HTML byte-for-byte.",
+    "changes": []
+  },
+  {
+    "hash": "a2291c4a3c23214f910bbb31c7a42e47f9921969",
     "date": "2026-05-07",
     "title": "Wire Vercel Analytics and Mediavine Grow alongside the existing Clarity hook",
     "summary": "",
     "changes": [
       "@vercel/analytics installed and <Analytics /> mounted in (site)/layout so /embed/widget stays analytics-free",
-      "MediavineGrow component mirrors the Clarity pattern: data-grow-initializer attribute preserved, afterInteractive strategy, env-gated on NEXT_PUBLIC_GROW_ME_SITE_ID",
-      "Set these env vars in Vercel: NEXT_PUBLIC_CLARITY_PROJECT_ID=wnovcghgyg and NEXT_PUBLIC_GROW_ME_SITE_ID=U2l0ZToyNjdjZDA1OS01MDJhLTRiODgtYTk3Zi1hZDU1ZTZjOWVlNTA="
+      "MediavineGrow component mirrors the Clarity pattern: data-grow-initializer attribute preserved, afterInteractive strategy, env-gated on NEXT_PUBLIC_GROW_ME_SITE_ID"
     ]
   }
 ]
