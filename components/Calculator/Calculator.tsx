@@ -55,9 +55,18 @@ export function Calculator({
   const [hydrated, setHydrated] = useState(false);
   const [copied, setCopied] = useState(false);
   const copyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  // Track whether the user has actually interacted. Until then we leave the
+  // URL clean — writing default inputs to the address bar makes a plain
+  // visit look polluted (?p=25&s=5&...).
+  const userEditedRef = useRef(false);
 
   useEffect(() => {
     setHydrated(true);
+    // Arrived via a shared link with params already on the URL: treat that
+    // as "in-scenario" so subsequent edits keep the URL in sync.
+    if (typeof window !== "undefined" && window.location.search.length > 1) {
+      userEditedRef.current = true;
+    }
   }, []);
 
   // Persist macro defaults whenever inputs change (after hydration).
@@ -67,9 +76,11 @@ export function Calculator({
   }, [inputs, hydrated]);
 
   // Keep URL in sync with current inputs (replaceState — no history spam).
-  // Skip in embedded mode: mutating the iframe URL surprises the host page.
+  // Skip in embedded mode (mutating the iframe URL surprises the host page)
+  // and skip until the user has touched something so a bare visit stays bare.
   useEffect(() => {
     if (!hydrated || embedded) return;
+    if (!userEditedRef.current) return;
     const qs = inputsToQuery(inputs);
     const url = `${window.location.pathname}?${qs}`;
     window.history.replaceState(null, "", url);
@@ -82,6 +93,7 @@ export function Calculator({
     value: CalculatorInputs[K],
   ) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
+    userEditedRef.current = true;
     if (embedded) return;
     if (key === "offsiteAdsEnabled") events.offsiteAdsToggled(value as boolean);
     if (key === "country") events.countryChanged(value as string);
