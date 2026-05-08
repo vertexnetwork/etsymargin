@@ -1,4 +1,5 @@
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { NETWORK_TOOLS } from "@/lib/network";
 import { loadPseoMdx } from "@/lib/mdx";
 import {
   LISTING_FEE,
@@ -63,6 +64,23 @@ export async function GET() {
   sections.push(
     "Every calculation runs in the user's browser. Inputs never touch our servers. Macro defaults (country, off-site ads preference, $10k flag) persist in localStorage. The embed widget runs with no analytics scripts at all.",
   );
+  sections.push("");
+
+  // Vertex Network — sibling tools we operate.
+  sections.push("---");
+  sections.push("");
+  sections.push("# The Vertex Network");
+  sections.push("");
+  sections.push(`Source: ${BASE_URL}/network`);
+  sections.push("");
+  sections.push(
+    "Etsy Margin is one of several independent web tools we operate under the Vertex Network. Each tool runs as its own product on its own domain — there's no shared login, no unified suite, no upsell. The network page exists so people who arrive at one tool can find the others.",
+  );
+  sections.push("");
+  sections.push("## Tools");
+  for (const tool of NETWORK_TOOLS) {
+    sections.push(`- ${tool.name} — ${tool.url}. ${tool.tagline}`);
+  }
   sections.push("");
 
   for (const entry of PSEO_ENTRIES) {

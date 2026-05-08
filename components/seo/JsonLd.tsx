@@ -1,4 +1,5 @@
 import type { PseoFaq } from "@/lib/pseo/data";
+import type { NetworkTool } from "@/lib/network";
 
 export function SoftwareApplicationJsonLd() {
   const json = {
@@ -28,6 +29,29 @@ export function FaqJsonLd({ faq }: { faq: PseoFaq[] }) {
       "@type": "Question",
       name: f.q,
       acceptedAnswer: { "@type": "Answer", text: f.a },
+    })),
+  };
+  return (
+    <script
+      type="application/ld+json"
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }}
+    />
+  );
+}
+
+export function NetworkCollectionJsonLd({ tools }: { tools: NetworkTool[] }) {
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    name: "The Vertex Network",
+    description:
+      "A small network of independent web tools. Etsy Margin is one of them.",
+    url: "https://etsymargin.tools/network",
+    hasPart: tools.map((t) => ({
+      "@type": "WebSite",
+      name: t.name,
+      url: t.url,
+      description: t.tagline,
     })),
   };
   return (

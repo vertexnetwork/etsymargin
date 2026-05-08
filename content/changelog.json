@@ -77,5 +77,34 @@
       "GA4 + Mediavine slots scaffolded (env-gated)",
       "GitHub Actions CI: test + typecheck + build on every PR"
     ]
+  },
+  {
+    "hash": "e2dbf8f0d8730735088497ab92239f56b7f4f68c",
+    "date": "2026-05-07",
+    "title": "Keep URL clean until the user actually edits an input",
+    "summary": "A bare visit to etsymargin.tools was being rewritten to ?p=25&s=5&m=4&as=5&c=US&ads=1&t10=0 because the URL-sync effect fired with the default inputs on hydration. Gate the sync on a userEditedRef so the address bar stays clean until either an input is touched or the visit started with query params (a shared link, in which case we keep tracking).",
+    "changes": []
+  },
+  {
+    "hash": "39e1837c0d29d15bb529cdaf2cafbfcfc85ccb05",
+    "date": "2026-05-07",
+    "title": "Fix Off-Site Ads box not surrounding legend and waterfall value cutoff",
+    "summary": "",
+    "changes": [
+      "Replace fieldset/legend with div role=group + label paragraph; the legend's anonymous browser layout left the cream surface starting below the label text instead of around it",
+      "Waterfall value placement now estimates text width and tries right-of-bar → left-of-bar → inside-right-aligned, so narrow bars near the right edge no longer push their dollar amount past the SVG edge"
+    ]
+  },
+  {
+    "hash": "359be48f57e8d860e81bbf438ac0cadb3da79deb",
+    "date": "2026-05-07",
+    "title": "Auto-generate changelog from git log; add lime-cream accents and card depth",
+    "summary": "",
+    "changes": [
+      "scripts/build-changelog.mjs reads git log into content/changelog.json on every prebuild; merges with existing JSON so shallow Vercel clones never lose history",
+      "Changelog page is now a static render of the JSON — no more hand-typed entries",
+      "Lime-cream accent moments: editorial kicker on the home hero (\"4–6 fees stacked per Etsy sale\") and category chips on the home grid",
+      "New `quiet-card` utility (subtle vertical gradient + layered shadow) applied to calculator panels, changelog, pSEO FAQ, and category cards so surfaces feel like surfaces, not flat boxes"
+    ]
   }
 ]

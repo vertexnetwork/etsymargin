@@ -5,7 +5,7 @@ export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
     <footer className="mt-16 border-t border-patina-100 bg-white/40">
-      <div className="mx-auto grid max-w-5xl gap-8 px-5 py-10 sm:grid-cols-3">
+      <div className="mx-auto grid max-w-5xl gap-8 px-5 pb-6 pt-10 sm:grid-cols-3">
         <div>
           <Link href="/" className="flex items-center gap-2 text-patina-900">
             <BrandMark size={22} />
@@ -74,6 +74,14 @@ export function SiteFooter() {
             </li>
           </ul>
         </div>
+      </div>
+      <div className="mx-auto max-w-5xl border-t border-patina-100/60 px-5 py-4 text-center">
+        <Link
+          href="/network"
+          className="text-xs text-patina-muted transition hover:text-patina-700"
+        >
+          Part of the Vertex Network
+        </Link>
       </div>
     </footer>
   );

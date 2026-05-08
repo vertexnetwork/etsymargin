@@ -30,6 +30,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: "monthly",
       priority: 0.4,
     },
+    {
+      url: `${BASE_URL}/network`,
+      lastModified: now,
+      changeFrequency: "monthly",
+      priority: 0.5,
+    },
     ...PSEO_ENTRIES.map((entry) => ({
       url: `${BASE_URL}/etsy-profit-margin/${entry.slug}`,
       lastModified: now,

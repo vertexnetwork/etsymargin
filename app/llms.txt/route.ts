@@ -1,4 +1,5 @@
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { NETWORK_TOOLS } from "@/lib/network";
 
 export const dynamic = "force-static";
 
@@ -47,7 +48,17 @@ export function GET() {
   lines.push("## Site");
   lines.push(`- [About](${BASE_URL}/about): What this is, how the math works (with the 2026 fee constants), privacy posture, contact.`);
   lines.push(`- [Changelog](${BASE_URL}/changelog): Version history for the calculator and fee math.`);
+  lines.push(`- [Network](${BASE_URL}/network): Other independent web tools we operate (the Vertex Network).`);
   lines.push(`- [Sitemap](${BASE_URL}/sitemap.xml): All indexable URLs.`);
+  lines.push("");
+
+  lines.push("## Vertex Network");
+  lines.push(
+    "Etsy Margin is one of several independent tools we operate under the Vertex Network. Each tool runs as its own product on its own domain — no shared accounts, no upsells.",
+  );
+  for (const tool of NETWORK_TOOLS) {
+    lines.push(`- [${tool.name}](${tool.url}): ${tool.tagline}`);
+  }
   lines.push("");
 
   lines.push("## Fee reference (2026)");
