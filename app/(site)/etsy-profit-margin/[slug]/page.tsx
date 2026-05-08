@@ -13,12 +13,16 @@ import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, getPseoEntry } from "@/lib/pseo/data";
 import { loadPseoMdx } from "@/lib/mdx";
 
-// Slugs where Printify is a high-fit affiliate match (POD apparel, mugs, baby).
-// Everything else hides the card to keep aesthetics + relevance honest.
+// Slugs where Printify is a high-fit affiliate match: POD apparel, mugs,
+// baby clothes, stickers (Printify catalog), and pet portraits (sold as
+// POD posters/canvas via Printify's wall-art catalog). Everything else
+// hides the card to keep aesthetics + relevance honest.
 const PRINTIFY_FIT = new Set([
   "custom-t-shirts-shipping-costs",
   "mugs-and-drinkware",
   "baby-clothing",
+  "stickers",
+  "pet-portraits",
 ]);
 
 export function generateStaticParams() {

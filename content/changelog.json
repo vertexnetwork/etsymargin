@@ -15,6 +15,11 @@
     "title": "Serve ads.txt with the AdSense authorization line"
   },
   {
+    "hash": "7049831fdc0281793541ea8c4b1175e4899b2eea",
+    "date": "2026-05-08",
+    "title": "Hardcode AdSense publisher ID in ads.txt, meta tag, and loader"
+  },
+  {
     "hash": "653dbae3fd3e4e5f9fe6bfdbb23fb0f95838d108",
     "date": "2026-05-07",
     "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets"
