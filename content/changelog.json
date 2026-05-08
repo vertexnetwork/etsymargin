@@ -5,6 +5,11 @@
     "title": "Wire Recommendations page, AdSense bridge, Gumroad scaffold, and affiliate placements"
   },
   {
+    "hash": "c5f10a522034815f683e3a83c7b95befe7932b5c",
+    "date": "2026-05-08",
+    "title": "Render AdSense loader as a plain SSR script tag and emit verification meta"
+  },
+  {
     "hash": "653dbae3fd3e4e5f9fe6bfdbb23fb0f95838d108",
     "date": "2026-05-07",
     "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets"
