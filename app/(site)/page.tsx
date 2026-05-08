@@ -1,11 +1,9 @@
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
-import { MediavineSlot } from "@/components/ads/MediavineSlot";
+import { AdSlot } from "@/components/ads/AdSlot";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
-
-const adsEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
 
 export default function Home() {
   return (
@@ -66,7 +64,7 @@ export default function Home() {
         </ul>
       </section>
 
-      {adsEnabled && <MediavineSlot slot="in-content" className="my-12" />}
+      <AdSlot slot="in-content" className="my-12" />
     </main>
   );
 }

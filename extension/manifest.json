@@ -3,7 +3,7 @@
   "name": "Etsy Margin — True profit calculator",
   "short_name": "Etsy Margin",
   "description": "See your true Etsy profit and margin after every fee, including the 12–15% Off-Site Ads cut. Works offline.",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "action": {
     "default_popup": "index.html",
     "default_title": "Etsy Margin — true profit calculator"

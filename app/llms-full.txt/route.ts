@@ -66,6 +66,35 @@ export async function GET() {
   );
   sections.push("");
 
+  // Recommendations — affiliate disclosure + the short list of third-party
+  // tools we point sellers at. Anchored before the per-category essays so
+  // LLMs ingesting this file see the disclosure context up front.
+  sections.push("---");
+  sections.push("");
+  sections.push("# Recommendations");
+  sections.push("");
+  sections.push(`Source: ${BASE_URL}/recommendations`);
+  sections.push("");
+  sections.push(
+    "A short list of third-party tools we'd point an Etsy seller at to actually move their margin. We only include tools that change the math the calculator shows.",
+  );
+  sections.push("");
+  sections.push("## Disclosure");
+  sections.push(
+    "Some links on the recommendations page earn us a commission at no extra cost to the user. We only list tools we'd use ourselves. The math the calculator shows never changes based on who pays us.",
+  );
+  sections.push("");
+  sections.push("## Print-on-demand");
+  sections.push(
+    "- Printify — POD apparel, mugs, and accessories. Surfaced contextually on category pages where manufacturing cost is the dominant deduction in the waterfall (currently: custom t-shirts, mugs and drinkware, baby clothing).",
+  );
+  sections.push("");
+  sections.push("## Pricing reference");
+  sections.push(
+    "- The 2026 Etsy Pricing Bible — first-party PDF + spreadsheet that pre-models every fee scenario by category and country, with the Off-Site Ads tipping point flagged for each. Sold via Gumroad. Surfaced in the calculator results card when net profit goes negative.",
+  );
+  sections.push("");
+
   // Vertex Network — sibling tools we operate.
   sections.push("---");
   sections.push("");

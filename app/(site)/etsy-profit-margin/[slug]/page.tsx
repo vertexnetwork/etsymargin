@@ -3,7 +3,9 @@ import Link from "next/link";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
 import { Calculator } from "@/components/Calculator/Calculator";
-import { MediavineSlot } from "@/components/ads/MediavineSlot";
+import { AdSlot } from "@/components/ads/AdSlot";
+import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
+import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { PseoPageView } from "@/components/analytics/PseoPageView";
 import { TrustStrip } from "@/components/layout/TrustStrip";
@@ -11,7 +13,13 @@ import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, getPseoEntry } from "@/lib/pseo/data";
 import { loadPseoMdx } from "@/lib/mdx";
 
-const adsEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
+// Slugs where Printify is a high-fit affiliate match (POD apparel, mugs, baby).
+// Everything else hides the card to keep aesthetics + relevance honest.
+const PRINTIFY_FIT = new Set([
+  "custom-t-shirts-shipping-costs",
+  "mugs-and-drinkware",
+  "baby-clothing",
+]);
 
 export function generateStaticParams() {
   return PSEO_ENTRIES.map((e) => ({ slug: e.slug }));
@@ -125,6 +133,14 @@ export default async function PseoPage({
         </div>
       </section>
 
+      {PRINTIFY_FIT.has(entry.slug) ? (
+        <div className="mt-12">
+          <PrintifyCard source="pseo" campaign={entry.slug} />
+        </div>
+      ) : (
+        <GumroadCta variant="inline" source="pseo" />
+      )}
+
       <section className="mt-16">
         <h2 className="mb-4 text-xl font-bold text-patina-900">
           More Etsy profit math
@@ -143,7 +159,7 @@ export default async function PseoPage({
         </ul>
       </section>
 
-      {adsEnabled && <MediavineSlot slot="in-content" className="my-12" />}
+      <AdSlot slot="in-content" className="my-12" />
     </main>
   );
 }

@@ -48,6 +48,14 @@ export function SiteFooter() {
                 Profit by category
               </Link>
             </li>
+            <li>
+              <Link
+                href="/recommendations"
+                className="text-patina-800 hover:text-patina-600"
+              >
+                Recommendations
+              </Link>
+            </li>
           </ul>
         </div>
 

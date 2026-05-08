@@ -55,6 +55,17 @@ export default async function EmbedWidgetPage({
         >
           etsymargin.tools
         </a>
+        <span aria-hidden="true" className="mx-2 text-patina-300">
+          ·
+        </span>
+        <a
+          href="https://etsymargin.tools/recommendations?utm_source=embed&utm_medium=widget&utm_campaign=printify"
+          target="_blank"
+          rel="sponsored noopener"
+          className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+        >
+          Lower your fees →
+        </a>
       </p>
     </div>
   );

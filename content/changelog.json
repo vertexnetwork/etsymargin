@@ -53,5 +53,10 @@
     "hash": "bc3e5ab863b25058ce60b93050f0ad80974e401e",
     "date": "2026-05-07",
     "title": "Prune rebased commits from changelog and regenerate"
+  },
+  {
+    "hash": "943fa80fce6cbebde6c278c43bbaa64cda2afd3a",
+    "date": "2026-05-07",
+    "title": "Strip commit bodies from the changelog; render subjects only"
   }
 ]

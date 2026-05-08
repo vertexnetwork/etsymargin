@@ -1,6 +1,7 @@
 "use client";
 
 import type { CalculatorResult } from "@/lib/fees";
+import { GumroadCta } from "@/components/affiliates/GumroadCta";
 
 const usd = (n: number) =>
   new Intl.NumberFormat("en-US", {
@@ -43,9 +44,12 @@ export function ResultsSummary({ result, itemPrice }: Props) {
         </span>
       </div>
       {losing ? (
-        <p className="mt-3 text-sm font-medium">
-          You&apos;re losing {usd(Math.abs(result.netProfit))} on every order at this price.
-        </p>
+        <>
+          <p className="mt-3 text-sm font-medium">
+            You&apos;re losing {usd(Math.abs(result.netProfit))} on every order at this price.
+          </p>
+          <GumroadCta variant="compact" source="calculator" />
+        </>
       ) : itemPrice > 0 ? (
         <p className="mt-3 text-sm opacity-75">
           Etsy takes {pct(result.effectiveFeeRate)} of revenue in fees before

@@ -29,6 +29,16 @@ createRoot(root).render(
           etsymargin.tools
         </a>
       </p>
+      <p className="mt-1 text-center text-[10px] text-patina-muted">
+        <a
+          href="https://etsymargin.tools/recommendations?utm_source=extension&utm_medium=popup&utm_campaign=printify"
+          target="_blank"
+          rel="sponsored noopener"
+          className="text-patina-700 hover:text-patina-900"
+        >
+          Reduce your fees → Recommendations
+        </a>
+      </p>
     </div>
   </StrictMode>,
 );
