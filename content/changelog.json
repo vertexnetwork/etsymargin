@@ -106,5 +106,19 @@
       "Lime-cream accent moments: editorial kicker on the home hero (\"4–6 fees stacked per Etsy sale\") and category chips on the home grid",
       "New `quiet-card` utility (subtle vertical gradient + layered shadow) applied to calculator panels, changelog, pSEO FAQ, and category cards so surfaces feel like surfaces, not flat boxes"
     ]
+  },
+  {
+    "hash": "01228e22b6f5f3c41e51dab234f4ac290989bfeb",
+    "date": "2026-05-07",
+    "title": "Add Vertex Network hub page and blind footer link",
+    "summary": "",
+    "changes": [
+      "New /network page introduces the Vertex Network and lists sibling tools (currently shopifont.app); statically prerendered, canonical, OG metadata, CollectionPage JSON-LD with hasPart entries per tool",
+      "lib/network.ts is the single source of truth — sitemap, JSON-LD, and llms files all read from it, so adding a new tool only requires editing one array",
+      "Footer gets a subtle bottom row \"Part of the Vertex Network\" linking to /network (centered, muted text, no nofollow so equity flows)",
+      "Outbound tool links use target=_blank rel=noopener (no nofollow, no noreferrer — we want the SEO and the referer)",
+      "sitemap.ts adds /network at priority 0.5",
+      "llms.txt gains a Vertex Network section; llms-full.txt gains a full network description block so AI crawlers ingest the hub"
+    ]
   }
 ]
