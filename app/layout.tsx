@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Urbanist, Poppins } from "next/font/google";
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 import "./globals.css";
 
 const urbanist = Urbanist({
@@ -14,8 +15,6 @@ const poppins = Poppins({
   variable: "--font-poppins",
   display: "swap",
 });
-
-const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
 export const metadata: Metadata = {
   title: "Etsy Margin — Find your true profit before you price",
@@ -36,12 +35,9 @@ export const metadata: Metadata = {
     description:
       "Free Etsy profit calculator. See the loss path from gross to net at a glance.",
   },
-  // Emit the AdSense ownership meta tag whenever a client ID is configured —
-  // this is AdSense's preferred verification path and is independent of the
-  // on/off serving flag, so verification stays durable across env changes.
-  ...(adsenseClientId
-    ? { other: { "google-adsense-account": adsenseClientId } }
-    : {}),
+  // AdSense ownership meta tag — Google's preferred verification primitive,
+  // independent of whether ads are currently serving.
+  other: { "google-adsense-account": ADSENSE_CLIENT_ID },
 };
 
 export const viewport: Viewport = {

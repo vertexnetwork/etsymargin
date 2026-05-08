@@ -10,6 +10,11 @@
     "title": "Render AdSense loader as a plain SSR script tag and emit verification meta"
   },
   {
+    "hash": "e2af038bf69728a229c4c806d096b61c46ccf896",
+    "date": "2026-05-08",
+    "title": "Serve ads.txt with the AdSense authorization line"
+  },
+  {
     "hash": "653dbae3fd3e4e5f9fe6bfdbb23fb0f95838d108",
     "date": "2026-05-07",
     "title": "Conversion-aesthetician audit pass: social cards, WCAG-AA contrast, thumb-zone targets"

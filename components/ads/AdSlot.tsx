@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 
 type Slot = "in-content" | "sidebar" | "sticky-footer";
 
@@ -25,13 +26,12 @@ type Props = {
 export function AdSlot({ slot, className = "", adsenseSlotId }: Props) {
   const mediavineEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
   const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "1";
-  const adsenseClient = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
 
   // Mediavine wins precedence — flipping NEXT_PUBLIC_MEDIAVINE_ENABLED=1 cuts
   // off AdSense rendering and the loader script in the layout.
   const useMediavine = mediavineEnabled;
   const useAdsense =
-    !useMediavine && adsenseEnabled && Boolean(adsenseClient) && Boolean(adsenseSlotId);
+    !useMediavine && adsenseEnabled && Boolean(adsenseSlotId);
 
   useEffect(() => {
     if (!useAdsense) return;
@@ -61,7 +61,7 @@ export function AdSlot({ slot, className = "", adsenseSlotId }: Props) {
         <ins
           className="adsbygoogle block"
           style={{ display: "block", width: "100%", height: "100%" }}
-          data-ad-client={adsenseClient}
+          data-ad-client={ADSENSE_CLIENT_ID}
           data-ad-slot={adsenseSlotId}
           data-ad-format={ADSENSE_FORMAT[slot]}
           data-full-width-responsive="true"

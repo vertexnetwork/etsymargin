@@ -5,6 +5,7 @@ import { MediavineGrow } from "@/components/analytics/MediavineGrow";
 import { GoogleAdsense } from "@/components/ads/GoogleAdsense";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
+import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
 
 export default function SiteLayout({
   children,
@@ -16,10 +17,9 @@ export default function SiteLayout({
   const growMeSiteId = process.env.NEXT_PUBLIC_GROW_ME_SITE_ID;
   const mediavineEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
   const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "1";
-  const adsenseClientId = process.env.NEXT_PUBLIC_ADSENSE_CLIENT_ID;
   // Mediavine is the master ad lever — when on, suppress AdSense entirely so
   // the two networks never both load.
-  const loadAdsense = !mediavineEnabled && adsenseEnabled && Boolean(adsenseClientId);
+  const loadAdsense = !mediavineEnabled && adsenseEnabled;
   return (
     <>
       <SiteHeader />
@@ -29,7 +29,7 @@ export default function SiteLayout({
       {gaId && <GoogleAnalytics gaId={gaId} />}
       {clarityId && <Clarity projectId={clarityId} />}
       {growMeSiteId && <MediavineGrow siteId={growMeSiteId} />}
-      {loadAdsense && <GoogleAdsense clientId={adsenseClientId!} />}
+      {loadAdsense && <GoogleAdsense clientId={ADSENSE_CLIENT_ID} />}
     </>
   );
 }
