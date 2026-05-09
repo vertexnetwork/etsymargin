@@ -4,21 +4,18 @@ import { BrandMark } from "@/components/brand/BrandMark";
 export function SiteFooter() {
   const year = new Date().getFullYear();
   return (
-    <footer className="mt-16 border-t border-patina-100 bg-white/40">
-      <div className="mx-auto grid max-w-5xl gap-8 px-5 pb-6 pt-10 sm:grid-cols-3">
-        <div>
+    <footer className="mt-12 border-t border-patina-100 bg-white/40 sm:mt-16">
+      <div className="mx-auto grid max-w-5xl grid-cols-2 gap-x-6 gap-y-6 px-5 pb-5 pt-8 sm:grid-cols-3 sm:gap-8 sm:pb-6 sm:pt-10">
+        <div className="col-span-2 sm:col-span-1">
           <Link href="/" className="flex items-center gap-2 text-patina-900">
             <BrandMark size={22} />
             <span className="font-display text-base font-semibold tracking-tight">
               Etsy Margin
             </span>
           </Link>
-          <p className="mt-3 max-w-xs text-sm text-patina-muted">
+          <p className="mt-2 max-w-xs text-sm text-patina-muted sm:mt-3">
             Find your true profit before you price. 2026 fee schedule, math runs
             in your browser.
-          </p>
-          <p className="mt-3 text-xs text-patina-muted">
-            Not affiliated with Etsy. © {year} Etsy Margin.
           </p>
         </div>
 
@@ -26,7 +23,7 @@ export function SiteFooter() {
           <h2 className="text-xs font-semibold uppercase tracking-widest text-patina-600">
             Tool
           </h2>
-          <ul className="mt-3 space-y-2 text-sm">
+          <ul className="mt-2 space-y-1.5 text-sm sm:mt-3 sm:space-y-2">
             <li>
               <Link href="/" className="text-patina-800 hover:text-patina-600">
                 Calculator
@@ -63,7 +60,7 @@ export function SiteFooter() {
           <h2 className="text-xs font-semibold uppercase tracking-widest text-patina-600">
             About
           </h2>
-          <ul className="mt-3 space-y-2 text-sm">
+          <ul className="mt-2 space-y-1.5 text-sm sm:mt-3 sm:space-y-2">
             <li>
               <Link
                 href="/about"
@@ -83,11 +80,10 @@ export function SiteFooter() {
           </ul>
         </div>
       </div>
-      <div className="mx-auto max-w-5xl border-t border-patina-100/60 px-5 py-4 text-center">
-        <Link
-          href="/network"
-          className="text-xs text-patina-muted transition hover:text-patina-700"
-        >
+      <div className="mx-auto flex max-w-5xl flex-wrap items-center justify-center gap-x-3 gap-y-1 border-t border-patina-100/60 px-5 py-3 text-center text-[11px] text-patina-muted sm:py-4 sm:text-xs">
+        <span>© {year} Etsy Margin · Not affiliated with Etsy</span>
+        <span aria-hidden="true">·</span>
+        <Link href="/network" className="transition hover:text-patina-700">
           Part of the Vertex Network
         </Link>
       </div>
