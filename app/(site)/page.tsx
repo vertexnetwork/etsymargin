@@ -1,6 +1,5 @@
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
-import { AdSlot } from "@/components/ads/AdSlot";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
@@ -64,7 +63,6 @@ export default function Home() {
         </ul>
       </section>
 
-      <AdSlot slot="in-content" className="my-12" />
     </main>
   );
 }

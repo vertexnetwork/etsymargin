@@ -1,0 +1,13 @@
+name: Lighthouse
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+jobs:
+  lhci:
+    uses: ThatMovieGuyOriginal/vertex-network-hub/.github/workflows/spoke-lighthouse.yml@v1
+    with:
+      node-version: "22"
+      config-path: lighthouserc.json

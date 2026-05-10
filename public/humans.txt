@@ -1,0 +1,12 @@
+/* TEAM */
+Maintainer: ThatMovieGuy
+Site: https://etsymargin.tools
+
+/* THANKS */
+Vertex Network: https://github.com/ThatMovieGuyOriginal/vertex-network-hub
+
+/* SITE */
+Last update: 2026-05-10
+Standards: HTML5, CSS3
+Components: Next.js 15, React 19, Tailwind v4, TypeScript
+Hosted: Vercel

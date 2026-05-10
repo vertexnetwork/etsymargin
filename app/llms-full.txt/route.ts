@@ -1,6 +1,7 @@
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
-import { NETWORK_TOOLS } from "@/lib/network";
+import { loadSisterSites } from "@/lib/network";
 import { loadPseoMdx } from "@/lib/mdx";
+import { siteConfig } from "@/lib/site-config";
 import {
   LISTING_FEE,
   TRANSACTION_FEE_RATE,
@@ -11,11 +12,12 @@ import {
 
 export const dynamic = "force-static";
 
-const BASE_URL = "https://etsymargin.tools";
+const BASE_URL = siteConfig.url;
 const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
 
 export async function GET() {
   const sections: string[] = [];
+  const sisters = await loadSisterSites();
 
   sections.push("# Etsy Margin — Full Content");
   sections.push("");
@@ -107,7 +109,7 @@ export async function GET() {
   );
   sections.push("");
   sections.push("## Tools");
-  for (const tool of NETWORK_TOOLS) {
+  for (const tool of sisters) {
     sections.push(`- ${tool.name} — ${tool.url}. ${tool.tagline}`);
   }
   sections.push("");
@@ -144,7 +146,8 @@ export async function GET() {
   return new Response(sections.join("\n"), {
     headers: {
       "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=3600",
+      // 3h cache per Vertex spec §6.
+      "cache-control": "public, max-age=10800",
     },
   });
 }

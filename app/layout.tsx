@@ -1,6 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Urbanist, Poppins } from "next/font/google";
-import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
+import { siteConfig } from "@/lib/site-config";
 import "./globals.css";
 
 const urbanist = Urbanist({
@@ -17,31 +17,35 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: "Etsy Margin — Find your true profit before you price",
-  description:
-    "Free Etsy profit calculator. See your true net profit and margin after every layered platform fee, including the 12–15% Off-Site Ads cut.",
-  metadataBase: new URL("https://etsymargin.tools"),
+  metadataBase: new URL(siteConfig.url),
+  title: {
+    default: `${siteConfig.name} — ${siteConfig.tagline}`,
+    template: `%s | ${siteConfig.name}`,
+  },
+  description: siteConfig.description,
+  keywords: [...siteConfig.keywords],
   openGraph: {
-    title: "Etsy Margin — Find your true profit before you price",
-    description:
-      "Free Etsy profit calculator. See the loss path from gross to net at a glance.",
-    url: "https://etsymargin.tools",
-    siteName: "Etsy Margin",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
+    url: siteConfig.url,
+    siteName: siteConfig.name,
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Etsy Margin — Find your true profit before you price",
-    description:
-      "Free Etsy profit calculator. See the loss path from gross to net at a glance.",
+    title: `${siteConfig.name} — ${siteConfig.tagline}`,
+    description: siteConfig.description,
   },
-  // AdSense ownership meta tag — Google's preferred verification primitive,
-  // independent of whether ads are currently serving.
-  other: { "google-adsense-account": ADSENSE_CLIENT_ID },
+  verification: {
+    google: siteConfig.verification.google || undefined,
+    other: siteConfig.verification.bing
+      ? { "msvalidate.01": siteConfig.verification.bing }
+      : undefined,
+  },
 };
 
 export const viewport: Viewport = {
-  themeColor: "#28565b",
+  themeColor: siteConfig.brand.markColor,
 };
 
 export default function RootLayout({

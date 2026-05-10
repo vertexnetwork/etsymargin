@@ -1,0 +1,49 @@
+name: Sync from vertex-network-hub
+
+on:
+  repository_dispatch:
+    types: [vertex-hub-sync]
+  schedule:
+    # Daily at 06:00 UTC — picks up hub changes even if propagate fan-out misses.
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Pull network-wide files from hub
+        env:
+          HUB_RAW: https://raw.githubusercontent.com/ThatMovieGuyOriginal/vertex-network-hub/main
+        run: |
+          set -euo pipefail
+          mkdir -p public
+          curl -fsSL "$HUB_RAW/config/network.json" -o public/network.json
+          curl -fsSL "$HUB_RAW/config/ai-bots.json" -o public/ai-bots.json
+          # Optional: ads.txt / app-ads.txt / humans.txt are synced when the
+          # hub publishes network-wide values. This site ships its own
+          # "no display ads" copy from app/ads.txt/route.ts and
+          # app/app-ads.txt/route.ts, so we deliberately do not pull those.
+
+      - name: Open PR if anything changed
+        uses: peter-evans/create-pull-request@v6
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          branch: hub-sync/${{ github.run_id }}
+          commit-message: "chore(sync): pull latest network.json + ai-bots.json from hub"
+          title: "chore(sync): vertex-hub network registry update"
+          body: |
+            Automated sync from
+            [vertex-network-hub](https://github.com/ThatMovieGuyOriginal/vertex-network-hub).
+
+            Diff between this branch and `main` is the new hub state.
+          labels: hub-sync
+          add-paths: |
+            public/network.json
+            public/ai-bots.json

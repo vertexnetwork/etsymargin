@@ -1,13 +1,18 @@
 import type { Metadata } from "next";
 import changelogData from "@/content/changelog.json";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "What's shipped — Etsy Margin",
+  title: `What's shipped — ${siteConfig.name}`,
   description:
     "Every commit landed on main, in order. Auto-generated from git history.",
   alternates: { canonical: "/changelog" },
 };
 
+// Build-internal shape — `hash` is kept in JSON for idempotent merge in
+// scripts/build-changelog.mjs but is never rendered to the page (Vertex
+// spec §7: changelog must show date + title only, full notes link to
+// GitHub Releases).
 type Entry = {
   hash: string;
   date: string;
@@ -17,7 +22,6 @@ type Entry = {
 const entries = changelogData as Entry[];
 
 const monthLabel = (iso: string) => {
-  // iso is YYYY-MM-DD; build a stable key + label without timezone drift.
   const [y, m] = iso.split("-");
   const d = new Date(Number(y), Number(m) - 1, 1);
   return d
@@ -54,45 +58,50 @@ export default function ChangelogPage() {
   return (
     <main className="mx-auto max-w-3xl px-5 py-10 sm:py-16">
       <header className="mb-12">
-        <span className="text-xs font-semibold uppercase tracking-widest text-patina-muted">
+        <span className="text-xs font-semibold uppercase tracking-widest text-(--color-muted)">
           Changelog
         </span>
-        <h1 className="mt-2 text-balance text-4xl font-bold leading-tight text-patina-900 sm:text-5xl">
+        <h1 className="mt-2 text-balance text-4xl font-bold leading-tight text-(--color-on-bg) sm:text-5xl">
           What&apos;s shipped
         </h1>
-        <p className="mt-4 max-w-2xl text-lg text-patina-800/80">
+        <p className="mt-4 max-w-2xl text-lg text-(--color-on-bg)/80">
           Every commit landed on{" "}
-          <code className="rounded bg-patina-50 px-1.5 py-0.5 font-mono text-base text-patina-800">
+          <code className="rounded bg-patina-50 px-1.5 py-0.5 font-mono text-base text-(--color-on-bg)">
             main
           </code>
           , in order. Generated from git history at build time so it stays in
-          sync with the repo without anyone hand-curating release notes.
+          sync with the repo without anyone hand-curating release notes.{" "}
+          <a
+            href={`${siteConfig.repoUrl}/releases`}
+            target="_blank"
+            rel="noopener"
+            className="text-(--color-accent) underline underline-offset-2 hover:text-(--color-on-bg)"
+          >
+            Long-form notes live on GitHub Releases →
+          </a>
         </p>
       </header>
 
       {groups.map((group) => (
         <section key={group.key} className="mb-10">
-          <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-patina-muted">
+          <h2 className="mb-3 text-sm font-bold uppercase tracking-widest text-(--color-muted)">
             {group.label}
           </h2>
-          <ol className="border-t border-patina-100/70">
+          <ol className="border-t border-(--color-border)/70">
             {group.rows.map((entry) => (
               <li
                 key={entry.hash}
-                className="grid grid-cols-[max-content_1fr] items-baseline gap-x-5 border-b border-patina-100/70 py-3 sm:grid-cols-[max-content_1fr_max-content] sm:gap-x-8"
+                className="grid grid-cols-[max-content_1fr] items-baseline gap-x-5 border-b border-(--color-border)/70 py-3 sm:gap-x-8"
               >
                 <time
                   dateTime={entry.date}
-                  className="font-mono text-xs text-patina-muted"
+                  className="font-mono text-xs text-(--color-muted)"
                 >
                   {dayLabel(entry.date)}
                 </time>
-                <span className="text-sm text-patina-900 sm:text-base">
+                <span className="text-sm text-(--color-on-bg) sm:text-base">
                   {entry.title}
                 </span>
-                <code className="col-span-2 -mt-1 font-mono text-[11px] text-patina-muted sm:col-span-1 sm:mt-0 sm:text-right">
-                  {entry.hash.slice(0, 7)}
-                </code>
               </li>
             ))}
           </ol>

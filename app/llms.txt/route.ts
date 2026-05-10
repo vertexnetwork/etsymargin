@@ -1,14 +1,16 @@
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
-import { NETWORK_TOOLS } from "@/lib/network";
+import { loadSisterSites } from "@/lib/network";
+import { siteConfig } from "@/lib/site-config";
 
 export const dynamic = "force-static";
 
-const BASE_URL = "https://etsymargin.tools";
+const BASE_URL = siteConfig.url;
 
-export function GET() {
+export async function GET() {
   const lines: string[] = [];
+  const sisters = await loadSisterSites();
 
-  lines.push("# Etsy Margin");
+  lines.push(`# ${siteConfig.name}`);
   lines.push("");
   lines.push(
     "> Free, client-side Etsy profit calculator. Computes true net profit and margin after every layered Etsy fee — listing, transaction, payment processing, regulatory operating fee, and the 12–15% Off-Site Ads cut (capped at $100 per order).",
@@ -21,7 +23,7 @@ export function GET() {
 
   lines.push("## Calculator");
   lines.push(
-    `- [Etsy Margin Calculator](${BASE_URL}): Live calculator with waterfall chart, fee breakdown, and shareable URL state.`,
+    `- [${siteConfig.name} Calculator](${BASE_URL}): Live calculator with waterfall chart, fee breakdown, and shareable URL state.`,
   );
   lines.push("");
 
@@ -49,15 +51,18 @@ export function GET() {
   lines.push(`- [About](${BASE_URL}/about): What this is, how the math works (with the 2026 fee constants), privacy posture, contact.`);
   lines.push(`- [Recommendations](${BASE_URL}/recommendations): A short, disclosed list of third-party tools that move an Etsy seller's margin. Affiliate links present; calculator math is independent.`);
   lines.push(`- [Changelog](${BASE_URL}/changelog): Version history for the calculator and fee math.`);
+  lines.push(`- [Privacy](${BASE_URL}/privacy): Privacy policy.`);
+  lines.push(`- [Terms](${BASE_URL}/terms): Terms of use.`);
+  lines.push(`- [Contact](${BASE_URL}/contact): How to reach the maintainer.`);
   lines.push(`- [Network](${BASE_URL}/network): Other independent web tools we operate (the Vertex Network).`);
   lines.push(`- [Sitemap](${BASE_URL}/sitemap.xml): All indexable URLs.`);
   lines.push("");
 
   lines.push("## Vertex Network");
   lines.push(
-    "Etsy Margin is one of several independent tools we operate under the Vertex Network. Each tool runs as its own product on its own domain — no shared accounts, no upsells.",
+    `${siteConfig.name} is one of several independent tools we operate under the Vertex Network. Each tool runs as its own product on its own domain — no shared accounts, no upsells.`,
   );
-  for (const tool of NETWORK_TOOLS) {
+  for (const tool of sisters) {
     lines.push(`- [${tool.name}](${tool.url}): ${tool.tagline}`);
   }
   lines.push("");
@@ -83,7 +88,8 @@ export function GET() {
   return new Response(lines.join("\n"), {
     headers: {
       "content-type": "text/plain; charset=utf-8",
-      "cache-control": "public, max-age=3600",
+      // 3h cache per Vertex spec §6.
+      "cache-control": "public, max-age=10800",
     },
   });
 }

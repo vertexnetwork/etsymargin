@@ -1,0 +1,38 @@
+name: Sitemap ping
+
+on:
+  deployment_status:
+
+jobs:
+  ping:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - name: Notify Bing IndexNow
+        env:
+          INDEXNOW_KEY: ${{ secrets.INDEXNOW_KEY }}
+        # IndexNow accepts a one-shot URL submission for the sitemap entry
+        # point. We send the canonical sitemap URL so Bing crawls it on
+        # a fresh deploy without waiting for the periodic refresh.
+        run: |
+          if [ -z "${INDEXNOW_KEY:-}" ]; then
+            echo "INDEXNOW_KEY not set — skipping Bing IndexNow."
+            exit 0
+          fi
+          curl -fsSL -X POST "https://api.indexnow.org/IndexNow" \
+            -H "Content-Type: application/json" \
+            -d "{
+              \"host\": \"etsymargin.tools\",
+              \"key\": \"${INDEXNOW_KEY}\",
+              \"urlList\": [
+                \"https://etsymargin.tools/sitemap.xml\"
+              ]
+            }"
+
+      - name: Notify Google (sitemap ping)
+        # GSC retired the public sitemap-ping endpoint, so this is a soft
+        # ping that may no-op. Kept here so the workflow file is the single
+        # source of truth for "what we tell search engines on deploy" and
+        # so a future endpoint re-enables in one place.
+        run: |
+          curl -fsSL "https://www.google.com/ping?sitemap=https://etsymargin.tools/sitemap.xml" || true

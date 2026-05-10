@@ -1,15 +1,16 @@
 import type { Metadata } from "next";
 import { EmbedSnippet } from "@/components/embed/EmbedSnippet";
+import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
-  title: "Embed the Etsy Margin Calculator on your site",
+  title: `Embed the ${siteConfig.name} Calculator on your site`,
   description:
     "Drop the Etsy profit calculator into any blog, supplier site, or course page with a single iframe. Free, no signup, prefill via URL params.",
   alternates: { canonical: "/embed" },
 };
 
 const SNIPPET = `<iframe
-  src="https://etsymargin.tools/embed/widget"
+  src="${siteConfig.url}/embed/widget"
   width="100%"
   height="720"
   style="border:0; border-radius:12px; max-width:840px;"

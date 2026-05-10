@@ -1,0 +1,25 @@
+name: Broken-link cron
+
+on:
+  schedule:
+    - cron: "0 12 * * 1" # Mondays 12:00 UTC
+  workflow_dispatch:
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Crawl public surface for 4xx/5xx
+        # lychee is fast, ignores fragments by default, and supports
+        # config-less invocation against the live origin.
+        uses: lycheeverse/lychee-action@v2
+        with:
+          args: >-
+            --no-progress
+            --max-redirects 5
+            --timeout 20
+            --accept 200,206,301,302,403
+            --exclude-mail
+            https://etsymargin.tools/sitemap.xml
+            https://etsymargin.tools/llms.txt
+          fail: true

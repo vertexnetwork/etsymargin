@@ -1,6 +1,46 @@
 @import "tailwindcss";
 
 @theme {
+  /* Canonical Vertex tokens (network-portable names — spec §5).
+     Values are spoke-specific and mirror the patina/cream palette below. */
+  --color-bg: #fbfaf3;
+  --color-surface: #ffffff;
+  --color-accent: #28565b;
+  --color-on-bg: #1a2326;
+  --color-on-accent: #fbfaf3;
+  --color-muted: #4a6f73;
+  --color-border: #d9ebec;
+  --color-success: #3d8389;
+  --color-danger: #b94a4a;
+
+  /* Typography */
+  --font-display: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
+  --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
+  --text-display: 3.5rem;
+  --text-h1: 2.25rem;
+  --text-h2: 1.75rem;
+  --text-h3: 1.375rem;
+
+  /* Spacing — 44px touch-target floor */
+  --spacing-touch: 2.75rem;
+
+  /* Radius / shadow */
+  --radius-card: 0.75rem;
+  --radius-pill: 9999px;
+  --shadow-card: 0 1px 2px rgba(31, 61, 64, 0.04), 0 8px 24px -12px rgba(31, 61, 64, 0.08);
+  --shadow-cta: 0 1px 2px rgba(31, 61, 64, 0.06), 0 6px 18px -8px rgba(31, 61, 64, 0.18);
+
+  /* CLS-safe ad slot reserves (kept for parity with sibling spokes; this
+     spoke renders no ads so the values are inert). */
+  --ad-slot-banner-h: 90px;
+  --ad-slot-rect-h: 250px;
+  --ad-slot-leaderboard-h: 90px;
+
+  /* Focus ring */
+  --focus-ring: 2px solid var(--color-accent);
+
+  /* ----- Brand-specific palette (spoke-only, used by Calculator + waterfall).
+     Token *names* are SPOKE; values stay private to this site. ----- */
   --color-patina-50: #f0f7f7;
   --color-patina-100: #d9ebec;
   --color-patina-200: #b6d8da;
@@ -20,14 +60,12 @@
   --color-loss-500: #b94a4a;
   --color-loss-700: #a83232;
   --color-ink: #1a2326;
-  --font-display: var(--font-urbanist), ui-sans-serif, system-ui, sans-serif;
-  --font-body: var(--font-poppins), ui-sans-serif, system-ui, sans-serif;
 }
 
 html,
 body {
-  background: var(--color-cream-50);
-  color: var(--color-ink);
+  background: var(--color-bg);
+  color: var(--color-on-bg);
   font-family: var(--font-body);
 }
 
@@ -40,15 +78,25 @@ h4 {
 }
 
 /* Surface treatment for white cards: subtle vertical gradient + layered
-   shadow so cards feel like surfaces rather than flat boxes. Pair with
-   ring-1 ring-patina-100 for the brand stroke. */
+   shadow so cards feel like surfaces rather than flat boxes. */
 @utility quiet-card {
   background-image: linear-gradient(
     180deg,
-    #ffffff 0%,
+    var(--color-surface) 0%,
     rgba(251, 250, 243, 0.5) 100%
   );
-  box-shadow:
-    0 1px 2px rgba(31, 61, 64, 0.04),
-    0 8px 24px -12px rgba(31, 61, 64, 0.08);
+  box-shadow: var(--shadow-card);
+}
+
+/* Visually-hidden but screen-reader-readable. */
+@utility sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
 }

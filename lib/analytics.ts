@@ -10,19 +10,25 @@ declare global {
   }
 }
 
-export function trackEvent(name: string, params?: Record<string, unknown>) {
+// safeTrack — no-ops outside the browser and when no provider is initialized.
+export function safeTrack(name: string, params?: Record<string, unknown>) {
   if (typeof window === "undefined") return;
   window.gtag?.("event", name, params);
 }
 
+// Backward-compat alias.
+export const trackEvent = safeTrack;
+
 export const events = {
   calculatorCalculated: (params: { country: string; offsiteAds: boolean; netProfit: number }) =>
-    trackEvent("calculator_calculated", params),
+    safeTrack("calculator_calculated", params),
   offsiteAdsToggled: (enabled: boolean) =>
-    trackEvent("offsite_ads_toggled", { enabled }),
+    safeTrack("offsite_ads_toggled", { enabled }),
   countryChanged: (country: string) =>
-    trackEvent("country_changed", { country }),
+    safeTrack("country_changed", { country }),
   pseoPageViewed: (slug: string) =>
-    trackEvent("pseo_page_viewed", { slug }),
-  shareUrlCopied: () => trackEvent("share_url_copied"),
+    safeTrack("pseo_page_viewed", { slug }),
+  shareUrlCopied: () => safeTrack("share_url_copied"),
+  // Vertex Network — required cross-network event (spec §9).
+  vertexFooterOpened: () => safeTrack("vertex_footer_opened"),
 };

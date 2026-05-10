@@ -10,6 +10,7 @@ import {
   saveDefaults,
 } from "@/lib/storage";
 import { events } from "@/lib/analytics";
+import { siteConfig } from "@/lib/site-config";
 import { InputsPanel } from "./InputsPanel";
 import { ResultsSummary } from "./ResultsSummary";
 import { WaterfallChart } from "./WaterfallChart";
@@ -113,7 +114,7 @@ export function Calculator({
     // In embedded mode, point the share URL at the canonical site, not the
     // iframe origin (which is the embedder's page).
     const base = embedded
-      ? "https://etsymargin.tools/"
+      ? `${siteConfig.url}/`
       : `${window.location.origin}${window.location.pathname}`;
     const url = `${base}?${inputsToQuery(inputs)}`;
     try {

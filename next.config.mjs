@@ -1,3 +1,86 @@
+// CSP is computed once at startup from siteConfig + env, then served as
+// a per-route header. The embed widget gets a relaxed `frame-ancestors *`
+// because that's the whole point of the embed; every other route gets
+// `frame-ancestors 'none'`.
+//
+// CSP-relevant providers are inferred from env so a deploy that flips
+// NEXT_PUBLIC_AD_PROVIDER doesn't need a code change.
+
+const inferProviders = () => ({
+  vercelAnalytics: true,
+  speedInsights: true,
+  ga4: Boolean(process.env.NEXT_PUBLIC_GA_ID),
+  clarity: Boolean(process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID),
+  plausible: Boolean(process.env.NEXT_PUBLIC_PLAUSIBLE_DOMAIN),
+  adsense: process.env.NEXT_PUBLIC_AD_PROVIDER === "adsense",
+  mediavine: process.env.NEXT_PUBLIC_AD_PROVIDER === "mediavine",
+  carbon: process.env.NEXT_PUBLIC_AD_PROVIDER === "carbon",
+});
+
+// Re-implement buildCSP / buildEmbedCSP inline here so next.config.mjs
+// stays plain ESM (it can't import .ts modules without transpilation).
+// Mirror lib/csp.ts; keep the two in sync — there's a unit test that
+// asserts equivalence (tests/unit/csp.test.ts).
+const composeCsp = (providers, embed = false) => {
+  const dir = {};
+  const add = (k, ...v) => {
+    dir[k] = dir[k] || new Set();
+    v.forEach((x) => dir[k].add(x));
+  };
+  add("default-src", "'self'");
+  add("base-uri", "'self'");
+  add("form-action", "'self'");
+  add("frame-ancestors", embed ? "*" : "'none'");
+  add("img-src", "'self'", "data:", "blob:");
+  add("font-src", "'self'", "data:");
+  add("manifest-src", "'self'");
+  add("media-src", "'self'");
+  add("object-src", "'none'");
+  add("style-src", "'self'", "'unsafe-inline'");
+  add("script-src", "'self'", "'unsafe-inline'");
+  add("connect-src", "'self'");
+  if (providers.vercelAnalytics || providers.speedInsights) {
+    add("script-src", "https://*.vercel-insights.com", "https://va.vercel-scripts.com");
+    add("connect-src", "https://*.vercel-insights.com", "https://va.vercel-scripts.com");
+  }
+  if (providers.ga4) {
+    add("script-src", "https://www.googletagmanager.com", "https://www.google-analytics.com");
+    add("img-src", "https://www.google-analytics.com");
+    add("connect-src", "https://www.google-analytics.com", "https://*.analytics.google.com");
+  }
+  if (providers.clarity) {
+    add("script-src", "https://www.clarity.ms");
+    add("img-src", "https://www.clarity.ms");
+    add("connect-src", "https://www.clarity.ms", "https://*.clarity.ms");
+  }
+  if (providers.plausible) {
+    add("script-src", "https://plausible.io");
+    add("connect-src", "https://plausible.io");
+  }
+  if (providers.adsense) {
+    add("script-src", "https://pagead2.googlesyndication.com");
+    add("img-src", "https://pagead2.googlesyndication.com");
+    add("connect-src", "https://pagead2.googlesyndication.com");
+    add("frame-src", "https://googleads.g.doubleclick.net");
+  }
+  if (providers.mediavine) {
+    add("script-src", "https://scripts.mediavine.com", "https://faves.grow.me");
+    add("connect-src", "https://scripts.mediavine.com", "https://faves.grow.me");
+    add("img-src", "https://*.mediavine.com");
+  }
+  if (providers.carbon) {
+    add("script-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
+    add("img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
+  }
+  return Object.entries(dir)
+    .map(([k, s]) => `${k} ${[...s].join(" ")}`)
+    .join("; ");
+};
+
+const providers = inferProviders();
+const csp = composeCsp(providers, false);
+const embedCsp = composeCsp(providers, true);
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -7,9 +90,13 @@ const nextConfig = {
       {
         source: "/embed/widget",
         headers: [
-          { key: "Content-Security-Policy", value: "frame-ancestors *" },
+          { key: "Content-Security-Policy", value: embedCsp },
           { key: "X-Frame-Options", value: "ALLOWALL" },
         ],
+      },
+      {
+        source: "/((?!embed/).*)",
+        headers: [{ key: "Content-Security-Policy", value: csp }],
       },
     ];
   },

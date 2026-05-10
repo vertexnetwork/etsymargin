@@ -1,0 +1,7 @@
+# Default owners for everything in the repo.
+*       @ThatMovieGuyOriginal
+
+# Hub-synced files — should never be hand-edited; PR them via
+# .github/workflows/sync-from-hub.yml instead.
+/public/network.json   @ThatMovieGuyOriginal
+/public/ai-bots.json   @ThatMovieGuyOriginal

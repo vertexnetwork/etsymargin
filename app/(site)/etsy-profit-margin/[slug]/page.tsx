@@ -2,11 +2,14 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { MDXRemote } from "next-mdx-remote/rsc";
+import remarkGfm from "remark-gfm";
+import rehypeSlug from "rehype-slug";
+import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Calculator } from "@/components/Calculator/Calculator";
-import { AdSlot } from "@/components/ads/AdSlot";
 import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PseoPageView } from "@/components/analytics/PseoPageView";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
@@ -63,6 +66,12 @@ export default async function PseoPage({
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
       <SoftwareApplicationJsonLd />
       <FaqJsonLd faq={entry.faq} />
+      <BreadcrumbSchema
+        crumbs={[
+          { name: "Profit by category", href: "/#categories" },
+          { name: entry.category, href: `/etsy-profit-margin/${entry.slug}` },
+        ]}
+      />
       <PseoPageView slug={entry.slug} />
 
       <nav className="mb-4 text-sm sm:mb-6">
@@ -96,7 +105,19 @@ export default async function PseoPage({
 
       {mdxSource && (
         <article className="mt-12 max-w-3xl">
-          <MDXRemote source={mdxSource} components={mdxComponents} />
+          <MDXRemote
+            source={mdxSource}
+            components={mdxComponents}
+            options={{
+              mdxOptions: {
+                remarkPlugins: [remarkGfm],
+                rehypePlugins: [
+                  rehypeSlug,
+                  [rehypeAutolinkHeadings, { behavior: "wrap" }],
+                ],
+              },
+            }}
+          />
         </article>
       )}
 
@@ -163,7 +184,6 @@ export default async function PseoPage({
         </ul>
       </section>
 
-      <AdSlot slot="in-content" className="my-12" />
     </main>
   );
 }

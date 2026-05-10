@@ -1,8 +1,16 @@
 "use client";
 
 import Script from "next/script";
+import { useConsent } from "@/components/consent/ConsentProvider";
+
+// Microsoft Clarity loader. Gated by the user-level consent state when
+// siteConfig.features.consent.required is on (Vertex spec §9).
 
 export function Clarity({ projectId }: { projectId: string }) {
+  const { status, required } = useConsent();
+  // If consent is not required (e.g., a future EU-only build flag), load
+  // unconditionally. Otherwise wait for the explicit "granted" state.
+  if (required && status !== "granted") return null;
   return (
     <Script
       id="ms-clarity"

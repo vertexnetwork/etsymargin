@@ -11,3 +11,13 @@ extension/dist/
 extension/node_modules/
 extension/package-lock.json
 temp/
+
+# Playwright
+playwright-report/
+test-results/
+
+# Lighthouse CI
+.lighthouseci/
+
+# Claude Code project state — tool-local, not project-canonical
+.claude/

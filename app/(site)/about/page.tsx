@@ -1,5 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { AboutPageSchema } from "@/components/seo/AboutPageSchema";
+import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { siteConfig } from "@/lib/site-config";
 import {
   LISTING_FEE,
   TRANSACTION_FEE_RATE,
@@ -9,9 +12,8 @@ import {
 } from "@/lib/fees";
 
 export const metadata: Metadata = {
-  title: "About — Etsy Margin",
-  description:
-    "Why we built Etsy Margin, how the fee math works, and why everything runs in your browser.",
+  title: `About — ${siteConfig.name}`,
+  description: `Why we built ${siteConfig.name}, how the fee math works, and why everything runs in your browser.`,
   alternates: { canonical: "/about" },
 };
 
@@ -20,9 +22,11 @@ const pct = (n: number) => `${(n * 100).toFixed(0)}%`;
 export default function AboutPage() {
   return (
     <main className="mx-auto max-w-3xl px-5 py-10 sm:py-16">
+      <AboutPageSchema />
+      <BreadcrumbSchema crumbs={[{ name: "About", href: "/about" }]} />
       <header className="mb-10">
         <h1 className="text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-4xl">
-          About Etsy Margin
+          About {siteConfig.name}
         </h1>
         <p className="mt-3 text-lg text-patina-800/80">
           A free, accurate, no-signup tool for Etsy sellers who want a clear
@@ -114,10 +118,10 @@ export default function AboutPage() {
           Found a fee path we&apos;re modeling wrong? Have a country we should
           add? Email{" "}
           <a
-            href="mailto:hello@etsymargin.tools"
+            href={`mailto:${siteConfig.supportEmail}`}
             className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
           >
-            hello@etsymargin.tools
+            {siteConfig.supportEmail}
           </a>{" "}
           with a reproduction and we&apos;ll fix it. The fee math lives in a
           single, heavily-tested pure function.

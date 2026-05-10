@@ -1,11 +1,13 @@
 import { ImageResponse } from "next/og";
+import { siteConfig } from "@/lib/site-config";
 
 export const runtime = "edge";
-export const alt = "Etsy Margin — Find your true profit before you price.";
+export const alt = `${siteConfig.name} — ${siteConfig.tagline}`;
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
 export default function OpenGraphImage() {
+  const c = siteConfig.theme.colors;
   return new ImageResponse(
     (
       <div
@@ -16,7 +18,7 @@ export default function OpenGraphImage() {
           flexDirection: "column",
           justifyContent: "space-between",
           padding: "72px 80px",
-          background: "#fbfaf3",
+          background: c.bg,
           fontFamily:
             "ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, sans-serif",
           color: "#1f3d40",
@@ -24,9 +26,9 @@ export default function OpenGraphImage() {
       >
         <div style={{ display: "flex", alignItems: "center", gap: 16 }}>
           <svg width="44" height="44" viewBox="0 0 24 24">
-            <rect x="1" y="4" width="3.5" height="16" rx="1" fill="#28565b" />
+            <rect x="1" y="4" width="3.5" height="16" rx="1" fill={c.accent} />
             <rect x="6" y="7" width="3.5" height="13" rx="1" fill="#2f6a70" />
-            <rect x="11" y="10" width="3.5" height="10" rx="1" fill="#3d8389" />
+            <rect x="11" y="10" width="3.5" height="10" rx="1" fill={c.success} />
             <rect x="16" y="13" width="3.5" height="7" rx="1" fill="#5a9ca2" />
             <rect x="21" y="16" width="2.5" height="4" rx="1" fill="#88bdc1" />
           </svg>
@@ -38,7 +40,7 @@ export default function OpenGraphImage() {
               color: "#1f3d40",
             }}
           >
-            Etsy Margin
+            {siteConfig.name}
           </div>
         </div>
 
@@ -53,14 +55,14 @@ export default function OpenGraphImage() {
               maxWidth: 980,
             }}
           >
-            Find your true profit before you price.
+            {siteConfig.tagline}
           </div>
           <div
             style={{
               fontSize: 32,
               fontWeight: 500,
               lineHeight: 1.3,
-              color: "#28565b",
+              color: c.accent,
               maxWidth: 920,
             }}
           >
@@ -76,7 +78,7 @@ export default function OpenGraphImage() {
             justifyContent: "space-between",
             fontSize: 22,
             fontWeight: 500,
-            color: "#28565b",
+            color: c.accent,
           }}
         >
           <div style={{ display: "flex", gap: 28 }}>
@@ -87,7 +89,7 @@ export default function OpenGraphImage() {
             <span>Updated for 2026 fees</span>
           </div>
           <div style={{ color: "#1f3d40", fontWeight: 600 }}>
-            etsymargin.tools
+            {siteConfig.domain}
           </div>
         </div>
       </div>

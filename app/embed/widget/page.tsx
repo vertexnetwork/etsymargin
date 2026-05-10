@@ -1,5 +1,6 @@
 import { Calculator } from "@/components/Calculator/Calculator";
 import type { CalculatorInputs } from "@/lib/fees";
+import { siteConfig } from "@/lib/site-config";
 
 type Search = Promise<{
   p?: string;
@@ -48,18 +49,18 @@ export default async function EmbedWidgetPage({
       <p className="mt-4 text-center text-xs text-patina-muted">
         Powered by{" "}
         <a
-          href="https://etsymargin.tools"
+          href={siteConfig.url}
           target="_blank"
           rel="noopener noreferrer"
           className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
         >
-          etsymargin.tools
+          {siteConfig.domain}
         </a>
         <span aria-hidden="true" className="mx-2 text-patina-300">
           ·
         </span>
         <a
-          href="https://etsymargin.tools/recommendations?utm_source=embed&utm_medium=widget&utm_campaign=printify"
+          href={`${siteConfig.url}/recommendations?utm_source=embed&utm_medium=widget&utm_campaign=printify`}
           target="_blank"
           rel="sponsored noopener"
           className="text-patina-700 underline underline-offset-2 hover:text-patina-900"

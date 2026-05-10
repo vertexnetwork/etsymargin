@@ -1,17 +1,25 @@
 import type { PseoFaq } from "@/lib/pseo/data";
-import type { NetworkTool } from "@/lib/network";
+import type { Property } from "@/lib/network";
+import { siteConfig } from "@/lib/site-config";
 
 export function SoftwareApplicationJsonLd() {
   const json = {
     "@context": "https://schema.org",
-    "@type": "SoftwareApplication",
-    name: "Etsy Margin Calculator",
-    applicationCategory: "FinanceApplication",
-    operatingSystem: "Web",
-    description:
-      "Free Etsy profit calculator. Computes true net profit and margin after every Etsy fee, including the Off-Site Ads fee.",
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-    url: "https://etsymargin.tools",
+    "@type": siteConfig.jsonLd.type,
+    name: `${siteConfig.name} Calculator`,
+    applicationCategory: siteConfig.jsonLd.applicationCategory,
+    operatingSystem: siteConfig.jsonLd.operatingSystem,
+    description: siteConfig.description,
+    offers: {
+      "@type": "Offer",
+      price: String(siteConfig.jsonLd.price),
+      priceCurrency: "USD",
+    },
+    url: siteConfig.url,
+    publisher: {
+      "@type": "Organization",
+      "@id": `${siteConfig.url}#organization`,
+    },
   };
   return (
     <script
@@ -39,14 +47,13 @@ export function FaqJsonLd({ faq }: { faq: PseoFaq[] }) {
   );
 }
 
-export function NetworkCollectionJsonLd({ tools }: { tools: NetworkTool[] }) {
+export function NetworkCollectionJsonLd({ tools }: { tools: Property[] }) {
   const json = {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
     name: "The Vertex Network",
-    description:
-      "A small network of independent web tools. Etsy Margin is one of them.",
-    url: "https://etsymargin.tools/network",
+    description: `A small network of independent web tools. ${siteConfig.name} is one of them.`,
+    url: `${siteConfig.url}/network`,
     hasPart: tools.map((t) => ({
       "@type": "WebSite",
       name: t.name,

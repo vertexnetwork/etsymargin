@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculate, OFFSITE_ADS_FEE_CAP } from "../lib/fees";
+import { calculate, OFFSITE_ADS_FEE_CAP } from "@/lib/fees";
 
 describe("calculate", () => {
   it("computes core US fees on a $25 item with $5 shipping, no ads", () => {

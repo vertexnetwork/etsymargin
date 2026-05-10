@@ -1,11 +1,13 @@
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Clarity } from "@/components/analytics/Clarity";
-import { MediavineGrow } from "@/components/analytics/MediavineGrow";
-import { GoogleAdsense } from "@/components/ads/GoogleAdsense";
+import { ConsentProvider } from "@/components/consent/ConsentProvider";
+import { CookieConsent } from "@/components/consent/CookieConsent";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
-import { ADSENSE_CLIENT_ID } from "@/lib/adsense";
+import { SiteSchema } from "@/components/seo/SiteSchema";
+import { siteConfig } from "@/lib/site-config";
 
 export default function SiteLayout({
   children,
@@ -14,22 +16,18 @@ export default function SiteLayout({
 }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
-  const growMeSiteId = process.env.NEXT_PUBLIC_GROW_ME_SITE_ID;
-  const mediavineEnabled = process.env.NEXT_PUBLIC_MEDIAVINE_ENABLED === "1";
-  const adsenseEnabled = process.env.NEXT_PUBLIC_ADSENSE_ENABLED === "1";
-  // Mediavine is the master ad lever — when on, suppress AdSense entirely so
-  // the two networks never both load.
-  const loadAdsense = !mediavineEnabled && adsenseEnabled;
+  const consentRequired = siteConfig.features.consent.required;
   return (
-    <>
+    <ConsentProvider required={consentRequired}>
+      <SiteSchema />
       <SiteHeader />
       {children}
       <SiteFooter />
       <Analytics />
+      <SpeedInsights />
       {gaId && <GoogleAnalytics gaId={gaId} />}
       {clarityId && <Clarity projectId={clarityId} />}
-      {growMeSiteId && <MediavineGrow siteId={growMeSiteId} />}
-      {loadAdsense && <GoogleAdsense clientId={ADSENSE_CLIENT_ID} />}
-    </>
+      {consentRequired && <CookieConsent />}
+    </ConsentProvider>
   );
 }
