@@ -264,7 +264,12 @@ function renderMarkdown(doc: Doc, md: string) {
 }
 
 function loadMdx(slug: string): string {
-  return fs.readFileSync(path.join(MDX_DIR, `${slug}.mdx`), "utf8");
+  // Returns "" for slugs that don't have an MDX body yet. The PDF build
+  // covers all 60+ pSEO entries; only the original 20 have full narrative
+  // content. New entries get a data-only category card until their MDX
+  // ships.
+  const file = path.join(MDX_DIR, `${slug}.mdx`);
+  return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
 }
 
 function drawTable(
@@ -599,12 +604,18 @@ function drawCategoryCard(doc: Doc, entry: PseoEntry) {
     [220, 70, 70, 70, 60],
   );
 
-  // Pull the live category narrative from content/pseo/<slug>.mdx so the
-  // category card carries 300-400 words of actual analysis instead of one
-  // sentence of subcopy. Markdown links to other category pages are rendered
-  // as plain text since the PDF can't navigate the website.
-  doc.moveDown(0.4);
-  renderMarkdown(doc, loadMdx(entry.slug));
+  // Pull the live category narrative from content/pseo/<slug>.mdx when it
+  // exists so the card carries 300-400 words of analysis. For lite entries
+  // without an MDX body yet, fall back to the subcopy as a brief "What
+  // this means" callout — keeps every card consistent.
+  const mdx = loadMdx(entry.slug);
+  if (mdx) {
+    doc.moveDown(0.4);
+    renderMarkdown(doc, mdx);
+  } else {
+    H2(doc, "What this means");
+    P(doc, entry.heroSubcopy);
+  }
 }
 
 // Hand-authored FAQs specific to using this book and the companion

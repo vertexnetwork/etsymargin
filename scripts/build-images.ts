@@ -136,10 +136,10 @@ function buildCover(): string {
   e.push(line(sx + 60, 305, sx + sidebarW - 60, 305, BRAND.patinaBlue700, 1));
 
   const bullets = [
-    "53-page PDF reference",
-    "400-row spreadsheet",
+    "93-page PDF reference",
+    "1,200-row spreadsheet",
     "5 country deep-dives",
-    "20 category margin cards",
+    "60 category margin cards",
     "12 hand-authored FAQ",
     "Free 2026 fee updates",
   ];
@@ -215,7 +215,7 @@ function buildPreview1(): string {
   e.push(text(pad, 152, "Six fees stacked.", {
     size: 46, weight: 800, fill: BRAND.white,
   }));
-  e.push(text(pad, 205, "Five countries. Twenty categories.", {
+  e.push(text(pad, 205, "Five countries. Sixty categories.", {
     size: 46, weight: 800, fill: BRAND.white,
   }));
 
@@ -227,13 +227,13 @@ function buildPreview1(): string {
   const cards = [
     {
       title: "REFERENCE PDF",
-      number: "53",
+      number: "93",
       suffix: "pages",
-      body: "Cover, foreword, fee-stack explainer, five country deep-dives at low / mid / high price points, twenty category margin cards with the live website's narrative, and the methodology colophon.",
+      body: "Cover, foreword, fee-stack explainer, five country deep-dives at low / mid / high price points, sixty category margin cards with the live website's narrative, and the methodology colophon.",
     },
     {
       title: "PRE-MODELED SHEET",
-      number: "400",
+      number: "1,200",
       suffix: "scenarios",
       body: "Every category × every payment processor region × Off-Site Ads on/off × under or above the $10k threshold. Pipe-delimited so commas in labels don't break the import. Opens in Excel, Sheets, Numbers.",
     },
@@ -358,7 +358,7 @@ function buildPreview2(): string {
   e.push(text(pad, H - 78, "Three of these fees are invisible to most sellers until they read the receipt.", {
     size: 17, italic: true, fill: BRAND.patinaBlue700,
   }));
-  e.push(text(pad, H - 48, "The Bible runs all 400 worked examples for you, in one PDF and one spreadsheet.", {
+  e.push(text(pad, H - 48, "The Bible runs all 1,200 worked examples for you, in one PDF and one spreadsheet.", {
     size: 17, weight: 700, fill: BRAND.patinaBlueDark,
   }));
 
@@ -378,13 +378,13 @@ function buildPreview3(): string {
   e.push(text(pad, 92, "THE COMPANION SPREADSHEET", {
     size: 13, weight: 700, fill: BRAND.patinaBlue500, letterSpacing: 4,
   }));
-  e.push(text(pad, 155, "400 scenarios. Pre-modeled.", {
+  e.push(text(pad, 155, "1,200 scenarios. Pre-modeled.", {
     size: 50, weight: 800, fill: BRAND.patinaBlueDark,
   }));
   e.push(text(pad, 212, "Pipe-delimited.", {
     size: 50, weight: 800, fill: BRAND.patinaBlueDark,
   }));
-  e.push(text(pad, 258, "20 categories × 5 countries × 4 ad scenarios. Open in Excel, Sheets, or Numbers.", {
+  e.push(text(pad, 258, "60 categories × 5 countries × 4 ad scenarios. Open in Excel, Sheets, or Numbers.", {
     size: 17, italic: true, fill: BRAND.patinaBlue700,
   }));
 
