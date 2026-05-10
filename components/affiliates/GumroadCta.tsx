@@ -4,28 +4,41 @@ type Source = "calculator" | "recommendations" | "pseo";
 type Props = {
   variant: Variant;
   source: Source;
+  /**
+   * Optional placement-tier identifier for analytics attribution. Threads
+   * through as `utm_content`. Used to differentiate calculator margin tiers
+   * (calc-loss / calc-thin / calc-healthy) so we can compare conversion
+   * across the cohort that hits each.
+   */
+  content?: string;
   className?: string;
 };
 
-function buildHref(rawUrl: string, source: Source, variant: Variant) {
+function buildHref(
+  rawUrl: string,
+  source: Source,
+  variant: Variant,
+  content?: string,
+) {
   try {
     const url = new URL(rawUrl);
     url.searchParams.set("utm_source", source);
     url.searchParams.set("utm_medium", variant);
     url.searchParams.set("utm_campaign", "pricing-bible");
+    if (content) url.searchParams.set("utm_content", content);
     return url.toString();
   } catch {
     return rawUrl;
   }
 }
 
-export function GumroadCta({ variant, source, className = "" }: Props) {
+export function GumroadCta({ variant, source, content, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
   const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "9";
 
   if (!enabled || !productUrl) return null;
-  const href = buildHref(productUrl, source, variant);
+  const href = buildHref(productUrl, source, variant, content);
 
   if (variant === "compact") {
     return (

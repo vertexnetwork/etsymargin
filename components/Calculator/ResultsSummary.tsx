@@ -48,13 +48,24 @@ export function ResultsSummary({ result, itemPrice }: Props) {
           <p className="mt-3 text-sm font-medium">
             You&apos;re losing {usd(Math.abs(result.netProfit))} on every order at this price.
           </p>
-          <GumroadCta variant="compact" source="calculator" />
+          <GumroadCta variant="compact" source="calculator" content="calc-loss" />
+        </>
+      ) : itemPrice > 0 && result.marginPercent < 0.15 ? (
+        <>
+          <p className="mt-3 text-sm font-medium">
+            Margin under 15% leaves no room for product variants, sales, or
+            rising supplier costs.
+          </p>
+          <GumroadCta variant="compact" source="calculator" content="calc-thin" />
         </>
       ) : itemPrice > 0 ? (
-        <p className="mt-3 text-sm opacity-75">
-          Etsy takes {pct(result.effectiveFeeRate)} of revenue in fees before
-          any product cost.
-        </p>
+        <>
+          <p className="mt-3 text-sm opacity-75">
+            Etsy takes {pct(result.effectiveFeeRate)} of revenue in fees before
+            any product cost.
+          </p>
+          <GumroadCta variant="compact" source="calculator" content="calc-healthy" />
+        </>
       ) : null}
 
       <table className="mt-5 w-full text-sm">
