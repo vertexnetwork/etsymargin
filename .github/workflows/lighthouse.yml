@@ -24,7 +24,7 @@ jobs:
       statuses: read
       deployments: read
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
 
       - name: Wait for the Vercel preview deployment
         id: vercel_preview
