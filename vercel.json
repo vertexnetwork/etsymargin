@@ -1,13 +1,6 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "redirects": [
-    {
-      "source": "/(.*)",
-      "has": [{ "type": "host", "value": "www.etsymargin.tools" }],
-      "destination": "https://etsymargin.tools/$1",
-      "permanent": true
-    }
-  ],
+  "_comment": "apex ↔ www redirection is handled by Vercel's domain settings (set the apex etsymargin.tools as primary; Vercel auto-redirects www to it). A vercel.json redirect here would fight Vercel's platform-level redirect and produce ERR_TOO_MANY_REDIRECTS.",
   "headers": [
     {
       "source": "/((?!embed/).*)",
