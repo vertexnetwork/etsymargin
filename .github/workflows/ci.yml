@@ -5,9 +5,58 @@ on:
   push:
     branches: [main]
 
+# Inline pipeline rather than calling the hub's reusable workflow —
+# until vertex-network-hub publishes spoke-ci.yml@v1, the spoke needs
+# its own self-contained build so PRs against branch-protected `main`
+# can actually merge. Each job below produces a discrete status check
+# (Typecheck, Test, Build) the protection rule can require.
+#
+# Lint runs in its own workflow file (.github/workflows/lint.yml) so
+# the `Lint` status check is selectable independently.
+
 jobs:
-  ci:
-    uses: ThatMovieGuyOriginal/vertex-network-hub/.github/workflows/spoke-ci.yml@v1
-    with:
-      node-version: "22"
-      run-e2e: false
+  Typecheck:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm typecheck
+
+  Test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm test
+
+  Build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - name: Build (also exercises prebuild → favicons + changelog)
+        run: pnpm build
+        env:
+          # Keep prebuild's git log step happy on shallow clones.
+          NEXT_TELEMETRY_DISABLED: "1"

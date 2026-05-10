@@ -1,0 +1,37 @@
+name: Lint
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+# Discrete status check the branch protection rule can require. Kept
+# separate from the hub-reusable CI workflow so the rule has a stable
+# "Lint" target instead of the umbrella "CI" check that bundles
+# typecheck/test/build into one.
+
+jobs:
+  Lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: ESLint (next-core-web-vitals + next/typescript + prettier)
+        run: pnpm lint
+
+      - name: Prettier --check
+        run: pnpm format:check

@@ -5,9 +5,60 @@ on:
   push:
     branches: [main]
 
+# Runs Lighthouse CI against the live Vercel preview URL (or production
+# deploy on push to main) instead of spinning up a local server in CI.
+# Two reasons: (1) we get the same edge runtime, CSP, and caching the
+# real user sees; (2) the workflow doesn't have to build the app twice
+# (Vercel already did it).
+#
+# Status check name: `Lighthouse / Lighthouse` — selectable as a required
+# check in the branch protection rule. Kept separate from the umbrella
+# CI workflow so it can be required independently.
+
 jobs:
-  lhci:
-    uses: ThatMovieGuyOriginal/vertex-network-hub/.github/workflows/spoke-lighthouse.yml@v1
-    with:
-      node-version: "22"
-      config-path: lighthouserc.json
+  Lighthouse:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      statuses: read
+      deployments: read
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Wait for the Vercel preview deployment
+        id: vercel_preview
+        uses: patrickedqvist/wait-for-vercel-preview@v1.3.2
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          max_timeout: 600
+          check_interval: 10
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version-file: .nvmrc
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Run Lighthouse CI against the preview URL
+        uses: treosh/lighthouse-ci-action@v12
+        with:
+          # Override lighthouserc.json's localhost defaults with the
+          # actual preview URL the deployment surfaced.
+          urls: |
+            ${{ steps.vercel_preview.outputs.url }}
+            ${{ steps.vercel_preview.outputs.url }}/about
+            ${{ steps.vercel_preview.outputs.url }}/etsy-profit-margin/custom-t-shirts-shipping-costs
+            ${{ steps.vercel_preview.outputs.url }}/network
+            ${{ steps.vercel_preview.outputs.url }}/changelog
+          configPath: ./lighthouserc.json
+          uploadArtifacts: true
+          temporaryPublicStorage: true
