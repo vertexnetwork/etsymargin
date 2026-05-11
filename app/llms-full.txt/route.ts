@@ -41,8 +41,12 @@ export async function GET() {
   sections.push("");
   sections.push("## Fee math (2026)");
   sections.push(`- Listing fee: $${LISTING_FEE.toFixed(2)} flat per listing`);
-  sections.push(`- Transaction fee: ${pct(TRANSACTION_FEE_RATE)} of (item price + shipping charged)`);
-  sections.push("- Payment processing: country-specific. US: 3% + $0.25. UK: 4% + £0.20. CA: 3% + CA$0.25 + 1.15% regulatory operating fee. AU: 3% + AU$0.25. EU: 4% + €0.30.");
+  sections.push(
+    `- Transaction fee: ${pct(TRANSACTION_FEE_RATE)} of (item price + shipping charged)`,
+  );
+  sections.push(
+    "- Payment processing: country-specific. US: 3% + $0.25. UK: 4% + £0.20. CA: 3% + CA$0.25 + 1.15% regulatory operating fee. AU: 3% + AU$0.25. EU: 4% + €0.30.",
+  );
   sections.push(
     `- Off-Site Ads: ${pct(OFFSITE_ADS_RATE_UNDER_10K)} for shops under $10k trailing 12-month revenue (opt-in), ${pct(OFFSITE_ADS_RATE_AT_10K)} mandatory once you cross the threshold. Capped at $${OFFSITE_ADS_FEE_CAP} per order.`,
   );

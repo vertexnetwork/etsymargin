@@ -20,11 +20,7 @@ const num = (v: string | undefined) => {
 
 const VALID_COUNTRIES = ["US", "UK", "CA", "AU", "EU"] as const;
 
-export default async function EmbedWidgetPage({
-  searchParams,
-}: {
-  searchParams: Search;
-}) {
+export default async function EmbedWidgetPage({ searchParams }: { searchParams: Search }) {
   const params = await searchParams;
   const initial: Partial<CalculatorInputs> = {};
   const ip = num(params.p);

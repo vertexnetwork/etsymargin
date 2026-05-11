@@ -272,12 +272,7 @@ function loadMdx(slug: string): string {
   return fs.existsSync(file) ? fs.readFileSync(file, "utf8") : "";
 }
 
-function drawTable(
-  doc: Doc,
-  headers: string[],
-  rows: string[][],
-  colWidths: number[],
-) {
+function drawTable(doc: Doc, headers: string[], rows: string[][], colWidths: number[]) {
   const startX = doc.page.margins.left;
   const totalW = colWidths.reduce((a, b) => a + b, 0);
   let y = doc.y + 4;
@@ -370,12 +365,9 @@ function drawCover(doc: Doc) {
     .font("Helvetica")
     .fontSize(11)
     .fillColor(BRAND.muted)
-    .text(
-      "etsymargin.tools  ·  2026 Edition",
-      left,
-      h - doc.page.margins.bottom - 14,
-      { width: contentW },
-    );
+    .text("etsymargin.tools  ·  2026 Edition", left, h - doc.page.margins.bottom - 14, {
+      width: contentW,
+    });
 }
 
 function drawForeword(doc: Doc) {
@@ -438,10 +430,7 @@ function drawFeeStack(doc: Doc) {
 
   doc.addPage();
   H2(doc, "5. Off-Site Ads Fee");
-  P(
-    doc,
-    "The most painful line in the stack — and the one most sellers haven't read carefully:",
-  );
+  P(doc, "The most painful line in the stack — and the one most sellers haven't read carefully:");
   P(
     doc,
     `· Under $10,000 in trailing 12-month revenue: ${
@@ -473,11 +462,7 @@ const COUNTRY_WORKED_EXAMPLES: Array<{ slug: string; label: string }> = [
 function drawCountryChapter(doc: Doc, code: CountryCode) {
   const c = COUNTRIES[code];
   doc.addPage();
-  doc
-    .font("Helvetica-Bold")
-    .fontSize(10)
-    .fillColor(BRAND.patinaBlue)
-    .text(`COUNTRY · ${code}`);
+  doc.font("Helvetica-Bold").fontSize(10).fillColor(BRAND.patinaBlue).text(`COUNTRY · ${code}`);
   doc.moveDown(0.2);
   H1(doc, c.label);
   P(doc, `Currency: ${c.currencySymbol}    Country code: ${c.code}`);
@@ -538,9 +523,7 @@ function drawCountryChapter(doc: Doc, code: CountryCode) {
         `${(r.marginPercent * 100).toFixed(1)}%`,
       ];
     });
-    drawTable(doc, ["Scenario", "Total fees", "Net profit", "Margin"], rows, [
-      240, 80, 80, 60,
-    ]);
+    drawTable(doc, ["Scenario", "Total fees", "Net profit", "Margin"], rows, [240, 80, 80, 60]);
   }
 }
 
@@ -597,12 +580,7 @@ function drawCategoryCard(doc: Doc, entry: PseoEntry) {
       `${(r.marginPercent * 100).toFixed(1)}%`,
     ];
   });
-  drawTable(
-    doc,
-    ["Scenario", "Gross", "Fees", "Net", "Margin"],
-    rows,
-    [220, 70, 70, 70, 60],
-  );
+  drawTable(doc, ["Scenario", "Gross", "Fees", "Net", "Margin"], rows, [220, 70, 70, 70, 60]);
 
   // Pull the live category narrative from content/pseo/<slug>.mdx when it
   // exists so the card carries 300-400 words of analysis. For lite entries
@@ -640,7 +618,7 @@ const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: "Why pipe-delimited instead of CSV?",
-    a: "Etsy product names and descriptive labels routinely contain commas — \"Mid tier, ads on\" being the obvious example. CSV files break on those commas without quote-escaping. Pipe characters virtually never appear inside the data, so the file imports cleanly into every spreadsheet app on the first try.",
+    a: 'Etsy product names and descriptive labels routinely contain commas — "Mid tier, ads on" being the obvious example. CSV files break on those commas without quote-escaping. Pipe characters virtually never appear inside the data, so the file imports cleanly into every spreadsheet app on the first try.',
   },
   {
     q: "What if Etsy changes its fee structure during 2026?",
@@ -695,14 +673,8 @@ function drawColophon(doc: Doc) {
     [
       ["Listing Fee", `$${LISTING_FEE.toFixed(2)}`],
       ["Transaction Fee Rate", `${(TRANSACTION_FEE_RATE * 100).toFixed(1)}%`],
-      [
-        "Off-Site Ads Rate (under $10k)",
-        `${(OFFSITE_ADS_RATE_UNDER_10K * 100).toFixed(0)}%`,
-      ],
-      [
-        "Off-Site Ads Rate (at/above $10k)",
-        `${(OFFSITE_ADS_RATE_AT_10K * 100).toFixed(0)}%`,
-      ],
+      ["Off-Site Ads Rate (under $10k)", `${(OFFSITE_ADS_RATE_UNDER_10K * 100).toFixed(0)}%`],
+      ["Off-Site Ads Rate (at/above $10k)", `${(OFFSITE_ADS_RATE_AT_10K * 100).toFixed(0)}%`],
       ["Off-Site Ads Fee Cap", `$${OFFSITE_ADS_FEE_CAP.toFixed(0)}`],
     ],
     [260, 200],

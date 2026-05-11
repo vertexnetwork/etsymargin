@@ -80,11 +80,7 @@ h4 {
 /* Surface treatment for white cards: subtle vertical gradient + layered
    shadow so cards feel like surfaces rather than flat boxes. */
 @utility quiet-card {
-  background-image: linear-gradient(
-    180deg,
-    var(--color-surface) 0%,
-    rgba(251, 250, 243, 0.5) 100%
-  );
+  background-image: linear-gradient(180deg, var(--color-surface) 0%, rgba(251, 250, 243, 0.5) 100%);
   box-shadow: var(--shadow-card);
 }
 

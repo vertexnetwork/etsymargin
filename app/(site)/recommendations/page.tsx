@@ -10,8 +10,7 @@ export const metadata: Metadata = {
   alternates: { canonical: "/recommendations" },
   openGraph: {
     title: "Recommended tools for Etsy sellers",
-    description:
-      "A short, honest list of tools that move the margin needle for Etsy sellers.",
+    description: "A short, honest list of tools that move the margin needle for Etsy sellers.",
     type: "website",
   },
 };
@@ -27,8 +26,8 @@ export default function RecommendationsPage() {
           Tools we&apos;d point an Etsy seller at.
         </h1>
         <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:text-lg">
-          Short list. We only include tools that change the math the calculator
-          shows. If something doesn&apos;t move your margin, it isn&apos;t here.
+          Short list. We only include tools that change the math the calculator shows. If something
+          doesn&apos;t move your margin, it isn&apos;t here.
         </p>
       </header>
 
@@ -37,9 +36,8 @@ export default function RecommendationsPage() {
           Disclosure
         </h2>
         <p className="mt-2 text-sm text-patina-800/85">
-          Some links on this page earn us a commission at no extra cost to you.
-          We only list tools we&apos;d use ourselves. The math on the calculator
-          never changes based on who pays us.
+          Some links on this page earn us a commission at no extra cost to you. We only list tools
+          we&apos;d use ourselves. The math on the calculator never changes based on who pays us.
         </p>
       </section>
 

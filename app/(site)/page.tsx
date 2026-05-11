@@ -20,8 +20,8 @@ export default function Home() {
           Don&apos;t lose money on the mandatory 15% Offsite Ads.
         </h1>
         <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
-          Find your true profit before you price. Every Etsy fee, layered exactly
-          the way Etsy charges them, with the loss path visible at a glance.
+          Find your true profit before you price. Every Etsy fee, layered exactly the way Etsy
+          charges them, with the loss path visible at a glance.
         </p>
 
         <TrustStrip />
@@ -38,9 +38,7 @@ export default function Home() {
       <Calculator />
 
       <section id="categories" className="mt-12 scroll-mt-20 sm:mt-16">
-        <h2 className="mb-2 text-2xl font-bold text-patina-900">
-          Profit math by Etsy category
-        </h2>
+        <h2 className="mb-2 text-2xl font-bold text-patina-900">Profit math by Etsy category</h2>
         <p className="mb-6 text-patina-muted">
           Pre-filled scenarios for the most common Etsy seller niches.
         </p>
@@ -62,7 +60,6 @@ export default function Home() {
           ))}
         </ul>
       </section>
-
     </main>
   );
 }

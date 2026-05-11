@@ -34,10 +34,7 @@ let cache: Manifest | null = null;
 async function loadManifest(): Promise<Manifest> {
   if (cache) return cache;
   try {
-    const raw = await fs.readFile(
-      path.join(process.cwd(), "public", "network.json"),
-      "utf8",
-    );
+    const raw = await fs.readFile(path.join(process.cwd(), "public", "network.json"), "utf8");
     cache = JSON.parse(raw) as Manifest;
     return cache;
   } catch {
@@ -53,9 +50,7 @@ export async function loadNetwork(): Promise<Property[]> {
 export async function loadSisterSites(): Promise<Property[]> {
   const sites = await loadNetwork();
   const selfHosts = new Set(
-    [siteConfig.url, `https://${siteConfig.domain}`].map((u) =>
-      new URL(u).host,
-    ),
+    [siteConfig.url, `https://${siteConfig.domain}`].map((u) => new URL(u).host),
   );
   return sites.filter((site) => {
     try {

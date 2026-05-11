@@ -31,10 +31,9 @@ export default async function NetworkPage() {
           A small family of tools we&apos;ve built.
         </h1>
         <p className="mt-3 max-w-2xl text-lg text-(--color-on-bg)/80">
-          {siteConfig.name} is one of {liveSisters.length + 1} independent web
-          tools we operate. Each one solves a single, specific problem for the
-          people using it. No accounts, no upsells, no shared infrastructure
-          — just standalone calculators and utilities.
+          {siteConfig.name} is one of {liveSisters.length + 1} independent web tools we operate.
+          Each one solves a single, specific problem for the people using it. No accounts, no
+          upsells, no shared infrastructure — just standalone calculators and utilities.
         </p>
       </header>
 
@@ -65,9 +64,7 @@ export default async function NetworkPage() {
                 <span className="mt-1 block text-xs uppercase tracking-wider text-(--color-muted)">
                   {tool.domain}
                 </span>
-                <p className="mt-2 text-sm text-(--color-on-bg)/85">
-                  {tool.tagline}
-                </p>
+                <p className="mt-2 text-sm text-(--color-on-bg)/85">{tool.tagline}</p>
                 {tool.status === "soon" && (
                   <span className="mt-2 inline-block rounded-full bg-cream-100 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-(--color-muted)">
                     Coming soon
@@ -80,18 +77,14 @@ export default async function NetworkPage() {
       </section>
 
       <section className="mt-12 space-y-4 text-(--color-on-bg)/85">
-        <h2 className="text-2xl font-bold text-(--color-on-bg)">
-          Why a network?
-        </h2>
+        <h2 className="text-2xl font-bold text-(--color-on-bg)">Why a network?</h2>
         <p>
-          Each tool runs as its own product on its own domain. We don&apos;t
-          force a unified login or pretend they&apos;re a suite — they
-          aren&apos;t. The network page exists so you can find the others if
-          one of them is useful to you.
+          Each tool runs as its own product on its own domain. We don&apos;t force a unified login
+          or pretend they&apos;re a suite — they aren&apos;t. The network page exists so you can
+          find the others if one of them is useful to you.
         </p>
         <p>
-          New tools get added here as we ship them. If you want to know when
-          that happens, the{" "}
+          New tools get added here as we ship them. If you want to know when that happens, the{" "}
           <VertexFooterLink
             href="/changelog"
             className="text-(--color-accent) underline underline-offset-2 hover:text-(--color-on-bg)"

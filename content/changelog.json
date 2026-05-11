@@ -1,5 +1,40 @@
 [
   {
+    "hash": "6039ba7aa7ca7fb416f195a0957d1d0eac838ee5",
+    "date": "2026-05-10",
+    "title": "Bump eslint-config-prettier from 9.1.2 to 10.1.8"
+  },
+  {
+    "hash": "594cb39967bfbb51e65b52210ac11c390b9fcae6",
+    "date": "2026-05-10",
+    "title": "Bump peter-evans/create-pull-request from 6 to 8"
+  },
+  {
+    "hash": "9a9c4aed84ed938dd5587207a0a163f528e2c704",
+    "date": "2026-05-10",
+    "title": "Bump actions/checkout from 4 to 6"
+  },
+  {
+    "hash": "df28ea78ec916ab9cbf63f49d0e3be8d7e43cda4",
+    "date": "2026-05-10",
+    "title": "Drop vercel.json www→apex redirect — Vercel handles it natively"
+  },
+  {
+    "hash": "e51c9749dd13e9b9eafaa148d02273ef541b206a",
+    "date": "2026-05-10",
+    "title": "Collapse Lint + Typecheck + Test + Build into a single CI status check"
+  },
+  {
+    "hash": "be9ecfe3f865f25bee7d41eb4c1445632b258132",
+    "date": "2026-05-10",
+    "title": "Split CI into discrete Lint / Typecheck / Test / Build / Lighthouse status checks"
+  },
+  {
+    "hash": "8e02dba710a7268310f47cdb3541f8908cf65026",
+    "date": "2026-05-10",
+    "title": "Promote etsy-profit-calc to a Vertex Network spoke"
+  },
+  {
     "hash": "80a9b99d74603970c1dd52be9c88ef1ac609de19",
     "date": "2026-05-09",
     "title": "Tier the calculator's Gumroad CTA across loss / thin / healthy margins"

@@ -1,6 +1,6 @@
 import { COUNTRIES, type CountryCode } from "./countries";
 
-export const LISTING_FEE = 0.20;
+export const LISTING_FEE = 0.2;
 export const TRANSACTION_FEE_RATE = 0.065;
 export const OFFSITE_ADS_RATE_UNDER_10K = 0.15;
 export const OFFSITE_ADS_RATE_AT_10K = 0.12;
@@ -59,19 +59,14 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
   const transactionFee = gross * TRANSACTION_FEE_RATE;
 
   const paymentBase = gross;
-  const paymentProcessingFee =
-    paymentBase * countrySpec.paymentPercent + countrySpec.paymentFlat;
+  const paymentProcessingFee = paymentBase * countrySpec.paymentPercent + countrySpec.paymentFlat;
 
   const regulatoryOperatingFee =
-    countrySpec.regulatoryOperatingPercent > 0
-      ? gross * countrySpec.regulatoryOperatingPercent
-      : 0;
+    countrySpec.regulatoryOperatingPercent > 0 ? gross * countrySpec.regulatoryOperatingPercent : 0;
 
   let offsiteAdsFee = 0;
   if (offsiteAdsEnabled) {
-    const rate = atOrAbove10k
-      ? OFFSITE_ADS_RATE_AT_10K
-      : OFFSITE_ADS_RATE_UNDER_10K;
+    const rate = atOrAbove10k ? OFFSITE_ADS_RATE_AT_10K : OFFSITE_ADS_RATE_UNDER_10K;
     offsiteAdsFee = Math.min(gross * rate, OFFSITE_ADS_FEE_CAP);
   }
 
@@ -98,16 +93,12 @@ export function calculate(inputs: CalculatorInputs): CalculatorResult {
   }
 
   if (offsiteAdsEnabled) {
-    const rate = atOrAbove10k
-      ? OFFSITE_ADS_RATE_AT_10K
-      : OFFSITE_ADS_RATE_UNDER_10K;
+    const rate = atOrAbove10k ? OFFSITE_ADS_RATE_AT_10K : OFFSITE_ADS_RATE_UNDER_10K;
     const capped = gross * rate > OFFSITE_ADS_FEE_CAP;
     fees.push({
       label: "Off-Site Ads Fee",
       amount: round2(offsiteAdsFee),
-      detail: capped
-        ? `${formatPct(rate)} capped at $100`
-        : `${formatPct(rate)} of order`,
+      detail: capped ? `${formatPct(rate)} capped at $100` : `${formatPct(rate)} of order`,
     });
   }
 

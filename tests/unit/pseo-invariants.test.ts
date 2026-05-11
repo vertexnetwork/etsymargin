@@ -15,9 +15,7 @@ describe("pSEO catalog invariants", () => {
 
   it("meta descriptions are ≤ 155 chars", () => {
     for (const e of PSEO_ENTRIES) {
-      expect(e.metaDescription.length, `slug: ${e.slug}`).toBeLessThanOrEqual(
-        155,
-      );
+      expect(e.metaDescription.length, `slug: ${e.slug}`).toBeLessThanOrEqual(155);
     }
   });
 
@@ -63,6 +61,8 @@ describe("pSEO catalog invariants", () => {
     }
     // Sanity floor — at least the original 20 long-form entries should
     // still have MDX bodies.
-    expect(checked, "at least 20 long-form pSEO entries should have MDX").toBeGreaterThanOrEqual(20);
+    expect(checked, "at least 20 long-form pSEO entries should have MDX").toBeGreaterThanOrEqual(
+      20,
+    );
   });
 });

@@ -79,9 +79,7 @@ export function inputsToQuery(inputs: CalculatorInputs): string {
 
 const VALID_COUNTRIES: CountryCode[] = ["US", "UK", "CA", "AU", "EU"];
 
-export function inputsFromQuery(
-  search: URLSearchParams,
-): Partial<CalculatorInputs> {
+export function inputsFromQuery(search: URLSearchParams): Partial<CalculatorInputs> {
   const out: Partial<CalculatorInputs> = {};
   const num = (k: string) => {
     const v = search.get(k);

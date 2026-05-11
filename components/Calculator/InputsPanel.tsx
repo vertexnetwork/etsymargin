@@ -7,10 +7,7 @@ import type { Country, CountryCode } from "@/lib/countries";
 type Props = {
   inputs: CalculatorInputs;
   countries: Country[];
-  onChange: <K extends keyof CalculatorInputs>(
-    key: K,
-    value: CalculatorInputs[K],
-  ) => void;
+  onChange: <K extends keyof CalculatorInputs>(key: K, value: CalculatorInputs[K]) => void;
   onCountryChange: (code: CountryCode) => void;
 };
 
@@ -25,12 +22,7 @@ const numericFields: Array<{
   { key: "actualShippingCost", label: "Actual Shipping Cost" },
 ];
 
-export function InputsPanel({
-  inputs,
-  countries,
-  onChange,
-  onCountryChange,
-}: Props) {
+export function InputsPanel({ inputs, countries, onChange, onCountryChange }: Props) {
   return (
     <div className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6">
       <h2 className="mb-5 text-lg font-semibold text-patina-900">Your numbers</h2>
@@ -61,8 +53,7 @@ export function InputsPanel({
             ))}
           </select>
           <span className="mt-1 block text-xs text-patina-muted">
-            All math runs in USD. Country drives Etsy&apos;s payment-processing
-            and regulatory fees.
+            All math runs in USD. Country drives Etsy&apos;s payment-processing and regulatory fees.
           </span>
         </label>
 
@@ -71,15 +62,11 @@ export function InputsPanel({
           aria-labelledby="ads-group-label"
           className="space-y-2.5 rounded-lg bg-cream-100 p-3.5"
         >
-          <p
-            id="ads-group-label"
-            className="text-sm font-medium text-patina-800"
-          >
+          <p id="ads-group-label" className="text-sm font-medium text-patina-800">
             Off-Site Ads
           </p>
           <p id="ads-10k-help" className="text-xs text-patina-muted">
-            Etsy charges 15% under $10k trailing revenue (opt-in) or 12% at/above
-            (mandatory).
+            Etsy charges 15% under $10k trailing revenue (opt-in) or 12% at/above (mandatory).
           </p>
           <label className="flex cursor-pointer items-start gap-2.5">
             <input
@@ -88,9 +75,7 @@ export function InputsPanel({
               onChange={(e) => onChange("offsiteAdsEnabled", e.target.checked)}
               className="mt-0.5 h-4 w-4 accent-patina-600"
             />
-            <span className="text-sm text-patina-800">
-              Include Off-Site Ads fee on this order
-            </span>
+            <span className="text-sm text-patina-800">Include Off-Site Ads fee on this order</span>
           </label>
           {inputs.offsiteAdsEnabled && (
             <label className="flex cursor-pointer items-start gap-2.5 pl-6">
@@ -138,9 +123,7 @@ function NumericField({
   return (
     <label htmlFor={id} className="block">
       <span className="text-sm font-medium text-patina-800">{label}</span>
-      {hint && (
-        <span className="mt-0.5 block text-xs text-patina-muted">{hint}</span>
-      )}
+      {hint && <span className="mt-0.5 block text-xs text-patina-muted">{hint}</span>}
       <div className="relative mt-1.5">
         <span className="pointer-events-none absolute inset-y-0 left-3 flex items-center text-patina-muted">
           $

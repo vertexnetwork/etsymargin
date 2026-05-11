@@ -31,10 +31,7 @@ async function copyDirIfExists(srcDir, destDir) {
 async function main() {
   await copyFile(path.join(root, "manifest.json"), path.join(dist, "manifest.json"));
   console.log("[post-build] copied manifest.json");
-  const iconCount = await copyDirIfExists(
-    path.join(root, "icons"),
-    path.join(dist, "icons"),
-  );
+  const iconCount = await copyDirIfExists(path.join(root, "icons"), path.join(dist, "icons"));
   console.log(`[post-build] copied ${iconCount} icon(s)`);
 }
 

@@ -1,8 +1,4 @@
-const POINTS = [
-  "Free · no signup",
-  "Math runs in your browser",
-  "Updated for 2026 fees",
-];
+const POINTS = ["Free · no signup", "Math runs in your browser", "Updated for 2026 fees"];
 
 export function TrustStrip() {
   return (

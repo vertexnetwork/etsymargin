@@ -11,10 +11,7 @@ export type PseoEntry = {
   heroSubcopy: string;
   prefilledScenario: Pick<
     CalculatorInputs,
-    | "itemPrice"
-    | "shippingCharged"
-    | "manufacturingCost"
-    | "actualShippingCost"
+    "itemPrice" | "shippingCharged" | "manufacturingCost" | "actualShippingCost"
   >;
   faq: PseoFaq[];
 };

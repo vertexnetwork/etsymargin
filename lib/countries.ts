@@ -23,7 +23,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     label: "United Kingdom",
     currencySymbol: "£",
     paymentPercent: 0.04,
-    paymentFlat: 0.20,
+    paymentFlat: 0.2,
     regulatoryOperatingPercent: 0.0032,
   },
   CA: {
@@ -47,7 +47,7 @@ export const COUNTRIES: Record<CountryCode, Country> = {
     label: "Other (EU country)",
     currencySymbol: "€",
     paymentPercent: 0.04,
-    paymentFlat: 0.30,
+    paymentFlat: 0.3,
     regulatoryOperatingPercent: 0,
   },
 };

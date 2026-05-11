@@ -2,13 +2,13 @@
 
 ## 1. Overview
 
-A free, instant, browser-based calculator that shows independent Etsy sellers their **true** net profit and margin after every layered platform fee — listing, transaction, payment processing, and (optionally) the 12–15% Off-Site Ads cut. The output is a stark waterfall chart that makes the loss path visible at a glance. Positioning: *"Find your true profit before you price."*
+A free, instant, browser-based calculator that shows independent Etsy sellers their **true** net profit and margin after every layered platform fee — listing, transaction, payment processing, and (optionally) the 12–15% Off-Site Ads cut. The output is a stark waterfall chart that makes the loss path visible at a glance. Positioning: _"Find your true profit before you price."_
 
 ---
 
 ## 2. Internal — Business Model
 
-*Not for the public site. Strategy, projections, and monetization assumptions.*
+_Not for the public site. Strategy, projections, and monetization assumptions._
 
 - **Niche & score**: E-commerce / Personal Finance — overall **89/100** (Earning Potential 90, Ease of Implementation 88).
 - **Traffic model** (PVs/mo): 5,000 min · 15,000 avg · 30,000 max.
@@ -28,28 +28,33 @@ A free, instant, browser-based calculator that shows independent Etsy sellers th
 
 ## 3. Brand & Customer-Facing
 
-*Voice, visual identity, and audience for everything users see.*
+_Voice, visual identity, and audience for everything users see._
 
 ### Audience
+
 - 86M+ active Etsy buyers worldwide.
 - Sellers skew: ~80% women, 97% home-based, 82% solo operators.
 - Largest age cohort: 25–34.
 
 ### Positioning copy
+
 - Primary hook: **"Don't lose money on mandatory 15% Offsite Ads."**
 - Tagline: **"Find your true profit before you price."**
 - Tone: address the financial anxiety directly, but keep the surface calm and approachable — this is already a stressful topic.
 
 ### Visual direction
-- **Primary palette**: Patina Blue (Etsy's 2026 Color of the Year) *or* Lime Cream (popular 2025 accent).
+
+- **Primary palette**: Patina Blue (Etsy's 2026 Color of the Year) _or_ Lime Cream (popular 2025 accent).
 - **Supporting**: soft, dreamy pastels for breathing room.
 - **Why**: financial tools tend to feel sharp and intimidating; a calm pastel surface makes the (sometimes brutal) numbers easier to sit with.
 
 ### Typography
+
 - **Display**: Urbanist — clean, refined, legible at large sizes.
 - **Body**: Poppins — friendly geometric sans-serif, fits the solo-entrepreneur vibe.
 
 ### Domain & socials
+
 - **Domain**: `etsymargin.tools` (available).
 - **Handle**: `@etsymargin` (free across major platforms).
 
@@ -57,9 +62,10 @@ A free, instant, browser-based calculator that shows independent Etsy sellers th
 
 ## 4. Engineering Plan
 
-*The buildable spec. A developer should be able to start from this section alone.*
+_The buildable spec. A developer should be able to start from this section alone._
 
 ### 4.1 Architecture
+
 - **Framework**: Next.js (App Router) on **Vercel**.
 - **Compute model**: 100% client-side calculations — deterministic pure functions. No backend, no database. Supabase is intentionally bypassed.
 - **Persistence**: `localStorage` for user macro defaults (shop country, $10k revenue threshold flag, default fee assumptions) so return visits skip data entry.
@@ -101,14 +107,16 @@ tests/
 ### 4.3 Calculator — inputs, algorithm, outputs
 
 **Inputs (form fields):**
+
 - Item Sale Price
 - Shipping Charged to Buyer
 - Product Manufacturing Cost
 - Actual Shipping Cost
-- Shop Country *(drives payment processor formula)*
+- Shop Country _(drives payment processor formula)_
 - Off-Site Ads toggle + $10k revenue threshold flag
 
 **Fee algorithm (sequential, lives in `lib/fees.ts`):**
+
 1. **Listing Fee** — flat **$0.20**.
 2. **Transaction Fee** — **6.5%** of `(Item Price + Shipping Charged)`.
 3. **Payment Processing** — country-specific (US example: **3% + $0.25**); driven by `lib/countries.ts`.
@@ -121,6 +129,7 @@ tests/
 Every step returns both a dollar amount and a labeled bucket so the chart consumes the algorithm output directly.
 
 **Outputs:**
+
 - Waterfall chart from gross → net, one bar per deduction.
 - Headline numbers: net profit ($) and true margin (%).
 - Per-fee breakdown table.
@@ -128,11 +137,13 @@ Every step returns both a dollar amount and a labeled bucket so the chart consum
 **Chart library**: **Recharts** (small bundle, good waterfall support, friendly to Next.js client components). Fallback: Visx if customization gets blocked.
 
 ### 4.4 State, persistence, URL sharing
+
 - React local state for the form; no global state library needed at MVP.
 - `lib/storage.ts` persists macro defaults under a versioned key (`etsymargin:v1`) so future schema changes don't crash old visitors.
 - Calculator inputs serialize to URL query params — users can share/bookmark a scenario, and inbound shared URLs double as a free analytics signal.
 
 ### 4.5 Programmatic SEO directory
+
 - **Route**: `/etsy-profit-margin/[slug]`.
 - **Data**: slug list in `lib/pseo/data.ts`. Each entry includes: `title`, `metaDescription`, `heroCopy`, `prefilledScenario`, `faq[]`.
 - **Long-form copy**: MDX files in `content/pseo/`.
@@ -142,6 +153,7 @@ Every step returns both a dollar amount and a labeled bucket so the chart consum
 - **JSON-LD**: `FAQPage` + `SoftwareApplication` schema via `components/seo/JsonLd.tsx`.
 
 ### 4.6 Mediavine ad integration
+
 - MVP launches **without** ads — slots are reserved in layout but inactive until the site hits Mediavine's ~50k sessions/mo threshold and is approved.
 - `<MediavineSlot />` encapsulates the script tag + placement; lazy-loaded below the fold to protect LCP.
 - Fixed-height containers prevent CLS regressions.
@@ -151,17 +163,20 @@ Every step returns both a dollar amount and a labeled bucket so the chart consum
   - Sticky footer slot on mobile.
 
 ### 4.7 Analytics
+
 - **GA4** via `next/third-parties` (official, low-overhead).
 - **Custom events**: `calculator_calculated`, `offsite_ads_toggled`, `country_changed`, `pseo_page_viewed`, `share_url_copied`.
 - Optional Plausible add-on later for a privacy-friendly dashboard; GA4 is fine for ad-network attribution.
 
 ### 4.8 Performance & SEO targets
+
 - **Core Web Vitals** (mid-tier mobile): LCP < 2.0s · CLS < 0.05 · INP < 200ms.
 - **Calculator JS budget**: ≤ 60 KB gzipped — Recharts is the main weight; tree-shake aggressively.
 - **Fonts**: `next/font` self-hosting Urbanist + Poppins with `display: swap`.
 - All pSEO routes statically rendered; rely on Vercel's default cache headers.
 
 ### 4.9 Testing strategy
+
 - **Unit (Vitest)** — `lib/fees.ts` is the correctness backbone:
   - Every fee path × every country.
   - Ads on/off, both thresholds (under and at/over $10k).
@@ -171,6 +186,7 @@ Every step returns both a dollar amount and a labeled bucket so the chart consum
 - All three suites run on every PR.
 
 ### 4.10 Deployment & CI
+
 - GitHub repo → Vercel project. Preview deploys on every PR; prod on `main`.
 - No secrets / env vars required at MVP.
 - GitHub Actions on PR: `pnpm test` · `pnpm typecheck` · `pnpm lint`.

@@ -31,34 +31,30 @@ export default function ContactPage() {
           {siteConfig.supportEmail}
         </a>
         <p className="mt-4 text-sm text-(--color-on-bg)/80">
-          We typically reply within two business days. Faster if your message
-          contains a reproducible fee-math correction with a link to the Etsy
-          help page that documents the rate you&apos;re flagging.
+          We typically reply within two business days. Faster if your message contains a
+          reproducible fee-math correction with a link to the Etsy help page that documents the rate
+          you&apos;re flagging.
         </p>
       </section>
 
       <section className="mt-10 space-y-4 text-(--color-on-bg)/85">
-        <h2 className="text-xl font-bold text-(--color-on-bg)">
-          What we&apos;d love to hear
-        </h2>
+        <h2 className="text-xl font-bold text-(--color-on-bg)">What we&apos;d love to hear</h2>
         <ul className="list-disc space-y-2 pl-6">
           <li>
-            Fee math we&apos;re modeling wrong — please link the Etsy help-page
-            URL so we can verify and patch in one round trip.
+            Fee math we&apos;re modeling wrong — please link the Etsy help-page URL so we can verify
+            and patch in one round trip.
           </li>
           <li>
-            A country we should add to the country selector (currently US, UK,
-            Canada, Australia, EU).
+            A country we should add to the country selector (currently US, UK, Canada, Australia,
+            EU).
           </li>
           <li>
-            Embed bugs (the iframe at <code>/embed/widget</code> behaves
-            unexpectedly on a host theme).
+            Embed bugs (the iframe at <code>/embed/widget</code> behaves unexpectedly on a host
+            theme).
           </li>
           <li>Press, podcast, or syndication requests.</li>
         </ul>
-        <h2 className="mt-6 text-xl font-bold text-(--color-on-bg)">
-          Security
-        </h2>
+        <h2 className="mt-6 text-xl font-bold text-(--color-on-bg)">Security</h2>
         <p>
           For security reports, use{" "}
           <a
@@ -78,9 +74,7 @@ export default function ContactPage() {
         </p>
       </section>
 
-      <p className="mt-12 text-xs text-(--color-muted)">
-        {siteConfig.trademarkDisclaimer}
-      </p>
+      <p className="mt-12 text-xs text-(--color-muted)">{siteConfig.trademarkDisclaimer}</p>
     </main>
   );
 }

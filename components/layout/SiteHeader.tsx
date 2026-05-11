@@ -8,10 +8,7 @@ export function SiteHeader() {
   return (
     <header className="sticky top-0 z-30 w-full border-b border-(--color-border) bg-(--color-bg)/85 backdrop-blur supports-[backdrop-filter]:bg-(--color-bg)/70">
       <div className="mx-auto flex h-14 max-w-5xl items-center justify-between px-5 sm:h-16">
-        <Link
-          href="/"
-          className="text-(--color-on-bg) transition hover:text-(--color-accent)"
-        >
+        <Link href="/" className="text-(--color-on-bg) transition hover:text-(--color-accent)">
           <Wordmark size={22} />
         </Link>
 
@@ -21,11 +18,7 @@ export function SiteHeader() {
           className="hidden items-center gap-6 text-sm font-medium text-(--color-on-bg)/85 sm:flex"
         >
           {navLinks.map((l) => (
-            <Link
-              key={l.href}
-              href={l.href}
-              className="transition hover:text-(--color-accent)"
-            >
+            <Link key={l.href} href={l.href} className="transition hover:text-(--color-accent)">
               {l.label}
             </Link>
           ))}

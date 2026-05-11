@@ -28,10 +28,7 @@ export const siteConfig = {
   ],
 
   // contact / legal
-  supportEmail: env(
-    "NEXT_PUBLIC_SITE_CONTACT_EMAIL",
-    "hello@etsymargin.tools",
-  ),
+  supportEmail: env("NEXT_PUBLIC_SITE_CONTACT_EMAIL", "hello@etsymargin.tools"),
   trademarkDisclaimer:
     "Etsy is a registered trademark of Etsy, Inc. Etsy Margin is an independent tool and is not endorsed by, affiliated with, or sponsored by Etsy.",
 
@@ -151,10 +148,7 @@ export const siteConfig = {
 
   // RFC 9116
   security: {
-    contact: env(
-      "NEXT_PUBLIC_SECURITY_CONTACT",
-      "mailto:security@etsymargin.tools",
-    ),
+    contact: env("NEXT_PUBLIC_SECURITY_CONTACT", "mailto:security@etsymargin.tools"),
     expires: "2027-05-10T00:00:00Z",
   },
 } as const;

@@ -11,9 +11,7 @@ test.describe("a11y — axe-core", () => {
   for (const path of ROUTES) {
     test(`no critical/serious violations: ${path}`, async ({ page }) => {
       await page.goto(path);
-      const results = await new AxeBuilder({ page })
-        .withTags(["wcag2a", "wcag2aa"])
-        .analyze();
+      const results = await new AxeBuilder({ page }).withTags(["wcag2a", "wcag2aa"]).analyze();
       const blocking = results.violations.filter(
         (v) => v.impact === "critical" || v.impact === "serious",
       );

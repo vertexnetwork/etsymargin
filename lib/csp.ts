@@ -82,8 +82,5 @@ export function buildCSP(providers: CspProviders = {}): string {
 // needs frame-ancestors *.
 export function buildEmbedCSP(providers: CspProviders = {}): string {
   const main = buildCSP(providers);
-  return main.replace(
-    /frame-ancestors '?none'?/,
-    "frame-ancestors *",
-  );
+  return main.replace(/frame-ancestors '?none'?/, "frame-ancestors *");
 }

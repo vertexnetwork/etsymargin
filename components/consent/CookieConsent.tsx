@@ -14,15 +14,12 @@ export function CookieConsent() {
       aria-labelledby="cookie-consent-title"
       className="fixed inset-x-3 bottom-3 z-50 mx-auto max-w-3xl rounded-2xl bg-(--color-on-bg) p-4 text-(--color-on-accent) shadow-2xl ring-1 ring-(--color-accent) sm:bottom-6 sm:p-5"
     >
-      <p
-        id="cookie-consent-title"
-        className="text-sm font-semibold sm:text-base"
-      >
+      <p id="cookie-consent-title" className="text-sm font-semibold sm:text-base">
         We use cookies for opt-in analytics.
       </p>
       <p className="mt-1 text-xs text-(--color-on-accent)/80 sm:text-sm">
-        Microsoft Clarity loads only after you accept. Calculator math runs
-        entirely in your browser regardless. See our{" "}
+        Microsoft Clarity loads only after you accept. Calculator math runs entirely in your browser
+        regardless. See our{" "}
         <Link
           href="/privacy"
           className="underline underline-offset-2 hover:text-(--color-on-accent)"

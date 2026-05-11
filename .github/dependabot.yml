@@ -7,6 +7,13 @@ updates:
     open-pull-requests-limit: 5
     labels:
       - dependencies
+    ignore:
+      # @types/node major versions must track the Node runtime
+      # (.nvmrc → 22). Bumping types past the runtime introduces type
+      # definitions for APIs that don't exist at runtime. Patch + minor
+      # bumps still flow through.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: "/"
