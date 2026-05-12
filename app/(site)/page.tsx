@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
+import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
@@ -36,6 +37,14 @@ export default function Home() {
       </header>
 
       <Calculator />
+
+      {/* Inline Pricing Bible CTA — between the calculator and the
+          categories grid, where the eye has just finished processing
+          numbers and is scanning for "what's next". The compact CTA
+          inside the results card alone was too easy to miss.
+          Attribution: utm_source=home so we can compare home-inline
+          vs in-calculator compact tiers. */}
+      <GumroadCta variant="inline" source="home" className="mt-10 sm:mt-12" />
 
       <section id="categories" className="mt-12 scroll-mt-20 sm:mt-16">
         <h2 className="mb-2 text-2xl font-bold text-patina-900">Profit math by Etsy category</h2>

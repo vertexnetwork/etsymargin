@@ -37,4 +37,14 @@ describe("CSP builder", () => {
   it("includes object-src 'none' (defense-in-depth)", () => {
     expect(buildCSP({})).toContain("object-src 'none'");
   });
+
+  it("frame-src includes 'self' when adsense is on (embed preview must work)", () => {
+    // Regression: when adsense flips on in prod, the CSP previously
+    // emitted `frame-src https://googleads.g.doubleclick.net` with no
+    // 'self', which broke the /embed page's live preview that iframes
+    // /embed/widget on the same origin. Pin the fix.
+    const csp = buildCSP({ adsense: true });
+    expect(csp).toMatch(/frame-src [^;]*'self'/);
+    expect(csp).toContain("https://googleads.g.doubleclick.net");
+  });
 });

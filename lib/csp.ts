@@ -60,7 +60,12 @@ export function buildCSP(providers: CspProviders = {}): string {
     add(d, "script-src", "https://pagead2.googlesyndication.com");
     add(d, "img-src", "https://pagead2.googlesyndication.com");
     add(d, "connect-src", "https://pagead2.googlesyndication.com");
-    add(d, "frame-src", "https://googleads.g.doubleclick.net");
+    // `frame-src` is its own directive and does NOT inherit from
+    // default-src once specified, so we must include 'self' explicitly
+    // or the /embed page can no longer iframe /embed/widget (same
+    // origin). Forgetting this broke the live preview on the embed
+    // page once adsense flipped on in production.
+    add(d, "frame-src", "'self'", "https://googleads.g.doubleclick.net");
   }
   if (providers.mediavine) {
     add(d, "script-src", "https://scripts.mediavine.com", "https://faves.grow.me");
