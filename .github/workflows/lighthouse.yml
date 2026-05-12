@@ -36,8 +36,8 @@ jobs:
 
       - name: Setup pnpm
         uses: pnpm/action-setup@v4
-        with:
-          version: 9
+        # No `version:` — pnpm/action-setup reads from package.json's
+        # `packageManager` field; specifying both causes a conflict.
 
       - name: Setup Node
         uses: actions/setup-node@v4
