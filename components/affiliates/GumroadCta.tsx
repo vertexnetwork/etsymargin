@@ -1,5 +1,5 @@
 type Variant = "compact" | "card" | "inline";
-type Source = "calculator" | "recommendations" | "pseo";
+type Source = "calculator" | "recommendations" | "pseo" | "home";
 
 type Props = {
   variant: Variant;
@@ -30,7 +30,7 @@ function buildHref(rawUrl: string, source: Source, variant: Variant, content?: s
 export function GumroadCta({ variant, source, content, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
-  const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "9";
+  const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "39";
 
   if (!enabled || !productUrl) return null;
   const href = buildHref(productUrl, source, variant, content);

@@ -61,7 +61,10 @@ const composeCsp = (providers, embed = false) => {
     add("script-src", "https://pagead2.googlesyndication.com");
     add("img-src", "https://pagead2.googlesyndication.com");
     add("connect-src", "https://pagead2.googlesyndication.com");
-    add("frame-src", "https://googleads.g.doubleclick.net");
+    // `frame-src` is its own directive and does NOT inherit from
+    // default-src once specified, so 'self' must be explicit or the
+    // /embed page can no longer iframe /embed/widget (same origin).
+    add("frame-src", "'self'", "https://googleads.g.doubleclick.net");
   }
   if (providers.mediavine) {
     add("script-src", "https://scripts.mediavine.com", "https://faves.grow.me");
