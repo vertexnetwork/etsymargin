@@ -3,12 +3,7 @@
 import { useEffect, useMemo, useRef, useState } from "react";
 import { calculate, type CalculatorInputs } from "@/lib/fees";
 import { COUNTRY_LIST, type CountryCode } from "@/lib/countries";
-import {
-  inputsFromQuery,
-  inputsToQuery,
-  loadDefaults,
-  saveDefaults,
-} from "@/lib/storage";
+import { inputsFromQuery, inputsToQuery, loadDefaults, saveDefaults } from "@/lib/storage";
 import { events } from "@/lib/analytics";
 import { siteConfig } from "@/lib/site-config";
 import { InputsPanel } from "./InputsPanel";
@@ -28,9 +23,7 @@ const DEFAULT_INPUTS: CalculatorInputs = {
 function readClientOverrides(): Partial<CalculatorInputs> {
   if (typeof window === "undefined") return {};
   try {
-    const fromUrl = inputsFromQuery(
-      new URLSearchParams(window.location.search),
-    );
+    const fromUrl = inputsFromQuery(new URLSearchParams(window.location.search));
     const fromStorage = loadDefaults() ?? {};
     return { ...fromStorage, ...fromUrl };
   } catch {
@@ -89,10 +82,7 @@ export function Calculator({
 
   const result = useMemo(() => calculate(inputs), [inputs]);
 
-  const update = <K extends keyof CalculatorInputs>(
-    key: K,
-    value: CalculatorInputs[K],
-  ) => {
+  const update = <K extends keyof CalculatorInputs>(key: K, value: CalculatorInputs[K]) => {
     setInputs((prev) => ({ ...prev, [key]: value }));
     userEditedRef.current = true;
     if (embedded) return;

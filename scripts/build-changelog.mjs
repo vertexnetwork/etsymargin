@@ -23,10 +23,10 @@ function readGitLog() {
   const fmt = `%H${FIELD}%aI${FIELD}%s${RECORD}`;
   let raw;
   try {
-    raw = execSync(
-      `git log --no-merges --pretty=format:"${fmt}"`,
-      { encoding: "utf8", maxBuffer: 8 * 1024 * 1024 },
-    );
+    raw = execSync(`git log --no-merges --pretty=format:"${fmt}"`, {
+      encoding: "utf8",
+      maxBuffer: 8 * 1024 * 1024,
+    });
   } catch {
     return [];
   }
@@ -56,10 +56,9 @@ function build() {
   // Oldest commit date currently in git's view. On a shallow clone this is
   // recent; on a full clone it's the repo's first commit.
   const oldestGitDate = fromGit.length
-    ? fromGit.reduce(
-        (min, c) => (c.date && c.date < min ? c.date : min),
-        fromGit[0].date,
-      ).slice(0, 10)
+    ? fromGit
+        .reduce((min, c) => (c.date && c.date < min ? c.date : min), fromGit[0].date)
+        .slice(0, 10)
     : null;
 
   const merged = new Map();
@@ -83,9 +82,7 @@ function build() {
       title: c.subject,
     });
   }
-  return Array.from(merged.values()).sort((a, b) =>
-    b.date.localeCompare(a.date),
-  );
+  return Array.from(merged.values()).sort((a, b) => b.date.localeCompare(a.date));
 }
 
 const entries = build();

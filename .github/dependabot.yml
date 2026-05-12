@@ -3,15 +3,40 @@ updates:
   - package-ecosystem: npm
     directory: "/"
     schedule:
+      # Weekly on Mondays — all bumps for the week arrive together so
+      # an absent-for-a-month return is 4 PRs, not 40 independent ones.
       interval: weekly
-    open-pull-requests-limit: 5
+      day: monday
+    open-pull-requests-limit: 3
     labels:
       - dependencies
+    groups:
+      # Bundle every minor + patch bump into ONE consolidated PR per
+      # week. Major bumps still get their own PR (they aren't in this
+      # group's match set) because they need individual review.
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch
+    ignore:
+      # @types/node major versions must track the Node runtime
+      # (.nvmrc → 22). Bumping types past the runtime introduces type
+      # definitions for APIs that don't exist at runtime. Patch + minor
+      # bumps still flow through.
+      - dependency-name: "@types/node"
+        update-types: ["version-update:semver-major"]
 
   - package-ecosystem: github-actions
     directory: "/"
     schedule:
       interval: weekly
+      day: monday
+    open-pull-requests-limit: 3
     labels:
       - dependencies
       - github-actions
+    groups:
+      minor-and-patch:
+        update-types:
+          - minor
+          - patch

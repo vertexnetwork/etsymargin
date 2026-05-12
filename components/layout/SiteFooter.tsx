@@ -20,8 +20,7 @@ export function SiteFooter() {
           </p>
           {showAffiliateDisclosure && (
             <p className="mt-3 text-xs text-(--color-muted)">
-              Some outbound links are affiliate links — clearly disclosed
-              wherever they appear.
+              Some outbound links are affiliate links — clearly disclosed wherever they appear.
             </p>
           )}
         </div>
@@ -35,10 +34,7 @@ export function SiteFooter() {
           © {year} {siteConfig.name} · {siteConfig.nav.disclaimer}
         </span>
         <span aria-hidden="true">·</span>
-        <VertexFooterLink
-          href="/network"
-          className="transition hover:text-(--color-accent)"
-        >
+        <VertexFooterLink href="/network" className="transition hover:text-(--color-accent)">
           Part of the Vertex Network
         </VertexFooterLink>
       </div>
@@ -61,10 +57,7 @@ function FooterColumn({
       <ul className="mt-2 space-y-1.5 text-sm sm:mt-3 sm:space-y-2">
         {links.map((l) => (
           <li key={l.href}>
-            <Link
-              href={l.href}
-              className="text-(--color-on-bg)/85 hover:text-(--color-accent)"
-            >
+            <Link href={l.href} className="text-(--color-on-bg)/85 hover:text-(--color-accent)">
               {l.label}
             </Link>
           </li>

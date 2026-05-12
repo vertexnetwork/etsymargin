@@ -48,11 +48,7 @@ export const viewport: Viewport = {
   themeColor: siteConfig.brand.markColor,
 };
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`${urbanist.variable} ${poppins.variable}`}>
       <body className="min-h-screen antialiased">{children}</body>

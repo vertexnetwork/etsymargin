@@ -1,6 +1,5 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "_comment": "apex ↔ www redirection is handled by Vercel's domain settings (set the apex etsymargin.tools as primary; Vercel auto-redirects www to it). A vercel.json redirect here would fight Vercel's platform-level redirect and produce ERR_TOO_MANY_REDIRECTS.",
   "headers": [
     {
       "source": "/((?!embed/).*)",
@@ -59,15 +58,11 @@
     },
     {
       "source": "/llms.txt",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
     },
     {
       "source": "/llms-full.txt",
-      "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400" }
-      ]
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=86400" }]
     },
     {
       "source": "/.well-known/security.txt",

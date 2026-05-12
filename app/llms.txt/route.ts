@@ -48,13 +48,21 @@ export async function GET() {
   lines.push("");
 
   lines.push("## Site");
-  lines.push(`- [About](${BASE_URL}/about): What this is, how the math works (with the 2026 fee constants), privacy posture, contact.`);
-  lines.push(`- [Recommendations](${BASE_URL}/recommendations): A short, disclosed list of third-party tools that move an Etsy seller's margin. Affiliate links present; calculator math is independent.`);
-  lines.push(`- [Changelog](${BASE_URL}/changelog): Version history for the calculator and fee math.`);
+  lines.push(
+    `- [About](${BASE_URL}/about): What this is, how the math works (with the 2026 fee constants), privacy posture, contact.`,
+  );
+  lines.push(
+    `- [Recommendations](${BASE_URL}/recommendations): A short, disclosed list of third-party tools that move an Etsy seller's margin. Affiliate links present; calculator math is independent.`,
+  );
+  lines.push(
+    `- [Changelog](${BASE_URL}/changelog): Version history for the calculator and fee math.`,
+  );
   lines.push(`- [Privacy](${BASE_URL}/privacy): Privacy policy.`);
   lines.push(`- [Terms](${BASE_URL}/terms): Terms of use.`);
   lines.push(`- [Contact](${BASE_URL}/contact): How to reach the maintainer.`);
-  lines.push(`- [Network](${BASE_URL}/network): Other independent web tools we operate (the Vertex Network).`);
+  lines.push(
+    `- [Network](${BASE_URL}/network): Other independent web tools we operate (the Vertex Network).`,
+  );
   lines.push(`- [Sitemap](${BASE_URL}/sitemap.xml): All indexable URLs.`);
   lines.push("");
 

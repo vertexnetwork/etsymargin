@@ -52,11 +52,7 @@ export async function generateMetadata({
   };
 }
 
-export default async function PseoPage({
-  params,
-}: {
-  params: Promise<{ slug: string }>;
-}) {
+export default async function PseoPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
   const entry = getPseoEntry(slug);
   if (!entry) notFound();
@@ -111,10 +107,7 @@ export default async function PseoPage({
             options={{
               mdxOptions: {
                 remarkPlugins: [remarkGfm],
-                rehypePlugins: [
-                  rehypeSlug,
-                  [rehypeAutolinkHeadings, { behavior: "wrap" }],
-                ],
+                rehypePlugins: [rehypeSlug, [rehypeAutolinkHeadings, { behavior: "wrap" }]],
               },
             }}
           />
@@ -126,9 +119,8 @@ export default async function PseoPage({
           Writing about {entry.category.toLowerCase()} on Etsy?
         </h2>
         <p className="mt-2 text-patina-800/85">
-          Drop this exact calculator — pre-filled with the {entry.category.toLowerCase()}{" "}
-          scenario above — into your post or supplier page with a single iframe.
-          Free, no signup.
+          Drop this exact calculator — pre-filled with the {entry.category.toLowerCase()} scenario
+          above — into your post or supplier page with a single iframe. Free, no signup.
         </p>
         <Link
           href="/embed"
@@ -140,15 +132,10 @@ export default async function PseoPage({
       </aside>
 
       <section className="mt-16">
-        <h2 className="mb-6 text-2xl font-bold text-patina-900">
-          Frequently asked questions
-        </h2>
+        <h2 className="mb-6 text-2xl font-bold text-patina-900">Frequently asked questions</h2>
         <div className="space-y-4">
           {entry.faq.map((f) => (
-            <details
-              key={f.q}
-              className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80"
-            >
+            <details key={f.q} className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80">
               <summary className="cursor-pointer text-base font-semibold text-patina-900">
                 {f.q}
               </summary>
@@ -167,9 +154,7 @@ export default async function PseoPage({
       )}
 
       <section className="mt-16">
-        <h2 className="mb-4 text-xl font-bold text-patina-900">
-          More Etsy profit math
-        </h2>
+        <h2 className="mb-4 text-xl font-bold text-patina-900">More Etsy profit math</h2>
         <ul className="grid gap-2 sm:grid-cols-2">
           {PSEO_ENTRIES.filter((e) => e.slug !== entry.slug).map((e) => (
             <li key={e.slug}>
@@ -183,7 +168,6 @@ export default async function PseoPage({
           ))}
         </ul>
       </section>
-
     </main>
   );
 }

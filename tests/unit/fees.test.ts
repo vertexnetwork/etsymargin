@@ -71,9 +71,7 @@ describe("calculate", () => {
       offsiteAdsEnabled: false,
       atOrAbove10k: false,
     });
-    expect(
-      r.fees.find((f) => f.label === "Regulatory Operating Fee")?.amount,
-    ).toBe(1.15);
+    expect(r.fees.find((f) => f.label === "Regulatory Operating Fee")?.amount).toBe(1.15);
   });
 
   it("uses UK payment processing rate (4% + £0.20)", () => {

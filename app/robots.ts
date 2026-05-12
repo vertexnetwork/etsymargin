@@ -12,10 +12,7 @@ type AiBots = { allow: string[]; disallow: string[] };
 
 async function loadAiBots(): Promise<AiBots> {
   try {
-    const raw = await fs.readFile(
-      path.join(process.cwd(), "public", "ai-bots.json"),
-      "utf8",
-    );
+    const raw = await fs.readFile(path.join(process.cwd(), "public", "ai-bots.json"), "utf8");
     const parsed = JSON.parse(raw) as Partial<AiBots>;
     return {
       allow: Array.isArray(parsed.allow) ? parsed.allow : [],

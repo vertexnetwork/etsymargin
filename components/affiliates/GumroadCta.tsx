@@ -14,12 +14,7 @@ type Props = {
   className?: string;
 };
 
-function buildHref(
-  rawUrl: string,
-  source: Source,
-  variant: Variant,
-  content?: string,
-) {
+function buildHref(rawUrl: string, source: Source, variant: Variant, content?: string) {
   try {
     const url = new URL(rawUrl);
     url.searchParams.set("utm_source", source);
@@ -77,9 +72,7 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
   }
 
   return (
-    <section
-      className={`quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6 ${className}`}
-    >
+    <section className={`quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6 ${className}`}>
       <span className="inline-flex items-center rounded-full bg-lime-cream/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
         Digital download · ${price}
       </span>
@@ -87,9 +80,8 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
         The 2026 Etsy Pricing Bible
       </h2>
       <p className="mt-2 text-sm text-patina-800/85 sm:text-base">
-        Every fee scenario pre-modeled in one PDF and spreadsheet — by category,
-        by country, with the offsite-ads tipping point flagged for each. One-time
-        purchase. Instant download.
+        Every fee scenario pre-modeled in one PDF and spreadsheet — by category, by country, with
+        the offsite-ads tipping point flagged for each. One-time purchase. Instant download.
       </p>
       <a
         href={href}

@@ -110,11 +110,7 @@ async function main() {
   await writePng(path.join(OUT_DIR, "favicon-32.png"), brandCard(32, body, 0.05), 32);
   await writePng(path.join(OUT_DIR, "icon-192.png"), brandCard(192, body), 192);
   await writePng(path.join(OUT_DIR, "icon-512.png"), brandCard(512, body), 512);
-  await writePng(
-    path.join(OUT_DIR, "apple-touch-icon-180.png"),
-    brandCard(180, body),
-    180,
-  );
+  await writePng(path.join(OUT_DIR, "apple-touch-icon-180.png"), brandCard(180, body), 180);
   await buildIco(body, path.join(OUT_DIR, "favicon.ico"));
 
   // OG fallback — used by routes without dynamic OG.

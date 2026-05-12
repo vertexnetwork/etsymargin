@@ -16,10 +16,7 @@ type Site = {
 
 describe("public/network.json", () => {
   it("matches the canonical Property shape spec §7", async () => {
-    const raw = await fs.readFile(
-      path.join(process.cwd(), "public", "network.json"),
-      "utf8",
-    );
+    const raw = await fs.readFile(path.join(process.cwd(), "public", "network.json"), "utf8");
     const manifest = JSON.parse(raw) as {
       version: string;
       brand: string;
@@ -40,10 +37,7 @@ describe("public/network.json", () => {
   });
 
   it("includes etsymargin (the current spoke is registered in the hub)", async () => {
-    const raw = await fs.readFile(
-      path.join(process.cwd(), "public", "network.json"),
-      "utf8",
-    );
+    const raw = await fs.readFile(path.join(process.cwd(), "public", "network.json"), "utf8");
     const manifest = JSON.parse(raw) as { sites: Site[] };
     const self = manifest.sites.find((s) => s.slug === "etsymargin");
     expect(self).toBeDefined();

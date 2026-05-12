@@ -95,11 +95,9 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
   const range = dataMax - dataMin || 1;
 
   const barAreaW = VIEW_W - LABEL_W - PAD_RIGHT;
-  const xScale = (v: number) =>
-    LABEL_W + ((v - dataMin) / range) * barAreaW;
+  const xScale = (v: number) => LABEL_W + ((v - dataMin) / range) * barAreaW;
 
-  const totalH =
-    PAD_TOP + steps.length * ROW_H + (steps.length - 1) * ROW_GAP + PAD_BOTTOM;
+  const totalH = PAD_TOP + steps.length * ROW_H + (steps.length - 1) * ROW_GAP + PAD_BOTTOM;
 
   const zeroX = xScale(0);
 
@@ -110,12 +108,9 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
 
   return (
     <div className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6">
-      <h2 className="mb-1 text-lg font-semibold text-patina-900">
-        Loss path: gross → net
-      </h2>
+      <h2 className="mb-1 text-lg font-semibold text-patina-900">Loss path: gross → net</h2>
       <p className="mb-5 text-sm text-patina-muted">
-        Each red bar is a fee Etsy takes before you pay product cost. Tap a bar
-        for details.
+        Each red bar is a fee Etsy takes before you pay product cost. Tap a bar for details.
       </p>
 
       <div className="-mx-1 overflow-x-auto">
@@ -173,10 +168,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
             }
 
             const isHover = hoverIdx === i;
-            const valueText =
-              step.type === "deduction"
-                ? `−${usd(step.value)}`
-                : usd(step.value);
+            const valueText = step.type === "deduction" ? `−${usd(step.value)}` : usd(step.value);
             const valueColor =
               step.type === "deduction"
                 ? "var(--color-loss-700)"
@@ -253,13 +245,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
                 </text>
 
                 {/* Invisible hit overlay for easier touch hover */}
-                <rect
-                  x={LABEL_W}
-                  y={y}
-                  width={barAreaW}
-                  height={ROW_H}
-                  fill="transparent"
-                />
+                <rect x={LABEL_W} y={y} width={barAreaW} height={ROW_H} fill="transparent" />
               </g>
             );
           })}
@@ -281,10 +267,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
       </div>
 
       {/* Hover/focus tooltip detail (under chart, mobile-friendly) */}
-      <div
-        aria-live="polite"
-        className="mt-3 min-h-[1.5rem] text-xs text-patina-muted"
-      >
+      <div aria-live="polite" className="mt-3 min-h-[1.5rem] text-xs text-patina-muted">
         {hoverIdx !== null && steps[hoverIdx] && (
           <span>
             <strong className="text-patina-900">{steps[hoverIdx].label}</strong>
@@ -314,9 +297,7 @@ export function WaterfallChart({ result }: { result: CalculatorResult }) {
           {steps.map((s) => (
             <tr key={s.label}>
               <td>{s.label}</td>
-              <td>
-                {s.type === "deduction" ? `−${usd(s.value)}` : usd(s.value)}
-              </td>
+              <td>{s.type === "deduction" ? `−${usd(s.value)}` : usd(s.value)}</td>
               <td>{usd(s.runningEnd)}</td>
             </tr>
           ))}

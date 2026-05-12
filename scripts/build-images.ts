@@ -66,23 +66,14 @@ function rect(
   return `<rect x="${x}" y="${y}" width="${w}" height="${h}" fill="${fill}" ${rx}/>`;
 }
 
-function line(
-  x1: number,
-  y1: number,
-  x2: number,
-  y2: number,
-  stroke: string,
-  width = 1,
-): string {
+function line(x1: number, y1: number, x2: number, y2: number, stroke: string, width = 1): string {
   return `<line x1="${x1}" y1="${y1}" x2="${x2}" y2="${y2}" stroke="${stroke}" stroke-width="${width}"/>`;
 }
 
 function text(x: number, y: number, t: string, opts: TextOpts): string {
   const w = opts.weight ?? 400;
   const f = opts.fill ?? BRAND.ink;
-  const ls = opts.letterSpacing
-    ? `letter-spacing="${opts.letterSpacing}"`
-    : "";
+  const ls = opts.letterSpacing ? `letter-spacing="${opts.letterSpacing}"` : "";
   const style = opts.italic ? `font-style="italic"` : "";
   const anchor = opts.anchor ?? "start";
   return `<text x="${x}" y="${y}" font-family="${FONT}" font-size="${opts.size}" font-weight="${w}" fill="${f}" ${ls} ${style} text-anchor="${anchor}">${escapeXml(t)}</text>`;
@@ -127,12 +118,23 @@ function buildCover(): string {
 
   // Sidebar — price + bullets
   const sx = W - sidebarW;
-  e.push(text(sx + sidebarW / 2, 230, "$39", {
-    size: 110, weight: 800, fill: BRAND.patinaBlueDark, anchor: "middle",
-  }));
-  e.push(text(sx + sidebarW / 2, 268, "ONE-TIME · INSTANT DOWNLOAD", {
-    size: 12, weight: 700, fill: BRAND.patinaBlue700, letterSpacing: 2.5, anchor: "middle",
-  }));
+  e.push(
+    text(sx + sidebarW / 2, 230, "$39", {
+      size: 110,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+      anchor: "middle",
+    }),
+  );
+  e.push(
+    text(sx + sidebarW / 2, 268, "ONE-TIME · INSTANT DOWNLOAD", {
+      size: 12,
+      weight: 700,
+      fill: BRAND.patinaBlue700,
+      letterSpacing: 2.5,
+      anchor: "middle",
+    }),
+  );
   e.push(line(sx + 60, 305, sx + sidebarW - 60, 305, BRAND.patinaBlue700, 1));
 
   const bullets = [
@@ -145,54 +147,98 @@ function buildCover(): string {
   ];
   let by = 360;
   for (const b of bullets) {
-    e.push(text(sx + 50, by, "→", {
-      size: 16, weight: 800, fill: BRAND.patinaBlue700,
-    }));
-    e.push(text(sx + 78, by, b, {
-      size: 16, weight: 500, fill: BRAND.patinaBlueDark,
-    }));
+    e.push(
+      text(sx + 50, by, "→", {
+        size: 16,
+        weight: 800,
+        fill: BRAND.patinaBlue700,
+      }),
+    );
+    e.push(
+      text(sx + 78, by, b, {
+        size: 16,
+        weight: 500,
+        fill: BRAND.patinaBlueDark,
+      }),
+    );
     by += 36;
   }
 
   // Main content — eyebrow
-  e.push(text(pad, 100, "FOR INDEPENDENT ETSY SELLERS", {
-    size: 13, weight: 700, fill: BRAND.limeCream, letterSpacing: 4,
-  }));
+  e.push(
+    text(pad, 100, "FOR INDEPENDENT ETSY SELLERS", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.limeCream,
+      letterSpacing: 4,
+    }),
+  );
 
   // Hook — three lines, with the loss number as its own punchline so it
   // reads as a visual hit and not a runover. Line 3 is oversized + lime
   // cream to carry the emotional load.
-  e.push(text(pad, 195, "Your $24 Etsy", {
-    size: 60, weight: 800, fill: BRAND.white,
-  }));
-  e.push(text(pad, 268, "t-shirt nets you", {
-    size: 60, weight: 800, fill: BRAND.white,
-  }));
-  e.push(text(pad, 358, "$5.31.", {
-    size: 96, weight: 800, fill: BRAND.limeCream,
-  }));
+  e.push(
+    text(pad, 195, "Your $24 Etsy", {
+      size: 60,
+      weight: 800,
+      fill: BRAND.white,
+    }),
+  );
+  e.push(
+    text(pad, 268, "t-shirt nets you", {
+      size: 60,
+      weight: 800,
+      fill: BRAND.white,
+    }),
+  );
+  e.push(
+    text(pad, 358, "$5.31.", {
+      size: 96,
+      weight: 800,
+      fill: BRAND.limeCream,
+    }),
+  );
 
   // Subhead
-  e.push(text(pad, 410, "Here's exactly which fees,", {
-    size: 22, fill: BRAND.patinaBlue200,
-  }));
-  e.push(text(pad, 442, "and how to price around them.", {
-    size: 22, fill: BRAND.patinaBlue200,
-  }));
+  e.push(
+    text(pad, 410, "Here's exactly which fees,", {
+      size: 22,
+      fill: BRAND.patinaBlue200,
+    }),
+  );
+  e.push(
+    text(pad, 442, "and how to price around them.", {
+      size: 22,
+      fill: BRAND.patinaBlue200,
+    }),
+  );
 
   // Brand block
   e.push(line(pad, 510, pad + 100, 510, BRAND.limeCream, 3));
-  e.push(text(pad, 558, "The 2026 Etsy Pricing Bible", {
-    size: 34, weight: 800, fill: BRAND.white,
-  }));
-  e.push(text(pad, 590, "Find your true profit before you price.", {
-    size: 18, italic: true, fill: BRAND.patinaBlue200,
-  }));
+  e.push(
+    text(pad, 558, "The 2026 Etsy Pricing Bible", {
+      size: 34,
+      weight: 800,
+      fill: BRAND.white,
+    }),
+  );
+  e.push(
+    text(pad, 590, "Find your true profit before you price.", {
+      size: 18,
+      italic: true,
+      fill: BRAND.patinaBlue200,
+    }),
+  );
 
   // Footer
-  e.push(text(pad, H - 50, "ETSYMARGIN.TOOLS · 2026 EDITION", {
-    size: 13, weight: 600, fill: BRAND.patinaBlue200, letterSpacing: 3,
-  }));
+  e.push(
+    text(pad, H - 50, "ETSYMARGIN.TOOLS · 2026 EDITION", {
+      size: 13,
+      weight: 600,
+      fill: BRAND.patinaBlue200,
+      letterSpacing: 3,
+    }),
+  );
 
   return svg(W, H, e.join(""));
 }
@@ -209,15 +255,28 @@ function buildPreview1(): string {
 
   // Header band
   e.push(rect(0, 0, W, 230, BRAND.patinaBlueDark));
-  e.push(text(pad, 90, "WHAT'S IN THE BUNDLE", {
-    size: 13, weight: 700, fill: BRAND.limeCream, letterSpacing: 4,
-  }));
-  e.push(text(pad, 152, "Six fees stacked.", {
-    size: 46, weight: 800, fill: BRAND.white,
-  }));
-  e.push(text(pad, 205, "Five countries. Sixty categories.", {
-    size: 46, weight: 800, fill: BRAND.white,
-  }));
+  e.push(
+    text(pad, 90, "WHAT'S IN THE BUNDLE", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.limeCream,
+      letterSpacing: 4,
+    }),
+  );
+  e.push(
+    text(pad, 152, "Six fees stacked.", {
+      size: 46,
+      weight: 800,
+      fill: BRAND.white,
+    }),
+  );
+  e.push(
+    text(pad, 205, "Five countries. Sixty categories.", {
+      size: 46,
+      weight: 800,
+      fill: BRAND.white,
+    }),
+  );
 
   // Three feature cards
   const cardY = 290;
@@ -250,15 +309,28 @@ function buildPreview1(): string {
     e.push(rect(x, cardY, cardW, cardH, BRAND.white, { rx: 14 }));
     e.push(rect(x, cardY, cardW, 4, BRAND.limeCream, { rx: 0 }));
 
-    e.push(text(x + 28, cardY + 50, card.title, {
-      size: 11, weight: 700, fill: BRAND.patinaBlue500, letterSpacing: 3,
-    }));
-    e.push(text(x + 28, cardY + 145, card.number, {
-      size: 86, weight: 800, fill: BRAND.patinaBlueDark,
-    }));
-    e.push(text(x + 28, cardY + 178, card.suffix, {
-      size: 16, weight: 500, fill: BRAND.patinaBlue700,
-    }));
+    e.push(
+      text(x + 28, cardY + 50, card.title, {
+        size: 11,
+        weight: 700,
+        fill: BRAND.patinaBlue500,
+        letterSpacing: 3,
+      }),
+    );
+    e.push(
+      text(x + 28, cardY + 145, card.number, {
+        size: 86,
+        weight: 800,
+        fill: BRAND.patinaBlueDark,
+      }),
+    );
+    e.push(
+      text(x + 28, cardY + 178, card.suffix, {
+        size: 16,
+        weight: 500,
+        fill: BRAND.patinaBlue700,
+      }),
+    );
     e.push(line(x + 28, cardY + 200, x + cardW - 28, cardY + 200, BRAND.patinaBlue100, 1));
 
     const lines = wrapText(card.body, 36);
@@ -270,9 +342,15 @@ function buildPreview1(): string {
   });
 
   // Footer
-  e.push(text(W / 2, H - 38, "etsymargin.tools  ·  The 2026 Etsy Pricing Bible  ·  $39", {
-    size: 14, weight: 700, fill: BRAND.patinaBlue700, letterSpacing: 2, anchor: "middle",
-  }));
+  e.push(
+    text(W / 2, H - 38, "etsymargin.tools  ·  The 2026 Etsy Pricing Bible  ·  $39", {
+      size: 14,
+      weight: 700,
+      fill: BRAND.patinaBlue700,
+      letterSpacing: 2,
+      anchor: "middle",
+    }),
+  );
 
   return svg(W, H, e.join(""));
 }
@@ -287,18 +365,35 @@ function buildPreview2(): string {
 
   e.push(rect(0, 0, W, H, BRAND.cream50));
 
-  e.push(text(pad, 92, "WORKED EXAMPLE · POD T-SHIRT", {
-    size: 13, weight: 700, fill: BRAND.patinaBlue500, letterSpacing: 4,
-  }));
-  e.push(text(pad, 155, "The fees most Etsy sellers", {
-    size: 50, weight: 800, fill: BRAND.patinaBlueDark,
-  }));
-  e.push(text(pad, 212, "can't name.", {
-    size: 50, weight: 800, fill: BRAND.patinaBlueDark,
-  }));
-  e.push(text(pad, 258, "$24 t-shirt with $5.50 shipping. POD supplier. Off-Site Ads on. US shop.", {
-    size: 17, italic: true, fill: BRAND.patinaBlue700,
-  }));
+  e.push(
+    text(pad, 92, "WORKED EXAMPLE · POD T-SHIRT", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.patinaBlue500,
+      letterSpacing: 4,
+    }),
+  );
+  e.push(
+    text(pad, 155, "The fees most Etsy sellers", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 212, "can't name.", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 258, "$24 t-shirt with $5.50 shipping. POD supplier. Off-Site Ads on. US shop.", {
+      size: 17,
+      italic: true,
+      fill: BRAND.patinaBlue700,
+    }),
+  );
 
   // Waterfall table
   const tableX = pad;
@@ -330,37 +425,69 @@ function buildPreview2(): string {
     } else if (i % 2 === 1) {
       e.push(rect(tableX, y, tableW, rowH, BRAND.white));
     }
-    const fill = row.total
-      ? BRAND.patinaBlueDark
-      : row.fee
-        ? BRAND.loss
-        : BRAND.patinaBlue700;
+    const fill = row.total ? BRAND.patinaBlueDark : row.fee ? BRAND.loss : BRAND.patinaBlue700;
     const weight = row.total ? 700 : row.fee ? 500 : 500;
-    e.push(text(tableX + 28, y + 30, row.label, {
-      size: 17, weight, fill,
-    }));
-    e.push(text(tableX + tableW - 28, y + 30, row.amount, {
-      size: 17, weight: row.total ? 800 : 700, fill, anchor: "end",
-    }));
+    e.push(
+      text(tableX + 28, y + 30, row.label, {
+        size: 17,
+        weight,
+        fill,
+      }),
+    );
+    e.push(
+      text(tableX + tableW - 28, y + 30, row.amount, {
+        size: 17,
+        weight: row.total ? 800 : 700,
+        fill,
+        anchor: "end",
+      }),
+    );
   });
 
   // Net profit row — highlighted
   const netY = startY + rows.length * rowH;
   e.push(rect(tableX, netY, tableW, rowH + 8, BRAND.limeCream));
-  e.push(text(tableX + 28, netY + 33, "Net profit", {
-    size: 22, weight: 800, fill: BRAND.patinaBlueDark,
-  }));
-  e.push(text(tableX + tableW - 28, netY + 33, "= $5.31    (22% margin on a $24 sale)", {
-    size: 20, weight: 800, fill: BRAND.patinaBlueDark, anchor: "end",
-  }));
+  e.push(
+    text(tableX + 28, netY + 33, "Net profit", {
+      size: 22,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(tableX + tableW - 28, netY + 33, "= $5.31    (22% margin on a $24 sale)", {
+      size: 20,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+      anchor: "end",
+    }),
+  );
 
   // Caption
-  e.push(text(pad, H - 78, "Three of these fees are invisible to most sellers until they read the receipt.", {
-    size: 17, italic: true, fill: BRAND.patinaBlue700,
-  }));
-  e.push(text(pad, H - 48, "The Bible runs all 1,200 worked examples for you, in one PDF and one spreadsheet.", {
-    size: 17, weight: 700, fill: BRAND.patinaBlueDark,
-  }));
+  e.push(
+    text(
+      pad,
+      H - 78,
+      "Three of these fees are invisible to most sellers until they read the receipt.",
+      {
+        size: 17,
+        italic: true,
+        fill: BRAND.patinaBlue700,
+      },
+    ),
+  );
+  e.push(
+    text(
+      pad,
+      H - 48,
+      "The Bible runs all 1,200 worked examples for you, in one PDF and one spreadsheet.",
+      {
+        size: 17,
+        weight: 700,
+        fill: BRAND.patinaBlueDark,
+      },
+    ),
+  );
 
   return svg(W, H, e.join(""));
 }
@@ -375,18 +502,40 @@ function buildPreview3(): string {
 
   e.push(rect(0, 0, W, H, BRAND.cream50));
 
-  e.push(text(pad, 92, "THE COMPANION SPREADSHEET", {
-    size: 13, weight: 700, fill: BRAND.patinaBlue500, letterSpacing: 4,
-  }));
-  e.push(text(pad, 155, "1,200 scenarios. Pre-modeled.", {
-    size: 50, weight: 800, fill: BRAND.patinaBlueDark,
-  }));
-  e.push(text(pad, 212, "Pipe-delimited.", {
-    size: 50, weight: 800, fill: BRAND.patinaBlueDark,
-  }));
-  e.push(text(pad, 258, "60 categories × 5 countries × 4 ad scenarios. Open in Excel, Sheets, or Numbers.", {
-    size: 17, italic: true, fill: BRAND.patinaBlue700,
-  }));
+  e.push(
+    text(pad, 92, "THE COMPANION SPREADSHEET", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.patinaBlue500,
+      letterSpacing: 4,
+    }),
+  );
+  e.push(
+    text(pad, 155, "1,200 scenarios. Pre-modeled.", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 212, "Pipe-delimited.", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(
+      pad,
+      258,
+      "60 categories × 5 countries × 4 ad scenarios. Open in Excel, Sheets, or Numbers.",
+      {
+        size: 17,
+        italic: true,
+        fill: BRAND.patinaBlue700,
+      },
+    ),
+  );
 
   // Table
   const tableX = pad;
@@ -401,9 +550,14 @@ function buildPreview3(): string {
   e.push(rect(tableX, startY, tableW, headerH, BRAND.patinaBlueDark));
   let cx = tableX;
   headers.forEach((h, i) => {
-    e.push(text(cx + 20, startY + 31, h, {
-      size: 13, weight: 700, fill: BRAND.limeCream, letterSpacing: 1.5,
-    }));
+    e.push(
+      text(cx + 20, startY + 31, h, {
+        size: 13,
+        weight: 700,
+        fill: BRAND.limeCream,
+        letterSpacing: 1.5,
+      }),
+    );
     cx += cols[i];
   });
 
@@ -432,7 +586,12 @@ function buildPreview3(): string {
       if (ci === 3 || ci === 4) {
         weight = 700;
         const status = row[5];
-        fill = status === "bad" ? BRAND.loss : status === "good" ? BRAND.patinaBlueDark : BRAND.patinaBlue700;
+        fill =
+          status === "bad"
+            ? BRAND.loss
+            : status === "good"
+              ? BRAND.patinaBlueDark
+              : BRAND.patinaBlue700;
       }
       e.push(text(cx + 20, y + 24, cell as string, { size: 13, weight, fill }));
       cx += cols[ci];
@@ -441,12 +600,25 @@ function buildPreview3(): string {
 
   // Caption
   const captionY = startY + headerH + rows.length * rowH + 32;
-  e.push(text(pad, captionY + 16, "The same fee model that powers the live calculator.", {
-    size: 17, italic: true, fill: BRAND.patinaBlue700,
-  }));
-  e.push(text(pad, captionY + 46, "Filter the rows that match your country and ad state. Read the result. Reprice in 10 minutes.", {
-    size: 17, weight: 700, fill: BRAND.patinaBlueDark,
-  }));
+  e.push(
+    text(pad, captionY + 16, "The same fee model that powers the live calculator.", {
+      size: 17,
+      italic: true,
+      fill: BRAND.patinaBlue700,
+    }),
+  );
+  e.push(
+    text(
+      pad,
+      captionY + 46,
+      "Filter the rows that match your country and ad state. Read the result. Reprice in 10 minutes.",
+      {
+        size: 17,
+        weight: 700,
+        fill: BRAND.patinaBlueDark,
+      },
+    ),
+  );
 
   return svg(W, H, e.join(""));
 }
@@ -469,43 +641,78 @@ function buildThumbnail(): string {
   e.push(rect(0, 0, W, H, BRAND.patinaBlueDark));
 
   // Eyebrow
-  e.push(text(pad, 86, "FOR INDEPENDENT ETSY SELLERS", {
-    size: 11, weight: 700, fill: BRAND.limeCream, letterSpacing: 3,
-  }));
+  e.push(
+    text(pad, 86, "FOR INDEPENDENT ETSY SELLERS", {
+      size: 11,
+      weight: 700,
+      fill: BRAND.limeCream,
+      letterSpacing: 3,
+    }),
+  );
 
   // "THE 2026" — small display row
-  e.push(text(pad, 168, "THE 2026", {
-    size: 30, weight: 800, fill: BRAND.cream50, letterSpacing: 2,
-  }));
+  e.push(
+    text(pad, 168, "THE 2026", {
+      size: 30,
+      weight: 800,
+      fill: BRAND.cream50,
+      letterSpacing: 2,
+    }),
+  );
 
   // Stacked title — "ETSY" + "PRICING" in cream, "BIBLE" oversized in lime
   // cream so it dominates at any zoom level. At 100×100 thumbnail size,
   // "BIBLE" is the only text that reads — that's the design intent.
-  e.push(text(pad, 246, "ETSY", {
-    size: 76, weight: 800, fill: BRAND.cream50,
-  }));
-  e.push(text(pad, 322, "PRICING", {
-    size: 76, weight: 800, fill: BRAND.cream50,
-  }));
-  e.push(text(pad, 422, "BIBLE.", {
-    size: 102, weight: 800, fill: BRAND.limeCream,
-  }));
+  e.push(
+    text(pad, 246, "ETSY", {
+      size: 76,
+      weight: 800,
+      fill: BRAND.cream50,
+    }),
+  );
+  e.push(
+    text(pad, 322, "PRICING", {
+      size: 76,
+      weight: 800,
+      fill: BRAND.cream50,
+    }),
+  );
+  e.push(
+    text(pad, 422, "BIBLE.", {
+      size: 102,
+      weight: 800,
+      fill: BRAND.limeCream,
+    }),
+  );
 
   // Divider line — same design vocabulary as cover
   e.push(line(pad, 460, pad + 84, 460, BRAND.limeCream, 3));
 
   // Tagline (italic, muted)
-  e.push(text(pad, 498, "Find your true profit", {
-    size: 18, italic: true, fill: BRAND.patinaBlue200,
-  }));
-  e.push(text(pad, 524, "before you price.", {
-    size: 18, italic: true, fill: BRAND.patinaBlue200,
-  }));
+  e.push(
+    text(pad, 498, "Find your true profit", {
+      size: 18,
+      italic: true,
+      fill: BRAND.patinaBlue200,
+    }),
+  );
+  e.push(
+    text(pad, 524, "before you price.", {
+      size: 18,
+      italic: true,
+      fill: BRAND.patinaBlue200,
+    }),
+  );
 
   // Footer
-  e.push(text(pad, H - 36, "ETSYMARGIN.TOOLS · 2026 EDITION", {
-    size: 11, weight: 600, fill: BRAND.patinaBlue200, letterSpacing: 3,
-  }));
+  e.push(
+    text(pad, H - 36, "ETSYMARGIN.TOOLS · 2026 EDITION", {
+      size: 11,
+      weight: 600,
+      fill: BRAND.patinaBlue200,
+      letterSpacing: 3,
+    }),
+  );
 
   return svg(W, H, e.join(""));
 }

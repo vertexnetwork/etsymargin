@@ -13,10 +13,7 @@ type Props = {
 
 export function Wordmark({ size = 22, className, withName = true }: Props) {
   return (
-    <span
-      aria-label={siteConfig.name}
-      className={`flex items-center gap-2 ${className ?? ""}`}
-    >
+    <span aria-label={siteConfig.name} className={`flex items-center gap-2 ${className ?? ""}`}>
       <BrandMark size={size} title={siteConfig.name} />
       {withName && (
         <span className="font-display text-base font-semibold tracking-tight sm:text-lg">

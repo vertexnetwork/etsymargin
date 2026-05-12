@@ -7,10 +7,9 @@ const BASE_URL = siteConfig.url;
 // `lastmod` from the build's commit author date (Vercel injects this) so
 // search engines see stable diffs across deploys instead of "everything
 // changed because the build ran today" (Vertex spec §6).
-const lastModified =
-  process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE
-    ? new Date(process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE)
-    : new Date();
+const lastModified = process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE
+  ? new Date(process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE)
+  : new Date();
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [

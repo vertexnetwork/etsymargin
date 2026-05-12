@@ -11,9 +11,7 @@ createRoot(root).render(
     <div className="min-w-[360px] p-3">
       <header className="mb-3 flex items-center gap-2">
         <BrandMark />
-        <span className="font-display text-sm font-semibold text-patina-900">
-          Etsy Margin
-        </span>
+        <span className="font-display text-sm font-semibold text-patina-900">Etsy Margin</span>
         <span className="ml-auto text-[10px] uppercase tracking-widest text-patina-muted">
           Offline
         </span>

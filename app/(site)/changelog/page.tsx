@@ -4,8 +4,7 @@ import { siteConfig } from "@/lib/site-config";
 
 export const metadata: Metadata = {
   title: `What's shipped — ${siteConfig.name}`,
-  description:
-    "Every commit landed on main, in order. Auto-generated from git history.",
+  description: "Every commit landed on main, in order. Auto-generated from git history.",
   alternates: { canonical: "/changelog" },
 };
 
@@ -24,17 +23,16 @@ const entries = changelogData as Entry[];
 const monthLabel = (iso: string) => {
   const [y, m] = iso.split("-");
   const d = new Date(Number(y), Number(m) - 1, 1);
-  return d
-    .toLocaleDateString("en-US", { year: "numeric", month: "long" })
-    .toUpperCase();
+  return d.toLocaleDateString("en-US", { year: "numeric", month: "long" }).toUpperCase();
 };
 
 const dayLabel = (iso: string) => {
   const [y, m, d] = iso.split("-");
-  return new Date(Number(y), Number(m) - 1, Number(d)).toLocaleDateString(
-    "en-US",
-    { year: "numeric", month: "short", day: "numeric" },
-  );
+  return new Date(Number(y), Number(m) - 1, Number(d)).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+    day: "numeric",
+  });
 };
 
 function groupByMonth(rows: Entry[]) {
@@ -69,8 +67,8 @@ export default function ChangelogPage() {
           <code className="rounded bg-patina-50 px-1.5 py-0.5 font-mono text-base text-(--color-on-bg)">
             main
           </code>
-          , in order. Generated from git history at build time so it stays in
-          sync with the repo without anyone hand-curating release notes.{" "}
+          , in order. Generated from git history at build time so it stays in sync with the repo
+          without anyone hand-curating release notes.{" "}
           <a
             href={`${siteConfig.repoUrl}/releases`}
             target="_blank"
@@ -93,15 +91,10 @@ export default function ChangelogPage() {
                 key={entry.hash}
                 className="grid grid-cols-[max-content_1fr] items-baseline gap-x-5 border-b border-(--color-border)/70 py-3 sm:gap-x-8"
               >
-                <time
-                  dateTime={entry.date}
-                  className="font-mono text-xs text-(--color-muted)"
-                >
+                <time dateTime={entry.date} className="font-mono text-xs text-(--color-muted)">
                   {dayLabel(entry.date)}
                 </time>
-                <span className="text-sm text-(--color-on-bg) sm:text-base">
-                  {entry.title}
-                </span>
+                <span className="text-sm text-(--color-on-bg) sm:text-base">{entry.title}</span>
               </li>
             ))}
           </ol>

@@ -9,11 +9,7 @@ import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteSchema } from "@/components/seo/SiteSchema";
 import { siteConfig } from "@/lib/site-config";
 
-export default function SiteLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function SiteLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
   const consentRequired = siteConfig.features.consent.required;

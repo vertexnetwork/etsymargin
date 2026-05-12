@@ -22,12 +22,9 @@ export const trackEvent = safeTrack;
 export const events = {
   calculatorCalculated: (params: { country: string; offsiteAds: boolean; netProfit: number }) =>
     safeTrack("calculator_calculated", params),
-  offsiteAdsToggled: (enabled: boolean) =>
-    safeTrack("offsite_ads_toggled", { enabled }),
-  countryChanged: (country: string) =>
-    safeTrack("country_changed", { country }),
-  pseoPageViewed: (slug: string) =>
-    safeTrack("pseo_page_viewed", { slug }),
+  offsiteAdsToggled: (enabled: boolean) => safeTrack("offsite_ads_toggled", { enabled }),
+  countryChanged: (country: string) => safeTrack("country_changed", { country }),
+  pseoPageViewed: (slug: string) => safeTrack("pseo_page_viewed", { slug }),
   shareUrlCopied: () => safeTrack("share_url_copied"),
   // Vertex Network — required cross-network event (spec §9).
   vertexFooterOpened: () => safeTrack("vertex_footer_opened"),
