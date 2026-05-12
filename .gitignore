@@ -21,3 +21,6 @@ test-results/
 
 # Claude Code project state — tool-local, not project-canonical
 .claude/
+
+# Local planning doc — not project-canonical
+PLAN.md
