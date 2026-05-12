@@ -5,15 +5,18 @@ on:
   push:
     branches: [main]
 
-# Single status check named `CI` — bundles lint, typecheck, test, build
-# so the branch protection rule needs exactly two gates: `CI` and
-# `Lighthouse` (plus Vercel's auto-attached deployment check).
+# Single status check exposed as `Lint · Typecheck · Test · Build` so
+# the branch protection rule reads like a punch list of what the gate
+# actually verifies. Steps are ordered cheapest-to-most-expensive so a
+# styling slip fails in ~20s instead of after a full Next build.
 #
-# Steps are ordered cheapest-to-most-expensive so a styling slip fails
-# in ~20s instead of after a full Next build.
+# Branch protection rule note: when this rename lands, the existing
+# `CI` required check in Settings → Branches becomes stale. Update it
+# to require `Lint · Typecheck · Test · Build` instead.
 
 jobs:
-  CI:
+  ci:
+    name: Lint · Typecheck · Test · Build
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v6
