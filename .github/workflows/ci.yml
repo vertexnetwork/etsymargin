@@ -2,31 +2,37 @@ name: CI
 
 on:
   pull_request:
+    branches: [main]
   push:
     branches: [main]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 
 # Single status check exposed as `Lint · Typecheck · Test · Build` so
 # the branch protection rule reads like a punch list of what the gate
 # actually verifies. Steps are ordered cheapest-to-most-expensive so a
 # styling slip fails in ~20s instead of after a full Next build.
-#
-# Branch protection rule note: when this rename lands, the existing
-# `CI` required check in Settings → Branches becomes stale. Update it
-# to require `Lint · Typecheck · Test · Build` instead.
 
 jobs:
-  ci:
+  verify:
     name: Lint · Typecheck · Test · Build
     runs-on: ubuntu-latest
+    timeout-minutes: 10
+
     steps:
-      - uses: actions/checkout@v6
+      - name: Checkout
+        uses: actions/checkout@v6
+        with:
+          # Full history so scripts/build-changelog.mjs can read git log.
+          fetch-depth: 0
 
-      - uses: pnpm/action-setup@v4
-        # No `version:` — pnpm/action-setup reads from package.json's
-        # `packageManager` field (single source of truth). Specifying
-        # both causes the action to error with conflicting versions.
+      - name: Install pnpm
+        uses: pnpm/action-setup@v6
 
-      - uses: actions/setup-node@v4
+      - name: Setup Node
+        uses: actions/setup-node@v6
         with:
           node-version-file: .nvmrc
           cache: pnpm
@@ -34,11 +40,11 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
-      - name: ESLint
-        run: pnpm lint
-
-      - name: Prettier --check
+      - name: Format check
         run: pnpm format:check
+
+      - name: Lint
+        run: pnpm lint
 
       - name: Typecheck
         run: pnpm typecheck
