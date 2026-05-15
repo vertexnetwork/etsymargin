@@ -16,6 +16,12 @@ export type PseoEntry = {
   faq: PseoFaq[];
 };
 
+// Last refresh date for the PSEO corpus. Surfaced as an explicit "Updated"
+// stamp in the page header AND as `dateModified` on the Article JSON-LD.
+// Anonymous-brand EEAT relies on objective freshness signals — bump this
+// whenever the corpus gets a substantive content or fee-math refresh.
+export const PSEO_LAST_UPDATED = "2026-05-14";
+
 const baseFaq: PseoFaq[] = [
   {
     q: "Does Etsy really take 15% for Off-Site Ads?",
@@ -24,6 +30,22 @@ const baseFaq: PseoFaq[] = [
   {
     q: "What's the cheapest way to lower my Etsy fees?",
     a: "Two levers actually move the needle: opting out of Off-Site Ads while you're still under the $10k threshold, and rolling shipping into the item price so you don't pay the 6.5% transaction fee on a separately-charged shipping line.",
+  },
+  {
+    q: "What percentage of sales does Etsy take overall?",
+    a: "Between roughly 10% and 28% of every sale. Standard fees (listing $0.20 + transaction 6.5% + US payment processing 3% + $0.25) come to about 10% of a typical order. Off-Site Ads attribution adds 12–15% on top — that's what pushes the realistic ceiling to 25–28%.",
+  },
+  {
+    q: "Does Etsy take 30%?",
+    a: "Not on a standard sale. Standard fees total around 10%, and Off-Site Ads attribution adds 12–15% (capped at $100 per order). 30% is only reached in unusual scenarios — a sales-tax pass-through plus currency conversion plus Off-Site Ads on a low-priced order — and even then it's the exception, not the rule.",
+  },
+  {
+    q: "How much does Etsy take from a $100 sale?",
+    a: "On a $100 sale (item only, US seller): Listing $0.20 + Transaction $6.50 + Payment processing $3.25 = $9.95 baseline (about 10%). If Off-Site Ads attribute the sale at 15%, add $15 — total $24.95, or about 25% of revenue.",
+  },
+  {
+    q: "Does Etsy charge $0.20 per listing?",
+    a: "Yes — $0.20 each time a listing sells, and the listing fee renews automatically every 4 months whether the item sells or not. Multi-quantity listings get charged $0.20 per unit sold, not per order.",
   },
 ];
 

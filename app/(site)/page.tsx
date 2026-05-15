@@ -1,9 +1,18 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+
+// Explicit canonical on the homepage closes the indexation leak GSC was
+// surfacing as duplicate `www.` + apex entries. The Vercel www→apex 308
+// handles the URL-level consolidation; this tag enforces it at the HTML
+// level so Google never sees ambiguous signal regardless of entry point.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -27,13 +36,21 @@ export default function Home() {
 
         <TrustStrip />
 
-        <a
-          href="#results"
-          className="mt-5 inline-flex items-center gap-1 rounded-full bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-patina-800 sm:hidden"
-        >
-          See my real profit
-          <span aria-hidden="true">↓</span>
-        </a>
+        <div className="mt-5 flex flex-wrap items-center gap-3">
+          <a
+            href="#results"
+            className="inline-flex items-center gap-1 rounded-full bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm hover:bg-patina-800 sm:hidden"
+          >
+            See my real profit
+            <span aria-hidden="true">↓</span>
+          </a>
+          <Link
+            href="/etsy-fees"
+            className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
+          >
+            Read the full 2026 Etsy fee breakdown →
+          </Link>
+        </div>
       </header>
 
       <Calculator />

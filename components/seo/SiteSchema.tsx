@@ -31,6 +31,11 @@ export function SiteSchema() {
         name: siteConfig.name,
         logo: `${siteConfig.url}/icon-512.png`,
         email: siteConfig.supportEmail,
+        // `sameAs` is the anonymous-brand EEAT lever: it pins this entity
+        // to a verifiable GitHub project and the Vertex Network parent,
+        // giving Google an objective cross-reference path without
+        // requiring a human author byline.
+        sameAs: [siteConfig.repoUrl, "https://vertex.network"],
       },
     ],
   };
