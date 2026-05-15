@@ -1,4 +1,5 @@
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { ANSWER_PAGES, DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
 import { loadSisterSites } from "@/lib/network";
 import { siteConfig } from "@/lib/site-config";
 
@@ -24,6 +25,23 @@ export async function GET() {
   lines.push("## Calculator");
   lines.push(
     `- [${siteConfig.name} Calculator](${BASE_URL}): Live calculator with waterfall chart, fee breakdown, and shareable URL state.`,
+  );
+  lines.push("");
+
+  lines.push("## Etsy fees explained");
+  lines.push(
+    `- [How much does Etsy take per sale? Complete 2026 fee breakdown](${BASE_URL}/etsy-fees): The pillar reference — every 2026 fee (listing, transaction, payment processing, Off-Site Ads, currency conversion, regulatory operating) layered in the order Etsy charges them, with worked examples and a live calculator.`,
+  );
+  for (const p of ANSWER_PAGES) {
+    lines.push(`- [${p.title}](${BASE_URL}/etsy-fees/${p.slug}): ${p.metaDescription}`);
+  }
+  for (const amount of DOLLAR_AMOUNTS) {
+    lines.push(
+      `- [How much does Etsy take from a $${amount} sale?](${BASE_URL}/etsy-fees/${dollarSlug(amount)}): Line-by-line fee breakdown and net profit on a $${amount} Etsy order (US seller), with the calculator pre-filled to that amount.`,
+    );
+  }
+  lines.push(
+    `- [Methodology](${BASE_URL}/methodology): Every fee constant the calculator uses, the order fees are layered, and the primary Etsy-published sources behind each rate.`,
   );
   lines.push("");
 
