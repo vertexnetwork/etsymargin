@@ -6,23 +6,31 @@ import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/component
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import {
+  ANSWER_PAGES,
   DOLLAR_AMOUNTS,
   PILLAR_DATE_PUBLISHED,
   PILLAR_LAST_UPDATED,
   dollarSlug,
+  getAnswerPage,
   parseDollarSlug,
+  type AnswerPage,
 } from "@/lib/etsy-fees/content";
 import { LISTING_FEE, TRANSACTION_FEE_RATE, OFFSITE_ADS_RATE_UNDER_10K } from "@/lib/fees";
+import { getPseoEntry } from "@/lib/pseo/data";
 
-// Programmatic surface for the PAA query "how much does Etsy take from a
-// $N sale". Each renders a single-question QAPage shape via the existing
-// FaqJsonLd component (one FAQ item = one Question/Answer) — that's the
-// schema Google parses for direct PAA citation. The calculator is
-// pre-filled to the dollar amount so the visitor lands on the exact
-// scenario they searched for.
+// `/etsy-fees/[slug]` serves two route shapes from one file:
+//   1. Dollar-amount programmatics — slug = `{N}-dollar-sale`
+//   2. PAA answer pages — slug = explicit kebab-case phrase
+//
+// Dollar slugs are pure numeric prefixes; answer slugs are word-prefixed,
+// so the two namespaces don't collide. We try answer-page first, then
+// dollar-slug, then 404.
 
 export function generateStaticParams() {
-  return DOLLAR_AMOUNTS.map((amount) => ({ slug: dollarSlug(amount) }));
+  return [
+    ...DOLLAR_AMOUNTS.map((amount) => ({ slug: dollarSlug(amount) })),
+    ...ANSWER_PAGES.map((p) => ({ slug: p.slug })),
+  ];
 }
 
 const US_PAYMENT_FLAT = 0.25;
@@ -57,6 +65,21 @@ export async function generateMetadata({
   params: Promise<{ slug: string }>;
 }): Promise<Metadata> {
   const { slug } = await params;
+  const answer = getAnswerPage(slug);
+  if (answer) {
+    return {
+      title: answer.metaTitle,
+      description: answer.metaDescription,
+      alternates: { canonical: `/etsy-fees/${answer.slug}` },
+      openGraph: {
+        title: answer.metaTitle,
+        description: answer.metaDescription,
+        type: "article",
+        publishedTime: PILLAR_DATE_PUBLISHED,
+        modifiedTime: PILLAR_LAST_UPDATED,
+      },
+    };
+  }
   const amount = parseDollarSlug(slug);
   if (amount === null) return {};
   const fees = feeBreakdown(amount);
@@ -74,11 +97,162 @@ export async function generateMetadata({
   };
 }
 
-export default async function DollarAmountPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function EtsyFeesSlugPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
+  const answer = getAnswerPage(slug);
+  if (answer) return <AnswerPageView page={answer} />;
   const amount = parseDollarSlug(slug);
   if (amount === null) notFound();
+  return <DollarAmountPage amount={amount} slug={slug} />;
+}
 
+function AnswerPageView({ page }: { page: AnswerPage }) {
+  const url = `/etsy-fees/${page.slug}`;
+  const faq = [{ q: page.title, a: page.shortAnswer }];
+  return (
+    <main className="mx-auto max-w-3xl px-5 py-6 sm:py-16">
+      <SoftwareApplicationJsonLd />
+      <FaqJsonLd faq={faq} />
+      <ArticleJsonLd
+        url={url}
+        headline={page.title}
+        description={page.metaDescription}
+        datePublished={PILLAR_DATE_PUBLISHED}
+        dateModified={PILLAR_LAST_UPDATED}
+      />
+      <BreadcrumbSchema
+        crumbs={[
+          { name: "Etsy Fees", href: "/etsy-fees" },
+          { name: page.title, href: url },
+        ]}
+      />
+
+      <nav className="mb-4 text-sm sm:mb-6">
+        <Link href="/etsy-fees" className="text-patina-700 hover:text-patina-900">
+          ← Complete Etsy fees breakdown
+        </Link>
+      </nav>
+
+      <header className="mb-8 sm:mb-10">
+        <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
+          {page.title}
+        </h1>
+        <p className="mt-4 text-base text-patina-800/90 sm:text-lg">{page.shortAnswer}</p>
+        <p className="mt-3 text-xs text-patina-muted">
+          Updated{" "}
+          <time dateTime={PILLAR_LAST_UPDATED}>
+            {new Date(PILLAR_LAST_UPDATED).toLocaleDateString("en-US", {
+              year: "numeric",
+              month: "long",
+              day: "numeric",
+            })}
+          </time>{" "}
+          · 2026 fee rates from{" "}
+          <a
+            href="https://www.etsy.com/legal/fees/"
+            target="_blank"
+            rel="noopener nofollow"
+            className="underline underline-offset-2 hover:text-patina-800"
+          >
+            Etsy&apos;s Fees &amp; Payments policy
+          </a>
+          .
+        </p>
+        <TrustStrip />
+      </header>
+
+      <article className="space-y-10 text-patina-800/90">
+        {page.sections.map((section) => (
+          <section key={section.heading}>
+            <h2 className="mb-3 text-xl font-bold text-patina-900 sm:text-2xl">
+              {section.heading}
+            </h2>
+            <div className="space-y-3">
+              {section.body.map((p, i) => (
+                <p key={i}>{p}</p>
+              ))}
+            </div>
+          </section>
+        ))}
+      </article>
+
+      {page.relatedSpokes && page.relatedSpokes.length > 0 && (
+        <section className="mt-12 rounded-2xl bg-patina-50 p-5 ring-1 ring-patina-100 sm:p-6">
+          <h2 className="mb-3 text-lg font-bold text-patina-900">Category-specific math</h2>
+          <p className="mb-4 text-sm text-patina-800/85">
+            See how the answer above plays out in real seller scenarios with pre-filled calculators.
+          </p>
+          <ul className="grid gap-2 sm:grid-cols-2">
+            {page.relatedSpokes.map((s) => {
+              const entry = getPseoEntry(s.slug);
+              if (!entry) return null;
+              return (
+                <li key={s.slug}>
+                  <Link
+                    href={`/etsy-profit-margin/${s.slug}`}
+                    className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+                  >
+                    {s.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      )}
+
+      <section className="mt-12">
+        <h2 className="mb-3 text-xl font-bold text-patina-900 sm:text-2xl">Run your numbers</h2>
+        <p className="mb-5 text-patina-800/85">
+          Plug in your item price, shipping, and product cost. The calculator layers every fee in
+          the order Etsy applies them.
+        </p>
+        <Calculator
+          initialInputs={{
+            itemPrice: 30,
+            shippingCharged: 5,
+            manufacturingCost: 4,
+            actualShippingCost: 5,
+          }}
+        />
+      </section>
+
+      <section className="mt-12">
+        <h2 className="mb-4 text-xl font-bold text-patina-900">More fee questions answered</h2>
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {ANSWER_PAGES.filter((p) => p.slug !== page.slug).map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/etsy-fees/${p.slug}`}
+                className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+              >
+                {p.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-12">
+        <h2 className="mb-4 text-xl font-bold text-patina-900">Specific sale amounts</h2>
+        <ul className="grid gap-2 sm:grid-cols-2">
+          {DOLLAR_AMOUNTS.map((a) => (
+            <li key={a}>
+              <Link
+                href={`/etsy-fees/${dollarSlug(a)}`}
+                className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+              >
+                How much does Etsy take from a ${a} sale?
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+    </main>
+  );
+}
+
+function DollarAmountPage({ amount, slug }: { amount: number; slug: string }) {
   const fees = feeBreakdown(amount);
   const url = `/etsy-fees/${slug}`;
 
@@ -256,6 +430,22 @@ export default async function DollarAmountPage({ params }: { params: Promise<{ s
                 className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
               >
                 How much does Etsy take from a ${a} sale?
+              </Link>
+            </li>
+          ))}
+        </ul>
+      </section>
+
+      <section className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
+        <h2 className="text-2xl font-bold text-patina-900">Related fee questions</h2>
+        <ul className="my-3 grid gap-2 sm:grid-cols-2">
+          {ANSWER_PAGES.map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/etsy-fees/${p.slug}`}
+                className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+              >
+                {p.title}
               </Link>
             </li>
           ))}

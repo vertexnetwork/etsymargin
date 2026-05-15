@@ -6,6 +6,7 @@ import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/component
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import {
+  ANSWER_PAGES,
   DOLLAR_AMOUNTS,
   FEE_ROWS,
   PILLAR_DATE_PUBLISHED,
@@ -415,6 +416,28 @@ export default function EtsyFeesPillarPage() {
           separate line item in your Payment account. US, Canadian, and Australian sellers generally
           don&apos;t see this fee.
         </p>
+      </section>
+
+      <section className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
+        <h2 className="text-2xl font-bold text-patina-900 sm:text-3xl">
+          Quick answers to the most common Etsy fee questions
+        </h2>
+        <p>
+          Each link below opens a dedicated answer page with the specific math, edge cases, and
+          related category breakdowns for that question.
+        </p>
+        <ul className="my-3 grid gap-2 sm:grid-cols-2">
+          {ANSWER_PAGES.map((p) => (
+            <li key={p.slug}>
+              <Link
+                href={`/etsy-fees/${p.slug}`}
+                className="text-patina-700 underline underline-offset-2 hover:text-patina-900"
+              >
+                {p.title}
+              </Link>
+            </li>
+          ))}
+        </ul>
       </section>
 
       <section className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
