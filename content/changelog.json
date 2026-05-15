@@ -1,5 +1,35 @@
 [
   {
+    "hash": "419bad40c749a264deaba08cf73e7fcbb7475b58",
+    "date": "2026-05-12",
+    "title": "Fix embed CSP, correct Gumroad price defaults, add home Pricing Bible CTA"
+  },
+  {
+    "hash": "adf10db26caf76c566b58d33f3502515630dc50e",
+    "date": "2026-05-12",
+    "title": "Run Lighthouse locally instead of waiting for Vercel preview"
+  },
+  {
+    "hash": "0bc096d4a0f82e15cf6c8f6d870e8c44b954b683",
+    "date": "2026-05-12",
+    "title": "Drop redundant pnpm version from setup actions"
+  },
+  {
+    "hash": "ca600d1dbfd7cd00ec61d8f18b390bb433f1da58",
+    "date": "2026-05-12",
+    "title": "Rename CI check + throttle Dependabot"
+  },
+  {
+    "hash": "ffa1db15700bb017a5bb413a98b40b5a92c7f26f",
+    "date": "2026-05-12",
+    "title": "Fold pending .env.example tweaks + untrack PLAN.md"
+  },
+  {
+    "hash": "028b3cd8c38d0a290e45b6bee1b558961f018c45",
+    "date": "2026-05-12",
+    "title": "Drop _comment from vercel.json — Vercel's schema rejects unknown keys"
+  },
+  {
     "hash": "6039ba7aa7ca7fb416f195a0957d1d0eac838ee5",
     "date": "2026-05-10",
     "title": "Bump eslint-config-prettier from 9.1.2 to 10.1.8"
@@ -33,6 +63,11 @@
     "hash": "8e02dba710a7268310f47cdb3541f8908cf65026",
     "date": "2026-05-10",
     "title": "Promote etsy-profit-calc to a Vertex Network spoke"
+  },
+  {
+    "hash": "8c48a1825698beff92658834b89b71f5bf7387e7",
+    "date": "2026-05-10",
+    "title": "chore(deps): triage dependabot bumps + normalize prettier"
   },
   {
     "hash": "80a9b99d74603970c1dd52be9c88ef1ac609de19",

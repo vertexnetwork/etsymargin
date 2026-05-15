@@ -1,5 +1,5 @@
 type Variant = "compact" | "card" | "inline";
-type Source = "calculator" | "recommendations" | "pseo" | "home";
+type Source = "calculator" | "recommendations" | "pseo" | "home" | "pillar";
 
 type Props = {
   variant: Variant;

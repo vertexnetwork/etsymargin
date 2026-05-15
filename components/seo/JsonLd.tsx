@@ -41,6 +41,42 @@ export function FaqJsonLd({ faq }: { faq: PseoFaq[] }) {
   );
 }
 
+// Article schema for long-form informational pages (the fee pillar, the
+// dollar-amount programmatic pages, the methodology page). Anonymous-brand
+// EEAT needs explicit datePublished/dateModified plus a publisher pointing
+// at the canonical Organization node emitted by SiteSchema — those are the
+// objective signals Google can verify without a human byline.
+export function ArticleJsonLd({
+  url,
+  headline,
+  description,
+  datePublished,
+  dateModified,
+}: {
+  url: string;
+  headline: string;
+  description: string;
+  datePublished: string;
+  dateModified: string;
+}) {
+  const absoluteUrl = url.startsWith("http") ? url : `${siteConfig.url}${url}`;
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "Article",
+    headline,
+    description,
+    datePublished,
+    dateModified,
+    inLanguage: "en",
+    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl },
+    author: { "@id": `${siteConfig.url}#organization` },
+    publisher: { "@id": `${siteConfig.url}#organization` },
+  };
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }} />
+  );
+}
+
 export function NetworkCollectionJsonLd({ tools }: { tools: Property[] }) {
   const json = {
     "@context": "https://schema.org",

@@ -1,5 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
 const BASE_URL = siteConfig.url;
@@ -14,6 +15,11 @@ const lastModified = process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
     { url: `${BASE_URL}`, lastModified, changeFrequency: "weekly", priority: 1.0 },
+    // The fee pillar sits at priority 0.9 — second only to the home page.
+    // It's the topical-authority hub that every spoke links UP into; we
+    // want crawlers visiting it on every pass.
+    { url: `${BASE_URL}/etsy-fees`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    { url: `${BASE_URL}/methodology`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/contact`, lastModified, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE_URL}/embed`, lastModified, changeFrequency: "monthly", priority: 0.6 },
@@ -26,6 +32,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
 
   return [
     ...staticRoutes,
+    ...DOLLAR_AMOUNTS.map((amount) => ({
+      url: `${BASE_URL}/etsy-fees/${dollarSlug(amount)}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    })),
     ...PSEO_ENTRIES.map((entry) => ({
       url: `${BASE_URL}/etsy-profit-margin/${entry.slug}`,
       lastModified,
