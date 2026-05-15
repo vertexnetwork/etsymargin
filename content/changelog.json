@@ -1,5 +1,15 @@
 [
   {
+    "hash": "b988a3c341890b0cc8a866ad5646349e1523d8b5",
+    "date": "2026-05-15",
+    "title": "Prettier-format 3 MDX bodies that skipped the format pass"
+  },
+  {
+    "hash": "962d05cf8f707b9c8379d78dd2c4e394e99edd0c",
+    "date": "2026-05-15",
+    "title": "Make Lighthouse CLS gate non-flaky: median-of-3, realistic ceiling"
+  },
+  {
     "hash": "2859723ec4801a45b95c28213779023875d36cda",
     "date": "2026-05-14",
     "title": "Default NEXT_PUBLIC_AD_PROVIDER to none in .env.example"
@@ -8,6 +18,61 @@
     "hash": "1ec4d2df168a2212734c6c60f695e081a5ad098e",
     "date": "2026-05-14",
     "title": "Build /etsy-fees topical-authority pillar + EEAT scaffolding"
+  },
+  {
+    "hash": "7e62323e95376a8e397edd4c814dea4e4bdcd6d5",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for canvas-tote-bags, christmas-ornaments, enamel-pins, wedding-cake-toppers"
+  },
+  {
+    "hash": "aed767f2aca7872fe5e4a735ce9deb3b43f4dde6",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for pet (cat-toys, custom-pet-tags, pet-beds) + paper (journals, planners, thank-you-cards) batch"
+  },
+  {
+    "hash": "4f283f1ce93d5141a542af63c4edb3576c1fcdb2",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for bath-salts, body-butter, canvas-prints, nursery-prints, watercolor-paintings"
+  },
+  {
+    "hash": "67063e2ffc536af2dad30e4377fd6f42fec65bfa",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for bath-bombs, lip-balm, macrame, wax-melts"
+  },
+  {
+    "hash": "6cc05f69dedfbe11c5ff983edd89de0e0cf5b0b6",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for cutting-boards-engraved and throw-blankets-handmade"
+  },
+  {
+    "hash": "e25f2c3eda61b32b151b1eff2b787c37db7cfef0",
+    "date": "2026-05-14",
+    "title": "Add MDX body for pillow-covers spoke"
+  },
+  {
+    "hash": "0632f80e531d069387329f1522bcd7f2ffa27a9f",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for birthstone-jewelry and friendship-bracelets"
+  },
+  {
+    "hash": "120ade18d3ce9e38f7484b7f18706158f653ee1a",
+    "date": "2026-05-14",
+    "title": "Add MDX body for statement-necklaces spoke"
+  },
+  {
+    "hash": "fac36bba846235c7c5bcf93c7b85117f0bdeadf5",
+    "date": "2026-05-14",
+    "title": "Add MDX bodies for earrings-handmade and kids-clothing-handmade"
+  },
+  {
+    "hash": "dc749bdd49fced064d6af3d15087d61f8cc0d8e2",
+    "date": "2026-05-14",
+    "title": "Add MDX body for aprons-handmade spoke"
+  },
+  {
+    "hash": "0508749e926355e859c2c12e46f2eb88047e01f4",
+    "date": "2026-05-14",
+    "title": "Pillar follow-up: PAA answer pages, Product-snippet fix, spoke refresh"
   },
   {
     "hash": "adf10db26caf76c566b58d33f3502515630dc50e",
