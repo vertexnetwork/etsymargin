@@ -195,9 +195,9 @@ export const PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "svg-files",
     category: "Digital",
-    title: "Etsy SVG Cut Files: True Profit Per Sale (2026)",
+    title: "Etsy SVG Files Profit: 12%+ Fees on $4 Sales (2026)",
     metaDescription:
-      "Selling SVG files on Etsy? See your real margin at $3–5 price points after the platform fee stack.",
+      "Selling SVG cut files on Etsy at $3–5? Real 2026 math: a $4 SVG nets $3.30 — effective fee rate is north of 12% before Off-Site Ads.",
     heroHeadline: "SVG sellers, your effective fee rate is north of 12%.",
     heroSubcopy:
       "Low-priced digital products get hit hardest by flat fees. The math is unforgiving below the $5 mark.",
@@ -280,9 +280,9 @@ export const PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "greeting-cards",
     category: "Paper",
-    title: "Etsy Greeting Card Shop Profit Calculator (2026)",
+    title: "Etsy Greeting Card Profit: $8 Sale Nets $3 After Fees (2026)",
     metaDescription:
-      "Greeting card makers: see your real margin on Etsy at $5–8 price points after every fee.",
+      "Etsy greeting card sellers: real 2026 math on a $6 card with $2 shipping. Effective fee rate hits 30% on single-card orders. Bundle math included.",
     heroHeadline: "Greeting cards: tiny price tags, outsized fee drag.",
     heroSubcopy:
       "At $6 a card, the $0.20 listing + $0.25 processing flat fees alone are over 7% of revenue before any percentage fee.",
@@ -297,9 +297,9 @@ export const PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "embroidery",
     category: "Apparel",
-    title: "Etsy Embroidery & Custom Hat Profit Math (2026)",
+    title: "Etsy Embroidery Profit Margin: $32 Hat Nets $11 in 2026",
     metaDescription:
-      "Custom embroidery sellers: model your real take-home on Etsy after blanks, thread, time, and platform fees.",
+      "Custom embroidery sellers: real 2026 math on a $32 hat after blanks, thread, time, and fees. Plus the digitizing trap that erases first-design profit.",
     heroHeadline: "Why your $32 embroidered hat nets less than a coffee.",
     heroSubcopy:
       "Blank cost + thread + the full Etsy fee stack means embroidery shops are routinely surprised by their real margin.",
@@ -1015,9 +1015,9 @@ export const PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "enamel-pins",
     category: "Accessories",
-    title: "Etsy Enamel Pin Profit Margin (2026)",
+    title: "Etsy Enamel Pins: $12 Profit After 100-Unit Minimums (2026)",
     metaDescription:
-      "Enamel pin makers: see your real margin on a $12 pin after manufacturing minimums, shipping, and Etsy fees.",
+      "Enamel pin sellers: real 2026 math on a $12 pin. Manufacturing minimums lock per-unit cost at $3, Etsy takes ~25% with Off-Site Ads. Run the numbers.",
     heroHeadline: "Enamel pins: minimum-order economics dictate margin.",
     heroSubcopy:
       "Pin manufacturing has minimums (100+ units) that lock in your per-unit cost. Etsy then takes its cut on every individual sale. Run the math.",

@@ -1,8 +1,13 @@
 [
   {
-    "hash": "419bad40c749a264deaba08cf73e7fcbb7475b58",
-    "date": "2026-05-12",
-    "title": "Fix embed CSP, correct Gumroad price defaults, add home Pricing Bible CTA"
+    "hash": "2859723ec4801a45b95c28213779023875d36cda",
+    "date": "2026-05-14",
+    "title": "Default NEXT_PUBLIC_AD_PROVIDER to none in .env.example"
+  },
+  {
+    "hash": "1ec4d2df168a2212734c6c60f695e081a5ad098e",
+    "date": "2026-05-14",
+    "title": "Build /etsy-fees topical-authority pillar + EEAT scaffolding"
   },
   {
     "hash": "adf10db26caf76c566b58d33f3502515630dc50e",
@@ -28,6 +33,16 @@
     "hash": "028b3cd8c38d0a290e45b6bee1b558961f018c45",
     "date": "2026-05-12",
     "title": "Drop _comment from vercel.json — Vercel's schema rejects unknown keys"
+  },
+  {
+    "hash": "1b94811bb1077b40eee8c673e3030754b4e6e049",
+    "date": "2026-05-12",
+    "title": "Bump Performance score: font-display optional + modern browserslist"
+  },
+  {
+    "hash": "419bad40c749a264deaba08cf73e7fcbb7475b58",
+    "date": "2026-05-12",
+    "title": "Fix embed CSP, correct Gumroad price defaults, add home Pricing Bible CTA"
   },
   {
     "hash": "6039ba7aa7ca7fb416f195a0957d1d0eac838ee5",

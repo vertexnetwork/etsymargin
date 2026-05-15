@@ -2,6 +2,13 @@ import type { PseoFaq } from "@/lib/pseo/data";
 import type { Property } from "@/lib/network";
 import { siteConfig } from "@/lib/site-config";
 
+// Emits the SoftwareApplication schema *without* an `offers` block. GSC was
+// classifying us as a "Product snippet" (53 imp, pos 10.64, 0 clicks) —
+// SoftwareApplication + Offer is interpreted as a Product, but with no
+// `aggregateRating` or `review` data we paid the classification tax and
+// got none of the snippet enhancements back. A free tool has no commerce
+// "offer" in the schema.org sense anyway; the calculator surfaces as a
+// normal informational result this way.
 export function SoftwareApplicationJsonLd() {
   const json = {
     "@context": "https://schema.org",
@@ -10,11 +17,6 @@ export function SoftwareApplicationJsonLd() {
     applicationCategory: siteConfig.jsonLd.applicationCategory,
     operatingSystem: siteConfig.jsonLd.operatingSystem,
     description: siteConfig.description,
-    offers: {
-      "@type": "Offer",
-      price: String(siteConfig.jsonLd.price),
-      priceCurrency: "USD",
-    },
     url: siteConfig.url,
     publisher: {
       "@type": "Organization",

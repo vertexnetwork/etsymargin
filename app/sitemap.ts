@@ -1,6 +1,6 @@
 import type { MetadataRoute } from "next";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
-import { DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
+import { ANSWER_PAGES, DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
 const BASE_URL = siteConfig.url;
@@ -37,6 +37,15 @@ export default function sitemap(): MetadataRoute.Sitemap {
       lastModified,
       changeFrequency: "monthly" as const,
       priority: 0.7,
+    })),
+    // PAA answer pages — slightly higher priority than dollar pages because
+    // each targets a distinct head-query phrase rather than a numeric
+    // variant of the same query template.
+    ...ANSWER_PAGES.map((p) => ({
+      url: `${BASE_URL}/etsy-fees/${p.slug}`,
+      lastModified,
+      changeFrequency: "monthly" as const,
+      priority: 0.75,
     })),
     ...PSEO_ENTRIES.map((entry) => ({
       url: `${BASE_URL}/etsy-profit-margin/${entry.slug}`,
