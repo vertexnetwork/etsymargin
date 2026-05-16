@@ -2,7 +2,6 @@
   "$schema": "./network.schema.json",
   "version": "2026.05.10",
   "brand": "Vertex Network",
-  "_comment": "Synced from vertex-network-hub/config/network.json. Do not edit by hand — sync-from-hub.yml will overwrite changes. The /network page filters out the current spoke (etsymargin) by matching siteConfig.url.",
   "sites": [
     {
       "slug": "captionsnap",
