@@ -2,6 +2,8 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Clarity } from "@/components/analytics/Clarity";
+import { RedditPixel } from "@/components/analytics/RedditPixel";
+import { RedditClickThrough } from "@/components/analytics/RedditClickThrough";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { CookieConsent } from "@/components/consent/CookieConsent";
 import { SiteHeader } from "@/components/layout/SiteHeader";
@@ -12,6 +14,7 @@ import { siteConfig } from "@/lib/site-config";
 export default function SiteLayout({ children }: { children: React.ReactNode }) {
   const gaId = process.env.NEXT_PUBLIC_GA_ID;
   const clarityId = process.env.NEXT_PUBLIC_CLARITY_PROJECT_ID;
+  const redditPixelId = process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID;
   const consentRequired = siteConfig.features.consent.required;
   return (
     <ConsentProvider required={consentRequired}>
@@ -23,6 +26,8 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
       <SpeedInsights />
       {gaId && <GoogleAnalytics gaId={gaId} />}
       {clarityId && <Clarity projectId={clarityId} />}
+      {redditPixelId && <RedditPixel pixelId={redditPixelId} />}
+      {redditPixelId && <RedditClickThrough />}
       {consentRequired && <CookieConsent />}
     </ConsentProvider>
   );

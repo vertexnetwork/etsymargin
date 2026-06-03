@@ -15,6 +15,7 @@ const inferProviders = () => ({
   adsense: process.env.NEXT_PUBLIC_AD_PROVIDER === "adsense",
   mediavine: process.env.NEXT_PUBLIC_AD_PROVIDER === "mediavine",
   carbon: process.env.NEXT_PUBLIC_AD_PROVIDER === "carbon",
+  reddit: Boolean(process.env.NEXT_PUBLIC_REDDIT_PIXEL_ID),
 });
 
 // Re-implement buildCSP / buildEmbedCSP inline here so next.config.mjs
@@ -74,6 +75,11 @@ const composeCsp = (providers, embed = false) => {
   if (providers.carbon) {
     add("script-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
     add("img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
+  }
+  if (providers.reddit) {
+    add("script-src", "https://www.redditstatic.com");
+    add("img-src", "https://*.reddit.com");
+    add("connect-src", "https://*.reddit.com");
   }
   return Object.entries(dir)
     .map(([k, s]) => `${k} ${[...s].join(" ")}`)

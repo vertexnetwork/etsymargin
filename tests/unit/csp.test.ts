@@ -27,6 +27,15 @@ describe("CSP builder", () => {
     expect(csp2).not.toContain("clarity.ms");
   });
 
+  it("adds Reddit pixel hosts only when the reddit provider is on", () => {
+    const csp = buildCSP({ reddit: true });
+    expect(csp).toContain("https://www.redditstatic.com");
+    expect(csp).toContain("https://*.reddit.com");
+    const off = buildCSP({});
+    expect(off).not.toContain("redditstatic.com");
+    expect(off).not.toContain("reddit.com");
+  });
+
   it("does NOT include any ad-network host when provider is none", () => {
     const csp = buildCSP({ vercelAnalytics: true, ga4: true, clarity: true });
     expect(csp).not.toContain("googlesyndication.com");

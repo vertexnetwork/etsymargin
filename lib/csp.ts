@@ -13,6 +13,7 @@ export type CspProviders = {
   adsense?: boolean;
   mediavine?: boolean;
   carbon?: boolean;
+  reddit?: boolean;
 };
 
 type DirectiveMap = Record<string, Set<string>>;
@@ -75,6 +76,13 @@ export function buildCSP(providers: CspProviders = {}): string {
   if (providers.carbon) {
     add(d, "script-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
     add(d, "img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
+  }
+  if (providers.reddit) {
+    // pixel.js is served from redditstatic; the pixel beacons events and
+    // pulls its config from *.reddit.com (alb.reddit.com / pixel-config).
+    add(d, "script-src", "https://www.redditstatic.com");
+    add(d, "img-src", "https://*.reddit.com");
+    add(d, "connect-src", "https://*.reddit.com");
   }
 
   return Object.entries(d)
