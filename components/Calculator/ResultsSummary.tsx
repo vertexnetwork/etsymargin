@@ -1,7 +1,7 @@
 "use client";
 
-import type { CalculatorResult } from "@/lib/fees";
-import { GumroadCta } from "@/components/affiliates/GumroadCta";
+import type { CalculatorInputs, CalculatorResult } from "@/lib/fees";
+import { NextBestAction } from "./NextBestAction";
 
 const usd = (n: number) =>
   new Intl.NumberFormat("en-US", {
@@ -19,10 +19,10 @@ const pct = (n: number) => {
 
 type Props = {
   result: CalculatorResult;
-  itemPrice: number;
+  inputs: CalculatorInputs;
 };
 
-export function ResultsSummary({ result, itemPrice }: Props) {
+export function ResultsSummary({ result, inputs }: Props) {
   const losing = result.netProfit < 0;
   const tone = losing
     ? "bg-red-50 text-red-900 ring-red-200"
@@ -32,53 +32,32 @@ export function ResultsSummary({ result, itemPrice }: Props) {
 
   return (
     <div className={`rounded-2xl p-5 shadow-sm ring-1 sm:p-6 ${tone}`}>
-      <p className="text-sm font-medium uppercase tracking-wide opacity-70">True Net Profit</p>
+      <p className="text-sm font-medium uppercase tracking-wide opacity-80">True Net Profit</p>
       <div className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
         <span className="text-4xl font-bold tabular-nums sm:text-5xl">{usd(result.netProfit)}</span>
         <span className="text-xl font-medium tabular-nums opacity-80">
           {pct(result.marginPercent)} margin
         </span>
       </div>
-      {losing ? (
-        <>
-          <p className="mt-3 text-sm font-medium">
-            You&apos;re losing {usd(Math.abs(result.netProfit))} on every order at this price.
-          </p>
-          <GumroadCta variant="compact" source="calculator" content="calc-loss" />
-        </>
-      ) : itemPrice > 0 && result.marginPercent < 0.15 ? (
-        <>
-          <p className="mt-3 text-sm font-medium">
-            Margin under 15% leaves no room for product variants, sales, or rising supplier costs.
-          </p>
-          <GumroadCta variant="compact" source="calculator" content="calc-thin" />
-        </>
-      ) : itemPrice > 0 ? (
-        <>
-          <p className="mt-3 text-sm opacity-75">
-            Etsy takes {pct(result.effectiveFeeRate)} of revenue in fees before any product cost.
-          </p>
-          <GumroadCta variant="compact" source="calculator" content="calc-healthy" />
-        </>
-      ) : null}
+      <NextBestAction result={result} inputs={inputs} />
 
       <table className="mt-5 w-full text-sm">
         <tbody className="divide-y divide-current/10">
           <tr>
-            <td className="py-2 opacity-70">Gross (item + shipping)</td>
+            <td className="py-2 opacity-80">Gross (item + shipping)</td>
             <td className="py-2 text-right font-medium tabular-nums">{usd(result.gross)}</td>
           </tr>
           {result.fees.map((fee) => (
             <tr key={fee.label}>
-              <td className="py-2 opacity-70">
+              <td className="py-2 opacity-80">
                 {fee.label}
-                {fee.detail && <span className="ml-2 text-xs opacity-50">— {fee.detail}</span>}
+                {fee.detail && <span className="ml-2 text-xs opacity-75">— {fee.detail}</span>}
               </td>
               <td className="py-2 text-right font-medium tabular-nums">−{usd(fee.amount)}</td>
             </tr>
           ))}
           <tr>
-            <td className="py-2 opacity-70">Cost of goods + shipping</td>
+            <td className="py-2 opacity-80">Cost of goods + shipping</td>
             <td className="py-2 text-right font-medium tabular-nums">−{usd(result.costOfGoods)}</td>
           </tr>
           <tr className="font-semibold">
