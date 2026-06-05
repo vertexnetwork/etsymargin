@@ -1,11 +1,13 @@
 name: Sync from vertex-network-hub
 
 on:
-  repository_dispatch:
-    types: [vertex-hub-sync]
   schedule:
-    # Daily at 06:00 UTC — picks up hub changes even if propagate fan-out misses.
-    - cron: "0 6 * * *"
+    # Bi-weekly fallback (1st & 15th, 06:00 UTC ≈ every other week). The hub's
+    # real-time `repository_dispatch` fan-out was removed here on purpose: with
+    # a per-run branch name it spawned one PR per fire and slammed every spoke.
+    # network.json / ai-bots.json rarely need same-day propagation; use the
+    # manual trigger below for the occasional urgent change.
+    - cron: "0 6 1,15 * *"
   workflow_dispatch:
 
 permissions:
@@ -35,7 +37,11 @@ jobs:
         uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
-          branch: hub-sync/${{ github.run_id }}
+          # STABLE branch name: peter-evans/create-pull-request force-updates
+          # this one long-lived branch and reuses its open PR. The previous
+          # `hub-sync/${{ github.run_id }}` was unique per run, so every sync
+          # opened a fresh branch+PR — the cause of the hub-sync sprawl.
+          branch: hub-sync/network-registry
           commit-message: "chore(sync): pull latest network.json + ai-bots.json from hub"
           title: "chore(sync): vertex-hub network registry update"
           body: |
