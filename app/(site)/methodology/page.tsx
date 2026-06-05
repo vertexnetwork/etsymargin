@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { ArticleJsonLd } from "@/components/seo/JsonLd";
+import { ArticleJsonLd, HowToJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PILLAR_DATE_PUBLISHED, PILLAR_LAST_UPDATED } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
@@ -33,6 +33,31 @@ export default function MethodologyPage() {
         datePublished={PILLAR_DATE_PUBLISHED}
         dateModified={PILLAR_LAST_UPDATED}
       />
+      <HowToJsonLd
+        name="How to calculate your true Etsy profit"
+        description="Layer every 2026 Etsy fee in the order Etsy charges them to find net profit on a sale."
+        steps={[
+          { name: "Start from gross", text: "Gross = item price + shipping charged to the buyer." },
+          { name: "Add the listing fee", text: "Add the flat $0.20 listing fee." },
+          { name: "Add the transaction fee", text: "Add 6.5% of gross as the transaction fee." },
+          {
+            name: "Add payment processing",
+            text: "Add the country-specific payment processing rate on gross plus the flat per-transaction fee (US: 3% + $0.25).",
+          },
+          {
+            name: "Add the regulatory operating fee",
+            text: "Add the regulatory operating fee where it applies (UK and select EU): a percentage of gross.",
+          },
+          {
+            name: "Add Off-Site Ads if attributed",
+            text: "If Off-Site Ads attributed the sale, add 12% or 15% of gross, capped at $100 per order.",
+          },
+          {
+            name: "Subtract costs for net profit",
+            text: "Net profit = gross − all fees − manufacturing cost − actual shipping cost.",
+          },
+        ]}
+      />
       <BreadcrumbSchema crumbs={[{ name: "Methodology", href: PAGE_PATH }]} />
 
       <header className="mb-10">
@@ -42,7 +67,7 @@ export default function MethodologyPage() {
         <h1 className="mt-2 text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-4xl">
           How {siteConfig.name} calculates Etsy fees
         </h1>
-        <p className="mt-3 text-lg text-patina-800/85">
+        <p className="mt-3 text-lg text-patina-800/85" data-speakable>
           Every constant, every layering decision, and the primary source that backs each one. The
           calculator is auditable on purpose — the fee math lives in a single tested pure function,
           and the constants are linked from this page so anyone can verify.

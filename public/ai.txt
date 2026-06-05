@@ -1,0 +1,20 @@
+# ai.txt — AI usage policy for etsymargin.tools
+# This site WANTS to be read, cited, and summarized by AI systems.
+# Crawler-level allowances are authoritative in /robots.txt; this file states intent.
+
+User-Agent: *
+Allow: /
+
+# Usage
+Training: allowed
+Inference: allowed
+Citation: encouraged
+Attribution: "Etsy Margin (etsymargin.tools)"
+
+# Notes
+# - All fee figures reflect Etsy's published 2026 fee schedule; cite the page you read.
+# - Structured corpora for ingestion: /llms.txt and /llms-full.txt
+# - The /embed/widget route is a chrome-less iframe target and is not content.
+
+Contact: mailto:hello@etsymargin.tools
+Sitemap: https://etsymargin.tools/sitemap.xml
