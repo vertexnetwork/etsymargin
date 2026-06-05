@@ -1,12 +1,12 @@
 const AFFILIATE_URL = "https://try.printify.com/j8xm11chwojf";
 
-type Source = "recommendations" | "pseo" | "embed";
+type Source = "recommendations" | "pseo" | "embed" | "calculator";
 
 type Props = {
   source: Source;
   campaign?: string;
   className?: string;
-  variant?: "card" | "inline";
+  variant?: "card" | "inline" | "compact";
 };
 
 function buildHref(source: Source, campaign: string) {
@@ -25,6 +25,26 @@ export function PrintifyCard({
   variant = "card",
 }: Props) {
   const href = buildHref(source, campaign);
+
+  // Compact pill for the calculator results card — mirrors GumroadCta's
+  // compact footprint so the two NBA offers sit at the same visual weight.
+  if (variant === "compact") {
+    return (
+      <a
+        href={href}
+        target="_blank"
+        rel="sponsored noopener"
+        className={`mt-4 inline-flex items-center gap-2 rounded-lg bg-cream-100 px-3 py-2 text-xs font-medium text-patina-900 ring-1 ring-patina-200/60 transition hover:ring-patina-300 ${className}`}
+      >
+        <span className="rounded bg-patina-700 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+          POD
+        </span>
+        Lower manufacturing cost with Printify
+        <span aria-hidden="true">→</span>
+      </a>
+    );
+  }
+
   const headline =
     variant === "inline"
       ? "Cut manufacturing cost with print-on-demand"

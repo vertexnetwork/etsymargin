@@ -132,7 +132,7 @@ export function Calculator({
       />
 
       <div id="results" className="space-y-6">
-        <ResultsSummary result={result} itemPrice={inputs.itemPrice} />
+        <ResultsSummary result={result} inputs={inputs} />
         <WaterfallChart result={result} />
         <div className="flex flex-wrap items-center gap-3">
           <button
