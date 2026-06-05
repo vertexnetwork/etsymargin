@@ -6,12 +6,12 @@
 //   SITE_URL=https://staging... npm run indexnow
 //
 // The key is a public verification token, served at /{key}.txt (see
-// public/8e2d4f7a1c9b6e3052f8a1d4c7b09e63.txt). IndexNow is idempotent —
+// public/a7aaf4f823494933a907206337b0081e.txt). IndexNow is idempotent —
 // resubmitting unchanged URLs is harmless, so a blanket post-deploy ping is
 // safe. Exits non-zero only on a hard transport/HTTP failure so it can gate
 // a deploy step if wired into CI.
 
-const KEY = "8e2d4f7a1c9b6e3052f8a1d4c7b09e63";
+const KEY = "a7aaf4f823494933a907206337b0081e";
 const SITE_URL = (process.env.SITE_URL || "https://etsymargin.tools").replace(/\/$/, "");
 const host = new URL(SITE_URL).host;
 const keyLocation = `${SITE_URL}/${KEY}.txt`;
