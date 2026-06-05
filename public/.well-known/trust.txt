@@ -1,0 +1,9 @@
+# trust.txt for etsymargin.tools (JournalList trust.txt spec)
+# Independent web tool operated under the Vertex Network.
+
+Belongto=https://vertex.network/
+Controlledby=https://vertex.network/
+Contact=mailto:hello@etsymargin.tools
+Disclosure=https://etsymargin.tools/about
+Vendor=https://etsymargin.tools/recommendations
+Datetime=2026-06-05T00:00:00Z

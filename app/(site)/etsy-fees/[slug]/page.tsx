@@ -137,7 +137,9 @@ function AnswerPageView({ page }: { page: AnswerPage }) {
         <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
           {page.title}
         </h1>
-        <p className="mt-4 text-base text-patina-800/90 sm:text-lg">{page.shortAnswer}</p>
+        <p className="mt-4 text-base text-patina-800/90 sm:text-lg" data-speakable>
+          {page.shortAnswer}
+        </p>
         <p className="mt-3 text-xs text-patina-muted">
           Updated{" "}
           <time dateTime={PILLAR_LAST_UPDATED}>
@@ -291,7 +293,10 @@ function DollarAmountPage({ amount, slug }: { amount: number; slug: string }) {
         <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
           How much does Etsy take from a ${amount} sale?
         </h1>
-        <p className="mt-3 max-w-2xl text-base text-patina-800/85 sm:mt-4 sm:text-lg">
+        <p
+          className="mt-3 max-w-2xl text-base text-patina-800/85 sm:mt-4 sm:text-lg"
+          data-speakable
+        >
           <strong className="text-patina-900">
             Baseline: ${fees.baseline.toFixed(2)} (~{fees.baselinePct}%).
           </strong>{" "}

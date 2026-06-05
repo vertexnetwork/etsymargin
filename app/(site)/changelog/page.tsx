@@ -5,7 +5,10 @@ import { siteConfig } from "@/lib/site-config";
 export const metadata: Metadata = {
   title: `What's shipped — ${siteConfig.name}`,
   description: "Every commit landed on main, in order. Auto-generated from git history.",
-  alternates: { canonical: "/changelog" },
+  alternates: {
+    canonical: "/changelog",
+    types: { "application/rss+xml": `${siteConfig.url}/rss.xml` },
+  },
 };
 
 // Build-internal shape — `hash` is kept in JSON for idempotent merge in

@@ -70,9 +70,50 @@ export function ArticleJsonLd({
     datePublished,
     dateModified,
     inLanguage: "en",
-    mainEntityOfPage: { "@type": "WebPage", "@id": absoluteUrl },
+    // `speakable` marks the assistant-readable answer for voice surfaces
+    // (Google Assistant, Gemini read-aloud). The H1 is the spoken question;
+    // `[data-speakable]` tags the one-paragraph BLUF/shortAnswer that
+    // carries the direct answer — kept to a single ~25-word read.
+    mainEntityOfPage: {
+      "@type": "WebPage",
+      "@id": absoluteUrl,
+      speakable: {
+        "@type": "SpeakableSpecification",
+        cssSelector: ["h1", "[data-speakable]"],
+      },
+    },
     author: { "@id": `${siteConfig.url}#organization` },
     publisher: { "@id": `${siteConfig.url}#organization` },
+  };
+  return (
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }} />
+  );
+}
+
+// HowTo schema for the procedural "how to calculate true Etsy profit" flow
+// (methodology layering order). Answer engines and SGE lift HowTo steps into
+// step-by-step result enrichments; the steps here mirror the visible <ol> so
+// rendered text and schema stay identical.
+export function HowToJsonLd({
+  name,
+  description,
+  steps,
+}: {
+  name: string;
+  description: string;
+  steps: Array<{ name: string; text: string }>;
+}) {
+  const json = {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
+    name,
+    description,
+    step: steps.map((s, i) => ({
+      "@type": "HowToStep",
+      position: i + 1,
+      name: s.name,
+      text: s.text,
+    })),
   };
   return (
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(json) }} />

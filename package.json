@@ -28,6 +28,7 @@
     "test:e2e": "playwright test",
     "lhci": "lhci autorun --config=./lighthouserc.json",
     "changelog": "node scripts/build-changelog.mjs",
+    "indexnow": "node scripts/indexnow-ping.mjs",
     "build:product": "tsx scripts/build-product.ts",
     "build:images": "tsx scripts/build-images.ts",
     "build:icons": "tsx scripts/generate-favicon.ts"

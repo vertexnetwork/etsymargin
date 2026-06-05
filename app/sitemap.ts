@@ -5,6 +5,12 @@ import { siteConfig } from "@/lib/site-config";
 
 const BASE_URL = siteConfig.url;
 
+// Surface the brand OG image to Google Images via the sitemap `images`
+// extension. Home + the fee pillar are the two entry points worth indexing
+// imagery for; per-page dynamic OG images live at hashed metadata routes that
+// aren't stable sitemap URLs, so we point at the canonical static asset.
+const OG_IMAGE = `${BASE_URL}/og-default.png`;
+
 // `lastmod` from the build's commit author date (Vercel injects this) so
 // search engines see stable diffs across deploys instead of "everything
 // changed because the build ran today" (Vertex spec §6).
@@ -14,11 +20,23 @@ const lastModified = process.env.VERCEL_GIT_COMMIT_AUTHOR_DATE
 
 export default function sitemap(): MetadataRoute.Sitemap {
   const staticRoutes: MetadataRoute.Sitemap = [
-    { url: `${BASE_URL}`, lastModified, changeFrequency: "weekly", priority: 1.0 },
+    {
+      url: `${BASE_URL}`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 1.0,
+      images: [OG_IMAGE],
+    },
     // The fee pillar sits at priority 0.9 — second only to the home page.
     // It's the topical-authority hub that every spoke links UP into; we
     // want crawlers visiting it on every pass.
-    { url: `${BASE_URL}/etsy-fees`, lastModified, changeFrequency: "weekly", priority: 0.9 },
+    {
+      url: `${BASE_URL}/etsy-fees`,
+      lastModified,
+      changeFrequency: "weekly",
+      priority: 0.9,
+      images: [OG_IMAGE],
+    },
     { url: `${BASE_URL}/methodology`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/contact`, lastModified, changeFrequency: "yearly", priority: 0.4 },
