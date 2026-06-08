@@ -131,7 +131,7 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         </div>
       </header>
 
-      <Calculator initialInputs={entry.prefilledScenario} />
+      <Calculator initialInputs={entry.prefilledScenario} category={entry.category} />
 
       {mdxSource && (
         <article className="mt-12 max-w-3xl">

@@ -4,7 +4,8 @@
 // the live calculator at etsymargin.tools.
 //
 // Usage: `npm run build:product`
-// Outputs: temp/gumroad-product/etsy-pricing-bible-2026.{pdf,psv}
+// Outputs: temp/gumroad-product/etsy-pricing-bible-2026.pdf
+//          temp/gumroad-product/master-pricing-matrix-2026.psv
 
 import fs from "node:fs";
 import path from "node:path";
@@ -27,7 +28,12 @@ const MDX_DIR = path.resolve("content/pseo");
 
 const OUT_DIR = path.resolve("temp/gumroad-product");
 const PDF_PATH = path.join(OUT_DIR, "etsy-pricing-bible-2026.pdf");
-const PSV_PATH = path.join(OUT_DIR, "etsy-pricing-bible-2026.psv");
+// The pre-modeled spreadsheet is branded the "Master Pricing Matrix" on the
+// sales page and throughout this manual; the filename matches it so a buyer
+// who reads a reference to it can find the file in their download.
+const MATRIX_NAME = "Master Pricing Matrix";
+const MATRIX_FILE = "master-pricing-matrix-2026.psv";
+const PSV_PATH = path.join(OUT_DIR, MATRIX_FILE);
 
 const BRAND = {
   patinaBlue: "#3E7C7B",
@@ -375,7 +381,7 @@ function drawForeword(doc: Doc) {
   H1(doc, "How to use this book");
   P(
     doc,
-    "This is a reference, not a read-through. Skip to the country chapter for your shop's location, then jump to the category card that matches what you sell. The companion spreadsheet (etsy-pricing-bible-2026.psv) has every combination pre-modeled — open it whenever you're tempted to set a price by feel.",
+    `This is a reference, not a read-through. Skip to the country chapter for your shop's location, then jump to the category card that matches what you sell. The ${MATRIX_NAME} (${MATRIX_FILE}) has every combination pre-modeled — open it whenever you're tempted to set a price by feel.`,
   );
   P(doc, "Three things to internalize before any pricing decision:");
   P(doc, "1. Etsy stacks four to six fees per sale. Most sellers can name two.");
@@ -447,6 +453,132 @@ function drawFeeStack(doc: Doc) {
   P(
     doc,
     "The cliff at $10,000 means crossing the threshold can make your effective fee rate jump several points overnight, even though the rate technically dropped from 15% to 12%. The country chapters and category cards both flag where this tipping point lands for you.",
+  );
+}
+
+// The bundling chapter — the highest-leverage tactic in this book for any
+// shop selling low-priced items, and the insight buyers single out. Etsy's
+// two flat fees ($0.20 listing + $0.25 fixed payment-processing portion) are
+// charged per ORDER, not per item, so selling cheap items one at a time pays
+// them over and over. Bundling pays them once. Every figure here is computed
+// live from lib/fees, so it can never drift from the calculator, the preview
+// imagery, or the Master Pricing Matrix.
+function drawBundlingChapter(doc: Doc) {
+  doc.addPage();
+  doc.font("Helvetica-Bold").fontSize(10).fillColor(BRAND.patinaBlue).text("PRICING TACTIC");
+  doc.moveDown(0.2);
+  H1(doc, "Bundle to stop paying the flat fees twice");
+
+  P(
+    doc,
+    "If you sell low-priced items, this is the single highest-leverage pricing move in this book. It does not require raising your prices, cutting your costs, or changing your product — only how many items ride on one order.",
+  );
+
+  H2(doc, "Why cheap items bleed margin");
+  P(
+    doc,
+    "Two of Etsy's fees are flat, not percentage-based: the $0.20 listing fee and the $0.25 fixed portion of US payment processing. On a $5 item those $0.45 in flat fees are 9% of the sale before a single percentage fee applies. On a $50 item the same $0.45 is under 1%. The flat fees do not scale down for cheap products — your effective fee rate scales up.",
+  );
+  P(
+    doc,
+    "The percentage fees (6.5% transaction + 3% payment processing) are the same either way. So the entire penalty for selling cheap items individually is the flat fees, repeated once per order.",
+  );
+
+  // Worked example, computed live — ten $5 items sold solo vs. one $50 bundle,
+  // US shop, Off-Site Ads off (the one variable bundling actually changes).
+  const BUNDLE_N = 10;
+  const ITEM = 5;
+  const base = {
+    shippingCharged: 0,
+    manufacturingCost: 0,
+    actualShippingCost: 0,
+    country: "US" as CountryCode,
+    offsiteAdsEnabled: false,
+    atOrAbove10k: false,
+  };
+  const solo = calculate({ ...base, itemPrice: ITEM });
+  const bundle = calculate({ ...base, itemPrice: ITEM * BUNDLE_N });
+  const soloTotalFees = solo.totalFees * BUNDLE_N;
+  const soloKeep = ITEM * BUNDLE_N - soloTotalFees;
+  const bundleKeep = bundle.gross - bundle.totalFees;
+  const saved = bundleKeep - soloKeep;
+
+  H2(doc, `Worked example: ten $${ITEM} items, US shop, Off-Site Ads off`);
+  drawTable(
+    doc,
+    ["Approach", "Total fees", "Effective rate", "You keep"],
+    [
+      [
+        `Sold one at a time (${BUNDLE_N} orders)`,
+        fmtMoney(soloTotalFees),
+        `${(solo.effectiveFeeRate * 100).toFixed(1)}%`,
+        fmtMoney(soloKeep),
+      ],
+      [
+        `Bundled into one $${ITEM * BUNDLE_N} listing`,
+        fmtMoney(bundle.totalFees),
+        `${(bundle.effectiveFeeRate * 100).toFixed(1)}%`,
+        fmtMoney(bundleKeep),
+      ],
+    ],
+    [200, 90, 90, 80],
+  );
+  P(
+    doc,
+    `Same products, same $${
+      ITEM * BUNDLE_N
+    } of revenue. Bundling nearly halves the effective fee rate — from ${(
+      solo.effectiveFeeRate * 100
+    ).toFixed(1)}% to ${(bundle.effectiveFeeRate * 100).toFixed(
+      1,
+    )}% — because the flat fees are paid once instead of ${BUNDLE_N} times. That is ${fmtMoney(
+      saved,
+    )} more in your pocket on the same sales.`,
+  );
+
+  H2(doc, "How the rate falls as the bundle grows");
+  P(doc, `Effective fee rate for $${ITEM} items, US shop, Off-Site Ads off, at each bundle size:`);
+  const sizes = [1, 3, 5, 10];
+  drawTable(
+    doc,
+    ["Bundle", "Listing price", "Effective fee rate"],
+    sizes.map((n) => {
+      const r = calculate({ ...base, itemPrice: ITEM * n });
+      const label = n === 1 ? "Single item" : `${n}-pack`;
+      return [label, fmtMoney(ITEM * n), `${(r.effectiveFeeRate * 100).toFixed(1)}%`];
+    }),
+    [180, 140, 140],
+  );
+  P(
+    doc,
+    "Most of the gain lands by the 3-pack; after that the curve flattens because the flat fees are already spread thin. You do not need a huge bundle — you need to stop paying the flat fees on every single low-priced order.",
+  );
+
+  H2(doc, "The framework");
+  drawInlineParagraph(
+    doc,
+    "**Bundle what a buyer already wants together.** Variant packs (colors, sizes), themed sets, and volume packs convert. Bundling unrelated items just to dodge fees lowers conversion and erases the gain.",
+    { bullet: true },
+  );
+  drawInlineParagraph(
+    doc,
+    "**Price the bundle below single-item × N.** A small discount is what makes the bundle attractive — and the fee savings above are what fund that discount without touching your margin.",
+    { bullet: true },
+  );
+  drawInlineParagraph(
+    doc,
+    "**Digital products bundle for free.** No added manufacturing or shipping cost, so the entire fee saving drops to the bottom line. This tactic is most powerful for digital shops.",
+    { bullet: true },
+  );
+  drawInlineParagraph(
+    doc,
+    "**For physical bundles, re-check shipping.** A heavier bundle can raise your actual shipping cost; model the bundle as its own scenario in the Master Pricing Matrix before you set the price.",
+    { bullet: true },
+  );
+  drawInlineParagraph(
+    doc,
+    "**It matters most below ~$10 per item.** Above that, the flat fees are already a small share of the sale and the tactic fades. Use it where the flat-fee drag is real.",
+    { bullet: true },
   );
 }
 
@@ -596,13 +728,13 @@ function drawCategoryCard(doc: Doc, entry: PseoEntry) {
   }
 }
 
-// Hand-authored FAQs specific to using this book and the companion
-// spreadsheet. Deliberately *not* deduped from the website's pSEO FAQs —
+// Hand-authored FAQs specific to using this book and the Master Pricing
+// Matrix. Deliberately *not* deduped from the website's pSEO FAQs —
 // those are SEO answers for category pages and don't fit the bible context.
 const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   {
     q: "How is this different from a free Etsy fee calculator?",
-    a: "A calculator answers one scenario at a time. This book answers 400 scenarios in one place — every category in this manual, against every payment-processor region, with Off-Site Ads on or off and your shop above or below the $10,000 threshold. The companion spreadsheet (etsy-pricing-bible-2026.psv) is the lookup table; the PDF explains the math behind it.",
+    a: `A calculator answers one scenario at a time. This book answers 1,200 scenarios in one place — every category in this manual, against every payment-processor region, with Off-Site Ads on or off and your shop above or below the $10,000 threshold. The ${MATRIX_NAME} (${MATRIX_FILE}) is the lookup table; the PDF explains the math behind it.`,
   },
   {
     q: "What's the refund policy?",
@@ -610,10 +742,10 @@ const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: "What file formats do I get?",
-    a: "Two files. A PDF reference manual (etsy-pricing-bible-2026.pdf) for reading and reference. A pipe-delimited spreadsheet (etsy-pricing-bible-2026.psv) for opening in Excel, Google Sheets, or Numbers.",
+    a: `Two files. A PDF reference manual (etsy-pricing-bible-2026.pdf) for reading and reference. The ${MATRIX_NAME} (${MATRIX_FILE}) — a pipe-delimited spreadsheet — for opening in Excel, Google Sheets, or Numbers.`,
   },
   {
-    q: "Will the spreadsheet open in Excel, Google Sheets, and Numbers?",
+    q: "Will the Master Pricing Matrix open in Excel, Google Sheets, and Numbers?",
     a: "Yes. The .psv is plain text with `|` (pipe) as the column delimiter. In Excel, use Data → From Text/CSV and set the delimiter to Pipe. In Google Sheets, use File → Import → Upload, then choose Custom and enter `|`. In Numbers on macOS, double-click the file and confirm the pipe delimiter when prompted.",
   },
   {
@@ -622,7 +754,7 @@ const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: "What if Etsy changes its fee structure during 2026?",
-    a: "You get the rebuilt bundle for free. Email the address printed on your Gumroad receipt and we re-send the PDF and spreadsheet with the updated rates. The fee math in this book is generated from the same TypeScript model that powers etsymargin.tools, so an Etsy change updates everything in one pass.",
+    a: `You get the rebuilt bundle for free. Email the address printed on your Gumroad receipt and we re-send the PDF and ${MATRIX_NAME} with the updated rates. The fee math in this book is generated from the same TypeScript model that powers etsymargin.tools, so an Etsy change updates everything in one pass.`,
   },
   {
     q: "Which countries are covered?",
@@ -642,7 +774,7 @@ const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: "Does this work for print-on-demand and dropship sellers?",
-    a: "Yes. The category cards already include t-shirts, mugs, baby clothing, stickers, and pet portraits — common POD product types. The spreadsheet's manufacturing-cost column is where you put your supplier's per-unit rate. Swap in your actual Printify, Printful, or Gelato number for a sharper read on a specific listing.",
+    a: `Yes. The category cards already include t-shirts, mugs, baby clothing, stickers, and pet portraits — common POD product types. The ${MATRIX_NAME}'s manufacturing-cost column is where you put your supplier's per-unit rate. Swap in your actual Printify, Printful, or Gelato number for a sharper read on a specific listing.`,
   },
   {
     q: "Can I share this with a business partner or my mastermind group?",
@@ -655,7 +787,7 @@ function drawFaqAppendix(doc: Doc) {
   H1(doc, "Frequently asked questions");
   P(
     doc,
-    "Common questions about using this book, the companion spreadsheet, and the underlying fee math.",
+    `Common questions about using this book, the ${MATRIX_NAME}, and the underlying fee math.`,
   );
   for (const f of BIBLE_FAQ) {
     H3(doc, f.q);
@@ -715,6 +847,7 @@ function buildPdf(): Promise<void> {
     drawCover(doc);
     drawForeword(doc);
     drawFeeStack(doc);
+    drawBundlingChapter(doc);
     for (const cc of COUNTRY_CODES) drawCountryChapter(doc, cc);
     for (const entry of PSEO_ENTRIES) drawCategoryCard(doc, entry);
     drawFaqAppendix(doc);

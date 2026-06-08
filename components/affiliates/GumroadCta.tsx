@@ -30,7 +30,7 @@ function buildHref(rawUrl: string, source: Source, variant: Variant, content?: s
 export function GumroadCta({ variant, source, content, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
-  const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "39";
+  const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "19";
 
   if (!enabled || !productUrl) return null;
   const href = buildHref(productUrl, source, variant, content);
@@ -57,7 +57,7 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
       <p
         className={`mt-8 rounded-xl bg-cream-100 px-4 py-3 text-sm text-patina-800/90 ring-1 ring-patina-100/80 ${className}`}
       >
-        Want every Etsy fee scenario pre-modeled in one PDF + spreadsheet?{" "}
+        Want every Etsy fee scenario pre-modeled in one PDF + the Master Pricing Matrix?{" "}
         <a
           href={href}
           target="_blank"
@@ -80,8 +80,9 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
         The 2026 Etsy Pricing Bible
       </h2>
       <p className="mt-2 text-sm text-patina-800/85 sm:text-base">
-        Every fee scenario pre-modeled in one PDF and spreadsheet — by category, by country, with
-        the offsite-ads tipping point flagged for each. One-time purchase. Instant download.
+        Every fee scenario pre-modeled in one PDF and the Master Pricing Matrix — by category, by
+        country, with the offsite-ads tipping point flagged for each. One-time purchase. Instant
+        download.
       </p>
       <a
         href={href}

@@ -135,7 +135,7 @@ export const siteConfig = {
     lemonSqueezy: { storeId: "", productSlug: "" },
     gumroad: {
       productUrl: env("NEXT_PUBLIC_GUMROAD_PRODUCT_URL", ""),
-      price: Number(env("NEXT_PUBLIC_GUMROAD_PRICE", "39")),
+      price: Number(env("NEXT_PUBLIC_GUMROAD_PRICE", "19")),
       enabled: env("NEXT_PUBLIC_GUMROAD_ENABLED", "0") === "1",
     },
   },
