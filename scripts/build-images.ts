@@ -119,7 +119,7 @@ function buildCover(): string {
   // Sidebar — price + bullets
   const sx = W - sidebarW;
   e.push(
-    text(sx + sidebarW / 2, 230, "$39", {
+    text(sx + sidebarW / 2, 230, "$19", {
       size: 110,
       weight: 800,
       fill: BRAND.patinaBlueDark,
@@ -138,8 +138,8 @@ function buildCover(): string {
   e.push(line(sx + 60, 305, sx + sidebarW - 60, 305, BRAND.patinaBlue700, 1));
 
   const bullets = [
-    "93-page PDF reference",
-    "1,200-row spreadsheet",
+    "136-page PDF reference",
+    "1,200-row pricing matrix",
     "5 country deep-dives",
     "60 category margin cards",
     "12 hand-authored FAQ",
@@ -286,12 +286,12 @@ function buildPreview1(): string {
   const cards = [
     {
       title: "REFERENCE PDF",
-      number: "93",
+      number: "136",
       suffix: "pages",
       body: "Cover, foreword, fee-stack explainer, five country deep-dives at low / mid / high price points, sixty category margin cards with the live website's narrative, and the methodology colophon.",
     },
     {
-      title: "PRE-MODELED SHEET",
+      title: "MASTER PRICING MATRIX",
       number: "1,200",
       suffix: "scenarios",
       body: "Every category × every payment processor region × Off-Site Ads on/off × under or above the $10k threshold. Pipe-delimited so commas in labels don't break the import. Opens in Excel, Sheets, Numbers.",
@@ -343,7 +343,7 @@ function buildPreview1(): string {
 
   // Footer
   e.push(
-    text(W / 2, H - 38, "etsymargin.tools  ·  The 2026 Etsy Pricing Bible  ·  $39", {
+    text(W / 2, H - 38, "etsymargin.tools  ·  The 2026 Etsy Pricing Bible  ·  $19", {
       size: 14,
       weight: 700,
       fill: BRAND.patinaBlue700,
@@ -503,7 +503,7 @@ function buildPreview3(): string {
   e.push(rect(0, 0, W, H, BRAND.cream50));
 
   e.push(
-    text(pad, 92, "THE COMPANION SPREADSHEET", {
+    text(pad, 92, "THE MASTER PRICING MATRIX", {
       size: 13,
       weight: 700,
       fill: BRAND.patinaBlue500,
@@ -616,6 +616,208 @@ function buildPreview3(): string {
         size: 17,
         weight: 700,
         fill: BRAND.patinaBlueDark,
+      },
+    ),
+  );
+
+  return svg(W, H, e.join(""));
+}
+
+// --- Preview 4: the bundling tactic (1280×800) ------------------------------
+// The single most-quoted insight from buyer feedback: bundling low-priced
+// items collapses the effective fee rate, because Etsy's flat fees ($0.20
+// listing + $0.25 processing) are charged per *order*, not per item. Numbers
+// match lib/fees exactly — and lib/fees rounds each fee line to the cent, so
+// the transaction fee on a $5 item is round($0.325) = $0.33, not $0.325. That
+// makes a solo $5 item cost $0.93 in fees (US shop, Off-Site Ads off):
+//   $5 item, solo:  $0.20 + round(6.5%×5)=$0.33 + (3%×5 + $0.25 = $0.40)
+//                   = $0.93 in fees → 18.6% effective rate
+//   ten $5 items ($50) in one order:
+//                   $0.20 + 6.5%×50 ($3.25) + (3%×50 + $0.25 = $1.75)
+//                   = $5.20 in fees → 10.4% effective rate
+// Same $50 of product; only the flat fees stop repeating, saving $9.30 −
+// $5.20 = $4.10. These match the Bible's bundling chapter (both derive from
+// calculate()). Off-Site Ads is excluded on purpose: it's a flat % that
+// stacks equally on both sides, so it would only dilute the comparison.
+
+function buildPreview4(): string {
+  const W = 1280;
+  const H = 800;
+  const pad = 96;
+  const e: string[] = [];
+
+  e.push(rect(0, 0, W, H, BRAND.cream50));
+
+  e.push(
+    text(pad, 84, "WORKED EXAMPLE · BUNDLING", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.patinaBlue500,
+      letterSpacing: 4,
+    }),
+  );
+  e.push(
+    text(pad, 144, "Cut your effective fee", {
+      size: 48,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 198, "rate nearly in half.", {
+      size: 48,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(
+      pad,
+      240,
+      "Ten $5 stickers · US shop · Off-Site Ads off. Same $50 of product — sold one at a time vs. one bundled listing.",
+      {
+        size: 16,
+        italic: true,
+        fill: BRAND.patinaBlue700,
+      },
+    ),
+  );
+
+  // Two comparison cards
+  const cardY = 280;
+  const cardH = 360;
+  const gap = 32;
+  const cardW = (W - pad * 2 - gap) / 2;
+
+  type Detail = { label: string; amount: string; total?: boolean };
+  const cards: Array<{
+    x: number;
+    accent: string;
+    title: string;
+    rate: string;
+    rateFill: string;
+    lead: string;
+    rows: Detail[];
+  }> = [
+    {
+      x: pad,
+      accent: BRAND.loss,
+      title: "SOLD ONE AT A TIME",
+      rate: "18.6%",
+      rateFill: BRAND.loss,
+      lead: "Ten separate orders",
+      rows: [
+        { label: "Listing fee  paid 10×", amount: "$2.00" },
+        { label: "Processing flat  paid 10×", amount: "$2.50" },
+        { label: "All fees on $50", amount: "$9.30", total: true },
+      ],
+    },
+    {
+      x: pad + cardW + gap,
+      accent: BRAND.limeCream,
+      title: "BUNDLED INTO ONE LISTING",
+      rate: "10.4%",
+      rateFill: BRAND.patinaBlueDark,
+      lead: "One order",
+      rows: [
+        { label: "Listing fee  paid once", amount: "$0.20" },
+        { label: "Processing flat  paid once", amount: "$0.25" },
+        { label: "All fees on $50", amount: "$5.20", total: true },
+      ],
+    },
+  ];
+
+  for (const card of cards) {
+    e.push(rect(card.x, cardY, cardW, cardH, BRAND.white, { rx: 14 }));
+    e.push(rect(card.x, cardY, cardW, 4, card.accent, { rx: 0 }));
+
+    e.push(
+      text(card.x + 32, cardY + 44, card.title, {
+        size: 12,
+        weight: 700,
+        fill: card.rateFill === BRAND.loss ? BRAND.loss : BRAND.patinaBlue500,
+        letterSpacing: 3,
+      }),
+    );
+    e.push(
+      text(card.x + 32, cardY + 138, card.rate, {
+        size: 78,
+        weight: 800,
+        fill: card.rateFill,
+      }),
+    );
+    e.push(
+      text(card.x + 32, cardY + 168, "effective fee rate", {
+        size: 16,
+        weight: 500,
+        fill: BRAND.patinaBlue700,
+      }),
+    );
+    e.push(
+      line(card.x + 32, cardY + 192, card.x + cardW - 32, cardY + 192, BRAND.patinaBlue100, 1),
+    );
+    e.push(
+      text(card.x + 32, cardY + 224, card.lead, {
+        size: 15,
+        weight: 700,
+        fill: BRAND.patinaBlueDark,
+      }),
+    );
+
+    let ry = cardY + 262;
+    for (const row of card.rows) {
+      const fill = row.total ? BRAND.patinaBlueDark : BRAND.patinaBlue700;
+      e.push(
+        text(card.x + 32, ry, row.label, {
+          size: 15,
+          weight: row.total ? 700 : 500,
+          fill,
+        }),
+      );
+      e.push(
+        text(card.x + cardW - 32, ry, row.amount, {
+          size: 15,
+          weight: row.total ? 800 : 700,
+          fill,
+          anchor: "end",
+        }),
+      );
+      ry += 34;
+    }
+  }
+
+  // Punchline bar
+  const tableX = pad;
+  const tableW = W - pad * 2;
+  const netY = 666;
+  e.push(rect(tableX, netY, tableW, 54, BRAND.limeCream));
+  e.push(
+    text(tableX + 28, netY + 34, "Same products. Same $50.", {
+      size: 20,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(tableX + tableW - 28, netY + 34, "Effective fees 18.6% → 10.4%   ·   +$4.10 kept", {
+      size: 18,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+      anchor: "end",
+    }),
+  );
+
+  // Mechanism footnote
+  e.push(
+    text(
+      W / 2,
+      netY + 92,
+      "Etsy's flat fees ($0.20 listing + $0.25 processing) are charged per order — bundle the items and you pay them once, not ten times.",
+      {
+        size: 13,
+        italic: true,
+        fill: BRAND.patinaBlue700,
+        anchor: "middle",
       },
     ),
   );
@@ -768,6 +970,7 @@ async function main() {
   await writePng("preview-1.png", buildPreview1());
   await writePng("preview-2.png", buildPreview2());
   await writePng("preview-3.png", buildPreview3());
+  await writePng("preview-4.png", buildPreview4());
   await writePng("logo.png", buildVertexLogo(), BRAND_DIR);
 }
 

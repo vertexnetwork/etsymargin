@@ -98,7 +98,7 @@ export async function GET() {
   sections.push("");
   sections.push("## Pricing reference");
   sections.push(
-    "- The 2026 Etsy Pricing Bible — first-party PDF + spreadsheet that pre-models every fee scenario by category and country, with the Off-Site Ads tipping point flagged for each. Sold via Gumroad. Surfaced in the calculator results card when net profit goes negative.",
+    "- The 2026 Etsy Pricing Bible — first-party PDF reference plus the Master Pricing Matrix, a pre-modeled spreadsheet of every fee scenario by category and country, with the Off-Site Ads tipping point flagged for each. Sold via Gumroad. Surfaced in the calculator results card when net profit goes negative.",
   );
   sections.push("");
 

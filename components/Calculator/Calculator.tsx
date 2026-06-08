@@ -34,9 +34,14 @@ function readClientOverrides(): Partial<CalculatorInputs> {
 export function Calculator({
   initialInputs,
   embedded = false,
+  category,
 }: {
   initialInputs?: Partial<CalculatorInputs>;
   embedded?: boolean;
+  // Category pages pass this so the results pitch can be tailored (e.g. the
+  // POD "overhead twice" framing for Apparel). Omitted on the generic
+  // homepage/embed calculator, where copy stays category-neutral.
+  category?: string;
 }) {
   // Lazy initializer: SSR returns base; client merges localStorage + URL on
   // first render so we hydrate with the right values from the start instead
@@ -132,7 +137,7 @@ export function Calculator({
       />
 
       <div id="results" className="space-y-6">
-        <ResultsSummary result={result} inputs={inputs} />
+        <ResultsSummary result={result} inputs={inputs} category={category} />
         <WaterfallChart result={result} />
         <div className="flex flex-wrap items-center gap-3">
           <button
