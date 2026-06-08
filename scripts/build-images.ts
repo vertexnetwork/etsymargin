@@ -138,7 +138,7 @@ function buildCover(): string {
   e.push(line(sx + 60, 305, sx + sidebarW - 60, 305, BRAND.patinaBlue700, 1));
 
   const bullets = [
-    "136-page PDF reference",
+    "135-page PDF reference",
     "1,200-row pricing matrix",
     "5 country deep-dives",
     "60 category margin cards",
@@ -286,7 +286,7 @@ function buildPreview1(): string {
   const cards = [
     {
       title: "REFERENCE PDF",
-      number: "136",
+      number: "135",
       suffix: "pages",
       body: "Cover, foreword, fee-stack explainer, five country deep-dives at low / mid / high price points, sixty category margin cards with the live website's narrative, and the methodology colophon.",
     },

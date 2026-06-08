@@ -171,7 +171,17 @@ function H1(doc: Doc, text: string) {
   doc.moveDown(0.4);
 }
 
+// Keep-with-next: if a heading would land within `needed` points of the page
+// bottom, push it to the next page so it never gets stranded above the fold
+// from the body or table that follows it. Guards against orphaned FAQ
+// questions and "## The common mistake" sub-heads.
+function ensureSpace(doc: Doc, needed: number) {
+  const bottom = doc.page.height - doc.page.margins.bottom;
+  if (doc.y + needed > bottom) doc.addPage();
+}
+
 function H2(doc: Doc, text: string) {
+  ensureSpace(doc, 64);
   doc.font("Helvetica-Bold").fontSize(13).fillColor(BRAND.patinaBlueDark).text(text);
   doc.moveDown(0.25);
 }
@@ -190,6 +200,7 @@ function muted(doc: Doc, text: string) {
 }
 
 function H3(doc: Doc, text: string) {
+  ensureSpace(doc, 60);
   doc.x = doc.page.margins.left;
   doc.font("Helvetica-Bold").fontSize(11.5).fillColor(BRAND.patinaBlueDark).text(text);
   doc.moveDown(0.2);
@@ -467,7 +478,7 @@ function drawBundlingChapter(doc: Doc) {
   doc.addPage();
   doc.font("Helvetica-Bold").fontSize(10).fillColor(BRAND.patinaBlue).text("PRICING TACTIC");
   doc.moveDown(0.2);
-  H1(doc, "Bundle to stop paying the flat fees twice");
+  H1(doc, "Bundle to stop paying the flat fees on every order");
 
   P(
     doc,
@@ -746,7 +757,7 @@ const BIBLE_FAQ: Array<{ q: string; a: string }> = [
   },
   {
     q: "Will the Master Pricing Matrix open in Excel, Google Sheets, and Numbers?",
-    a: "Yes. The .psv is plain text with `|` (pipe) as the column delimiter. In Excel, use Data → From Text/CSV and set the delimiter to Pipe. In Google Sheets, use File → Import → Upload, then choose Custom and enter `|`. In Numbers on macOS, double-click the file and confirm the pipe delimiter when prompted.",
+    a: "Yes. The .psv is plain text with the pipe character (|) as the column delimiter. In Excel, use Data > From Text/CSV and set the delimiter to Pipe. In Google Sheets, use File > Import > Upload, then choose Custom and enter a pipe (|). In Numbers on macOS, double-click the file and confirm the pipe delimiter when prompted.",
   },
   {
     q: "Why pipe-delimited instead of CSV?",

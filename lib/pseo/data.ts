@@ -29,7 +29,7 @@ const baseFaq: PseoFaq[] = [
   },
   {
     q: "What's the cheapest way to lower my Etsy fees?",
-    a: "Two levers actually move the needle: opting out of Off-Site Ads while you're still under the $10k threshold, and rolling shipping into the item price so you don't pay the 6.5% transaction fee on a separately-charged shipping line.",
+    a: "Two levers move the needle: opting out of Off-Site Ads while you're still under the $10k threshold, and rolling shipping into the item price so you don't pay the 6.5% transaction fee on a separately-charged shipping line.",
   },
   {
     q: "What percentage of sales does Etsy take overall?",
@@ -266,7 +266,7 @@ export const PSEO_ENTRIES: PseoEntry[] = [
     title: "Etsy Handmade Soap Profit Margin (2026)",
     metaDescription:
       "Soap makers: see your real margin on Etsy after lye, oils, packaging, shipping, and the platform fee stack.",
-    heroHeadline: "Cottage soap math: where the margin actually lives.",
+    heroHeadline: "Cottage soap math: where the margin lives.",
     heroSubcopy:
       "Soap is heavy and hazmat-flagged for some carriers — shipping eats into a tighter category than most makers realize.",
     prefilledScenario: {
@@ -493,7 +493,7 @@ export const PSEO_ENTRIES: PseoEntry[] = [
       "Selling premade logo packs on Etsy? See your real margin on a $20 logo bundle after every fee.",
     heroHeadline: "Logo template packs: where bundling wins on margin.",
     heroSubcopy:
-      "At $20 a pack, you cross the threshold where percentage fees dominate flat fees. That's the price point where digital design products actually scale.",
+      "At $20 a pack, you cross the threshold where percentage fees dominate flat fees. That's the price point where digital design products scale.",
     prefilledScenario: {
       itemPrice: 20,
       shippingCharged: 0,
