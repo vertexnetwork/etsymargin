@@ -6,6 +6,9 @@ out/
 .DS_Store
 .env*.local
 coverage/
+
+# Search Console exports — local reference data for pSEO, not committed
+gsc-exports/
 *.tsbuildinfo
 extension/dist/
 extension/node_modules/

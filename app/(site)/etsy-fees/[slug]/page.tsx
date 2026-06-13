@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 import type { Metadata } from "next";
 import { Calculator } from "@/components/Calculator/Calculator";
-import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import {
@@ -111,7 +111,7 @@ function AnswerPageView({ page }: { page: AnswerPage }) {
   const faq = [{ q: page.title, a: page.shortAnswer }];
   return (
     <main className="mx-auto max-w-3xl px-5 py-6 sm:py-16">
-      <SoftwareApplicationJsonLd />
+      {/* Informational answer page — Article + FAQ only (no app entity). */}
       <FaqJsonLd faq={faq} />
       <ArticleJsonLd
         url={url}
@@ -267,7 +267,7 @@ function DollarAmountPage({ amount, slug }: { amount: number; slug: string }) {
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
-      <SoftwareApplicationJsonLd />
+      {/* Informational answer page — Article + FAQ only (no app entity). */}
       <FaqJsonLd faq={faq} />
       <ArticleJsonLd
         url={url}

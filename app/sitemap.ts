@@ -48,6 +48,25 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { url: `${BASE_URL}/terms`, lastModified, changeFrequency: "yearly", priority: 0.3 },
   ];
 
+  // Public landing pages for the gated audit tool — indexable SEO/GEO surface.
+  // The gated /audit and /audit/unlock routes stay OUT of the sitemap (noindex).
+  if (siteConfig.features.audit.enabled) {
+    staticRoutes.push(
+      {
+        url: `${BASE_URL}/bulk-etsy-profit-calculator`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+      {
+        url: `${BASE_URL}/etsy-shop-audit`,
+        lastModified,
+        changeFrequency: "monthly",
+        priority: 0.8,
+      },
+    );
+  }
+
   return [
     ...staticRoutes,
     ...DOLLAR_AMOUNTS.map((amount) => ({

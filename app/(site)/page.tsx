@@ -5,6 +5,7 @@ import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { siteConfig } from "@/lib/site-config";
 
 // Explicit canonical on the homepage closes the indexation leak GSC was
 // surfacing as duplicate `www.` + apex entries. The Vercel www→apex 308
@@ -48,12 +49,30 @@ export default function Home() {
             href="/etsy-fees"
             className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
           >
-            Read the full 2026 Etsy fee breakdown →
+            How much does Etsy take per sale? Full 2026 fee breakdown →
           </Link>
         </div>
       </header>
 
       <Calculator />
+
+      {/* Whole-shop teaser — the single-listing answer is the hook; the
+          painkiller is auditing the entire catalog at once. Only rendered when
+          the gated audit tool is live. */}
+      {siteConfig.features.audit.enabled && (
+        <Link
+          href="/audit"
+          className="quiet-card mt-10 flex items-center justify-between gap-4 rounded-2xl px-5 py-4 ring-1 ring-patina-200/70 transition hover:ring-patina-300 sm:mt-12"
+        >
+          <span className="text-sm text-patina-800 sm:text-base">
+            <strong className="text-patina-900">This is one listing.</strong> See every listing in
+            your shop at once — find every money-loser.
+          </span>
+          <span aria-hidden="true" className="text-lg text-patina-700">
+            →
+          </span>
+        </Link>
+      )}
 
       {/* Inline Pricing Bible CTA — between the calculator and the
           categories grid, where the eye has just finished processing
