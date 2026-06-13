@@ -1,3 +1,4 @@
+import { readFileSync } from "node:fs";
 import { describe, expect, it } from "vitest";
 import {
   auditListings,
@@ -108,5 +109,45 @@ describe("auditListings + summarize", () => {
     // Worst-first ordering: the loss sorts to the front.
     expect(summary.worst[0].row.title).toBe("loser");
     expect(audited.find((a) => a.row.title === "loser")?.result.netProfit).toBeLessThan(0);
+  });
+});
+
+// Validates the parser against a fixture built to the real EtsyListingsDownload
+// .csv schema (24 columns, BOM, CRLF, quoted comma-fields, escaped quotes,
+// variation columns, blank SKUs). Regenerate via temp/.../make-sample-csv.mjs.
+describe("real Etsy export schema (fixture)", () => {
+  const csv = readFileSync(
+    new URL("../fixtures/etsy-listings-sample.csv", import.meta.url),
+    "utf8",
+  );
+  const { rows, warnings } = parseEtsyListings(csv);
+
+  it("detects all the columns we need (no critical warnings)", () => {
+    // price/title/sku all present in the real schema → zero warnings.
+    expect(warnings).toEqual([]);
+    expect(rows).toHaveLength(18);
+  });
+
+  it("does not mistake 'VARIATION 1 NAME' for the title column", () => {
+    // TITLE precedes the variation columns, so first /title|name/ match wins.
+    expect(rows[0].title).toBe("Vinyl Sticker - Wildflower Bouquet");
+    expect(rows[0].price).toBe(3.5);
+    expect(rows[0].sku).toBe("STK-WF-01");
+  });
+
+  it("parses a title containing a comma (quoted field)", () => {
+    const pet = rows.find((r) => r.sku === "" && r.price === 25);
+    expect(pet?.title).toBe("Custom Pet Portrait, Hand-Drawn Digital");
+  });
+
+  it("parses a title with escaped double-quotes", () => {
+    const mug = rows.find((r) => r.sku === "MUG-GARD");
+    expect(mug?.title).toBe('Ceramic Mug - "World\'s Okayest Gardener"');
+  });
+
+  it("keeps blank SKUs blank rather than dropping the row", () => {
+    const blanks = rows.filter((r) => r.sku === "");
+    expect(blanks.length).toBeGreaterThanOrEqual(3);
+    expect(blanks.every((r) => r.price > 0 && r.title.length > 0)).toBe(true);
   });
 });
