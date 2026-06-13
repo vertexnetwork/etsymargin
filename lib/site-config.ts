@@ -106,6 +106,13 @@ export const siteConfig = {
       chromeWebStoreUrl: "",
     },
     proEnabled: env("NEXT_PUBLIC_PRO_ENABLED", "0") === "1",
+    // Gated bulk shop-audit tool — the painkiller. Buyers of the Gumroad
+    // product unlock it with their license key (see lib/server-config.ts for
+    // the server-only verification secrets).
+    audit: {
+      enabled: env("NEXT_PUBLIC_AUDIT_ENABLED", "0") === "1",
+      route: "/audit",
+    },
     email: {
       enabled: false,
       leadMagnetName: "",

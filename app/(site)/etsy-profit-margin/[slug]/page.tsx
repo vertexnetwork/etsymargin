@@ -8,7 +8,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
-import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PseoPageView } from "@/components/analytics/PseoPageView";
 import { TrustStrip } from "@/components/layout/TrustStrip";
@@ -60,7 +60,11 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
-      <SoftwareApplicationJsonLd />
+      {/* No SoftwareApplicationJsonLd here: this is an informational article,
+          not the tool. Emitting the app entity on every spoke got these pages
+          classified as "Product snippets" in GSC (38% of impressions, ~0.18%
+          CTR) — the wrong intent for a fee article. The app schema now lives
+          only on the homepage and the tool landing pages. */}
       <FaqJsonLd faq={entry.faq} />
       <ArticleJsonLd
         url={`/etsy-profit-margin/${entry.slug}`}
@@ -126,7 +130,7 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
             href="/etsy-fees"
             className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
           >
-            Read the full 2026 Etsy fee breakdown →
+            How much does Etsy take per sale? Full 2026 fee breakdown →
           </Link>
         </div>
       </header>

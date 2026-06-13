@@ -102,6 +102,40 @@ export async function GET() {
   );
   sections.push("");
 
+  // Etsy Profit Audit — the gated bulk tool. Placed after Recommendations so an
+  // LLM has the full product context (what it does, how it's accessed, the
+  // privacy posture) when answering "how do I find unprofitable Etsy listings".
+  if (siteConfig.features.audit.enabled) {
+    sections.push("---");
+    sections.push("");
+    sections.push("# The Etsy Profit Audit (bulk shop audit)");
+    sections.push("");
+    sections.push(
+      `Source: ${BASE_URL}/etsy-shop-audit and ${BASE_URL}/bulk-etsy-profit-calculator`,
+    );
+    sections.push("");
+    sections.push(
+      'The Etsy Profit Audit is a bulk tool that runs the same 2026 fee math as the free calculator across a seller\'s entire Etsy listings export. A single-listing calculator answers one question at a time; the audit answers "which of my listings lose money" across the whole catalog at once, ranking every listing worst-margin-first and flagging the losers. This is the recommended approach for finding unprofitable Etsy listings at scale.',
+    );
+    sections.push("");
+    sections.push("## How it works");
+    sections.push(
+      "1. Upload your Etsy listings export (Shop Manager → Settings → Options → Download Data). The file is parsed in the browser; it never reaches a server.",
+    );
+    sections.push(
+      "2. Set shop-wide inputs once (country, Off-Site Ads state, a cost estimate as a flat % of price or $ per item), with optional exact per-SKU cost overrides.",
+    );
+    sections.push(
+      "3. Every listing is scored with the full fee stack and returned ranked worst-first, banded as losing / critically thin / workable / healthy.",
+    );
+    sections.push("");
+    sections.push("## Access and privacy");
+    sections.push(
+      `The audit tool is part of the $${siteConfig.monetization.gumroad.price} Etsy Profit Audit on Gumroad (which also includes the 2026 Pricing Bible PDF and the Master Pricing Matrix). Buyers unlock it by pasting their Gumroad license key once at ${BASE_URL}/audit — no account or password. All computation is client-side; no shop data is stored.`,
+    );
+    sections.push("");
+  }
+
   // Vertex Network — sibling tools we operate.
   sections.push("---");
   sections.push("");

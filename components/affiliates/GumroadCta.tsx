@@ -46,7 +46,7 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
         <span className="rounded bg-patina-700 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
           ${price}
         </span>
-        Get every fee scenario pre-modeled — Etsy Pricing Bible
+        Audit your whole shop — find every money-losing listing
         <span aria-hidden="true">→</span>
       </a>
     );
@@ -57,14 +57,15 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
       <p
         className={`mt-8 rounded-xl bg-cream-100 px-4 py-3 text-sm text-patina-800/90 ring-1 ring-patina-100/80 ${className}`}
       >
-        Want every Etsy fee scenario pre-modeled in one PDF + the Master Pricing Matrix?{" "}
+        Want to audit your <em>whole</em> shop at once and find every money-losing listing? Plus the
+        2026 Pricing Bible PDF + Master Pricing Matrix.{" "}
         <a
           href={href}
           target="_blank"
           rel="noopener"
           className="font-semibold text-patina-700 underline underline-offset-2 hover:text-patina-900"
         >
-          Get the 2026 Etsy Pricing Bible — ${price}
+          Get the Etsy Profit Audit — ${price}
         </a>
         .
       </p>
@@ -74,15 +75,14 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
   return (
     <section className={`quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6 ${className}`}>
       <span className="inline-flex items-center rounded-full bg-lime-cream/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
-        Digital download · ${price}
+        Audit tool + downloads · ${price}
       </span>
-      <h2 className="mt-3 text-lg font-bold text-patina-900 sm:text-xl">
-        The 2026 Etsy Pricing Bible
-      </h2>
+      <h2 className="mt-3 text-lg font-bold text-patina-900 sm:text-xl">The Etsy Profit Audit</h2>
       <p className="mt-2 text-sm text-patina-800/85 sm:text-base">
-        Every fee scenario pre-modeled in one PDF and the Master Pricing Matrix — by category, by
-        country, with the offsite-ads tipping point flagged for each. One-time purchase. Instant
-        download.
+        Upload your Etsy export and see exactly which listings lose money — your whole shop audited
+        at once, not one listing at a time. Includes the 2026 Pricing Bible PDF and the
+        1,200-scenario Master Pricing Matrix. One-time purchase. The math pays for itself the first
+        time it catches a mispriced listing.
       </p>
       <a
         href={href}

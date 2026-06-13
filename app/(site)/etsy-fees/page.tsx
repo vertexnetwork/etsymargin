@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
-import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
+import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import {
@@ -42,7 +42,9 @@ const updatedLabel = new Date(PILLAR_LAST_UPDATED).toLocaleDateString("en-US", {
 export default function EtsyFeesPillarPage() {
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
-      <SoftwareApplicationJsonLd />
+      {/* Informational pillar — Article + FAQ, not the app entity. See the
+          spoke template for why SoftwareApplication was pulled off article
+          pages (Product-snippet misclassification in GSC). */}
       <FaqJsonLd faq={PILLAR_FAQ} />
       <ArticleJsonLd
         url={PAGE_PATH}

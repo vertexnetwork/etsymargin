@@ -1,5 +1,40 @@
 [
   {
+    "hash": "5efcef6a18b907a3a8f02073d092313880557b03",
+    "date": "2026-06-08",
+    "title": "PDF QA pass: fix glyph/orphan/copy defects found in visual audit"
+  },
+  {
+    "hash": "0a2647742cc18e61b623cd1d617e278e6f51fea7",
+    "date": "2026-06-07",
+    "title": "Drop Bible to $19, add bundling chapter, rebrand matrix, tier calculator pitch"
+  },
+  {
+    "hash": "b6e2ad97a5de3a18894de6aa5cd9e444ad6b89c8",
+    "date": "2026-06-05",
+    "title": "chore(deps): refresh dependencies (supersedes both dependabot PRs)"
+  },
+  {
+    "hash": "c07627365fdc2684d3eeeb9780edf70caca7e5cf",
+    "date": "2026-06-05",
+    "title": "chore(sync): stop hub-sync branch sprawl + bi-weekly cadence"
+  },
+  {
+    "hash": "61622a2670a9f8b0aaf74d2ea7d55da34bbe7964",
+    "date": "2026-06-05",
+    "title": "Use the real project IndexNow key"
+  },
+  {
+    "hash": "120ef4d2fd75e287187aeb005a5518ae325eb95c",
+    "date": "2026-06-05",
+    "title": "Route calculator CTA to the seller's actual lever (NBA) + fix card-tone contrast"
+  },
+  {
+    "hash": "1b1b396d83450c34ae2e83da228c51180b9f2bdd",
+    "date": "2026-06-05",
+    "title": "Add visibility quick wins: speakable/HowTo schema, image+IndexNow+RSS discovery"
+  },
+  {
     "hash": "b988a3c341890b0cc8a866ad5646349e1523d8b5",
     "date": "2026-05-15",
     "title": "Prettier-format 3 MDX bodies that skipped the format pass"
@@ -8,6 +43,11 @@
     "hash": "962d05cf8f707b9c8379d78dd2c4e394e99edd0c",
     "date": "2026-05-15",
     "title": "Make Lighthouse CLS gate non-flaky: median-of-3, realistic ceiling"
+  },
+  {
+    "hash": "a84e30ac4b68f41c70dd5e69c807e4489ad9aae9",
+    "date": "2026-05-15",
+    "title": "Wire the fee pillar + answer pages into the GEO surface (llms.txt)"
   },
   {
     "hash": "2859723ec4801a45b95c28213779023875d36cda",
