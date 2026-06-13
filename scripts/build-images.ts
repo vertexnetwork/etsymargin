@@ -138,11 +138,11 @@ function buildCover(): string {
   e.push(line(sx + 60, 305, sx + sidebarW - 60, 305, BRAND.patinaBlue700, 1));
 
   const bullets = [
+    "Bulk shop audit tool",
     "135-page PDF reference",
     "1,200-row pricing matrix",
     "5 country deep-dives",
     "60 category margin cards",
-    "12 hand-authored FAQ",
     "Free 2026 fee updates",
   ];
   let by = 360;
@@ -174,25 +174,26 @@ function buildCover(): string {
     }),
   );
 
-  // Hook — three lines, with the loss number as its own punchline so it
-  // reads as a visual hit and not a runover. Line 3 is oversized + lime
-  // cream to carry the emotional load.
+  // Hook — three lines, with the question as its own punchline. Line 3 is
+  // oversized + lime cream to carry the emotional load. The painkiller framing:
+  // the seller's real fear isn't one listing, it's not knowing which of many
+  // are quietly underwater.
   e.push(
-    text(pad, 195, "Your $24 Etsy", {
-      size: 60,
+    text(pad, 195, "Which of your Etsy", {
+      size: 56,
       weight: 800,
       fill: BRAND.white,
     }),
   );
   e.push(
-    text(pad, 268, "t-shirt nets you", {
-      size: 60,
+    text(pad, 268, "listings lose", {
+      size: 56,
       weight: 800,
       fill: BRAND.white,
     }),
   );
   e.push(
-    text(pad, 358, "$5.31.", {
+    text(pad, 358, "money?", {
       size: 96,
       weight: 800,
       fill: BRAND.limeCream,
@@ -201,13 +202,13 @@ function buildCover(): string {
 
   // Subhead
   e.push(
-    text(pad, 410, "Here's exactly which fees,", {
+    text(pad, 410, "Audit your whole shop at once —", {
       size: 22,
       fill: BRAND.patinaBlue200,
     }),
   );
   e.push(
-    text(pad, 442, "and how to price around them.", {
+    text(pad, 442, "find every one in minutes.", {
       size: 22,
       fill: BRAND.patinaBlue200,
     }),
@@ -216,7 +217,7 @@ function buildCover(): string {
   // Brand block
   e.push(line(pad, 510, pad + 100, 510, BRAND.limeCream, 3));
   e.push(
-    text(pad, 558, "The 2026 Etsy Pricing Bible", {
+    text(pad, 558, "The Etsy Profit Audit", {
       size: 34,
       weight: 800,
       fill: BRAND.white,
@@ -243,6 +244,151 @@ function buildCover(): string {
   return svg(W, H, e.join(""));
 }
 
+// --- Preview: the audit tool output (1280×800) ------------------------------
+// The hero preview for the rebrand. Shows the painkiller in action: a whole
+// shop scored at once, money-losers flagged. Mirrors the live AuditResults
+// table + the SampleAuditTable on the landing pages so the storefront promise
+// matches what buyers actually see.
+
+function buildPreviewAudit(): string {
+  const W = 1280;
+  const H = 800;
+  const pad = 96;
+  const e: string[] = [];
+
+  e.push(rect(0, 0, W, H, BRAND.cream50));
+
+  e.push(
+    text(pad, 92, "THE BULK SHOP AUDIT", {
+      size: 13,
+      weight: 700,
+      fill: BRAND.patinaBlue500,
+      letterSpacing: 4,
+    }),
+  );
+  e.push(
+    text(pad, 155, "Your whole shop,", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 212, "audited at once.", {
+      size: 50,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(pad, 258, "Upload your Etsy export. Every listing scored. Money-losers flagged, worst-first.", {
+      size: 17,
+      italic: true,
+      fill: BRAND.patinaBlue700,
+    }),
+  );
+
+  // Results table
+  const tableX = pad;
+  const tableW = W - pad * 2;
+  const startY = 305;
+  const headerH = 48;
+  const rowH = 44;
+  const headers = ["Listing", "Price", "Net", "Margin", "Status"];
+  const cols = [430, 150, 170, 158, 180];
+
+  e.push(rect(tableX, startY, tableW, headerH, BRAND.patinaBlueDark));
+  let cx = tableX;
+  headers.forEach((h, i) => {
+    const anchor = i === 0 || i === 4 ? "start" : "end";
+    const tx = anchor === "start" ? cx + 20 : cx + cols[i] - 20;
+    e.push(
+      text(tx, startY + 31, h, {
+        size: 13,
+        weight: 700,
+        fill: BRAND.limeCream,
+        letterSpacing: 1.5,
+        anchor,
+      }),
+    );
+    cx += cols[i];
+  });
+
+  // band: loss | thin | workable | healthy
+  const rows: Array<[string, string, string, string, string, string]> = [
+    ["Mini sticker (single)", "$3.00", "− $0.62", "−21%", "Losing money", "loss"],
+    ["Vinyl decal 3-pack", "$8.00", "$0.41", "5%", "Critically thin", "thin"],
+    ["Enamel pin", "$12.00", "$2.10", "18%", "Workable, tight", "workable"],
+    ["Sticker sheet bundle", "$24.00", "$9.80", "41%", "Healthy", "healthy"],
+    ["Die-cut magnet", "$4.50", "− $0.18", "−4%", "Losing money", "loss"],
+    ["Holographic pack", "$16.00", "$5.55", "35%", "Healthy", "healthy"],
+  ];
+  const dotColor: Record<string, string> = {
+    loss: BRAND.loss,
+    thin: BRAND.loss,
+    workable: "#c98a2b",
+    healthy: BRAND.patinaBlue500,
+  };
+
+  rows.forEach((row, i) => {
+    const y = startY + headerH + i * rowH;
+    const band = row[5];
+    const bg = band === "loss" ? "#f7e4e4" : i % 2 === 0 ? BRAND.white : BRAND.cream100;
+    e.push(rect(tableX, y, tableW, rowH, bg));
+    cx = tableX;
+    // Listing
+    e.push(text(cx + 20, y + 28, row[0], { size: 15, weight: 500, fill: BRAND.ink }));
+    cx += cols[0];
+    // Price
+    e.push(text(cx + cols[1] - 20, y + 28, row[1], { size: 15, fill: BRAND.ink, anchor: "end" }));
+    cx += cols[1];
+    // Net
+    e.push(
+      text(cx + cols[2] - 20, y + 28, row[2], {
+        size: 15,
+        weight: 700,
+        fill: band === "loss" ? BRAND.loss : BRAND.patinaBlueDark,
+        anchor: "end",
+      }),
+    );
+    cx += cols[2];
+    // Margin
+    e.push(
+      text(cx + cols[3] - 20, y + 28, row[3], {
+        size: 15,
+        weight: 700,
+        fill: band === "loss" ? BRAND.loss : BRAND.patinaBlue700,
+        anchor: "end",
+      }),
+    );
+    cx += cols[3];
+    // Status (dot + label)
+    e.push(`<circle cx="${cx + 26}" cy="${y + 23}" r="5" fill="${dotColor[band]}"/>`);
+    e.push(text(cx + 40, y + 28, row[4], { size: 14, weight: 500, fill: BRAND.patinaBlue700 }));
+  });
+
+  // Punchline
+  const capY = startY + headerH + rows.length * rowH + 28;
+  e.push(rect(tableX, capY, tableW, 54, BRAND.limeCream));
+  e.push(
+    text(tableX + 28, capY + 34, "3 of these 6 listings lose money or run razor-thin.", {
+      size: 19,
+      weight: 800,
+      fill: BRAND.patinaBlueDark,
+    }),
+  );
+  e.push(
+    text(tableX + tableW - 28, capY + 34, "You'd never catch that one at a time.", {
+      size: 17,
+      weight: 700,
+      fill: BRAND.patinaBlueDark,
+      anchor: "end",
+    }),
+  );
+
+  return svg(W, H, e.join(""));
+}
+
 // --- Preview 1: What's inside (1280×800) ------------------------------------
 
 function buildPreview1(): string {
@@ -256,7 +402,7 @@ function buildPreview1(): string {
   // Header band
   e.push(rect(0, 0, W, 230, BRAND.patinaBlueDark));
   e.push(
-    text(pad, 90, "WHAT'S IN THE BUNDLE", {
+    text(pad, 90, "WHAT YOU GET", {
       size: 13,
       weight: 700,
       fill: BRAND.limeCream,
@@ -264,14 +410,14 @@ function buildPreview1(): string {
     }),
   );
   e.push(
-    text(pad, 152, "Six fees stacked.", {
+    text(pad, 152, "A bulk audit tool.", {
       size: 46,
       weight: 800,
       fill: BRAND.white,
     }),
   );
   e.push(
-    text(pad, 205, "Five countries. Sixty categories.", {
+    text(pad, 205, "A 135-page reference. A matrix.", {
       size: 46,
       weight: 800,
       fill: BRAND.white,
@@ -285,22 +431,22 @@ function buildPreview1(): string {
   const gap = 24;
   const cards = [
     {
+      title: "BULK AUDIT TOOL",
+      number: "All",
+      suffix: "your listings",
+      body: "Upload your Etsy export and see which listings lose money, ranked worst-first. The same fee math as the free calculator, run across your whole shop at once. Runs in your browser — nothing is uploaded.",
+    },
+    {
       title: "REFERENCE PDF",
       number: "135",
       suffix: "pages",
-      body: "Cover, foreword, fee-stack explainer, five country deep-dives at low / mid / high price points, sixty category margin cards with the live website's narrative, and the methodology colophon.",
+      body: "Fee-stack explainer, the bundling tactic, five country deep-dives at low / mid / high price points, sixty category margin cards with the live site's narrative, and the methodology colophon.",
     },
     {
       title: "MASTER PRICING MATRIX",
       number: "1,200",
       suffix: "scenarios",
       body: "Every category × every payment processor region × Off-Site Ads on/off × under or above the $10k threshold. Pipe-delimited so commas in labels don't break the import. Opens in Excel, Sheets, Numbers.",
-    },
-    {
-      title: "BUYER-FACING FAQ",
-      number: "12",
-      suffix: "answers",
-      body: "Refund policy. File formats. The 2026 update guarantee. Country coverage. POD applicability. License terms. On-site vs. off-site ads scope. The questions you'd ask before you buy — answered here, not later.",
     },
   ];
 
@@ -343,7 +489,7 @@ function buildPreview1(): string {
 
   // Footer
   e.push(
-    text(W / 2, H - 38, "etsymargin.tools  ·  The 2026 Etsy Pricing Bible  ·  $19", {
+    text(W / 2, H - 38, "etsymargin.tools  ·  The Etsy Profit Audit  ·  $19", {
       size: 14,
       weight: 700,
       fill: BRAND.patinaBlue700,
@@ -480,7 +626,7 @@ function buildPreview2(): string {
     text(
       pad,
       H - 48,
-      "The Bible runs all 1,200 worked examples for you, in one PDF and one spreadsheet.",
+      "The bundle runs all 1,200 worked examples for you, in one PDF and one spreadsheet.",
       {
         size: 17,
         weight: 700,
@@ -873,14 +1019,14 @@ function buildThumbnail(): string {
     }),
   );
   e.push(
-    text(pad, 322, "PRICING", {
+    text(pad, 322, "PROFIT", {
       size: 76,
       weight: 800,
       fill: BRAND.cream50,
     }),
   );
   e.push(
-    text(pad, 422, "BIBLE.", {
+    text(pad, 422, "AUDIT.", {
       size: 102,
       weight: 800,
       fill: BRAND.limeCream,
@@ -967,10 +1113,13 @@ function buildVertexLogo(): string {
 async function main() {
   await writePng("cover.png", buildCover());
   await writePng("thumbnail.png", buildThumbnail());
-  await writePng("preview-1.png", buildPreview1());
-  await writePng("preview-2.png", buildPreview2());
-  await writePng("preview-3.png", buildPreview3());
-  await writePng("preview-4.png", buildPreview4());
+  // Order matters — Gumroad shows previews in upload order. Lead with the
+  // audit tool (the hero/painkiller), then what's included, then the proof.
+  await writePng("preview-1.png", buildPreviewAudit());
+  await writePng("preview-2.png", buildPreview1());
+  await writePng("preview-3.png", buildPreview2());
+  await writePng("preview-4.png", buildPreview3());
+  await writePng("preview-5.png", buildPreview4());
   await writePng("logo.png", buildVertexLogo(), BRAND_DIR);
 }
 
