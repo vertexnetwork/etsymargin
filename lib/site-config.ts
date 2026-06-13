@@ -60,12 +60,17 @@ export const siteConfig = {
   nav: {
     primary: [
       { href: "/#categories", label: "Categories" },
+      // Points at the public landing page, NOT the gated /audit tool — the
+      // SiteHeader filters this out when the audit feature flag is off.
+      { href: "/etsy-shop-audit", label: "Audit my shop" },
       { href: "/embed", label: "Embed" },
       { href: "/about", label: "About" },
     ] as ReadonlyArray<{ href: string; label: string }>,
     footer: {
       product: [
         { href: "/", label: "Calculator" },
+        // Landing page (not the gated tool); SiteFooter filters when flag off.
+        { href: "/etsy-shop-audit", label: "Etsy shop audit" },
         { href: "/embed", label: "Embed on your site" },
         { href: "/#categories", label: "Profit by category" },
         { href: "/recommendations", label: "Recommendations" },

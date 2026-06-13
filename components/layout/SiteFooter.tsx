@@ -5,7 +5,11 @@ import { siteConfig } from "@/lib/site-config";
 
 export function SiteFooter() {
   const year = new Date().getFullYear();
-  const { product, company, legal } = siteConfig.nav.footer;
+  const { company, legal } = siteConfig.nav.footer;
+  // Drop the audit landing link until the feature flag is on (page 404s otherwise).
+  const product = siteConfig.nav.footer.product.filter(
+    (l) => siteConfig.features.audit.enabled || l.href !== "/etsy-shop-audit",
+  );
   const showAffiliateDisclosure = siteConfig.features.affiliate.enabled;
 
   return (

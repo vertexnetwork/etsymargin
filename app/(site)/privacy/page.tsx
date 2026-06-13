@@ -145,8 +145,9 @@ export default function PrivacyPage() {
             <h3 className="mt-6 text-xl font-semibold text-(--color-on-bg)">Advertising</h3>
             <p>
               {siteConfig.name} runs <strong>no third-party display ads</strong>. We monetize via
-              the optional <em>2026 Etsy Pricing Bible</em> PDF on Gumroad, and via
-              clearly-disclosed affiliate links to tools that lower your Etsy fees.
+              the optional <em>Etsy Profit Audit</em> on Gumroad (the bulk shop-audit tool, the 2026
+              Pricing Bible PDF, and the pricing matrix), and via clearly-disclosed affiliate links
+              to tools that lower your Etsy fees.
             </p>
           </>
         )}
@@ -172,6 +173,11 @@ export default function PrivacyPage() {
           <li>
             <strong>No cross-site tracking on calculator inputs.</strong> What you type into the
             calculator stays in your browser unless you explicitly share or save it.
+          </li>
+          <li>
+            <strong>No uploads of your shop data.</strong> The bulk shop audit reads your Etsy
+            listings export entirely in your browser — the file is never sent to or stored on our
+            servers.
           </li>
           <li>
             <strong>No fingerprinting.</strong> No device fingerprinting libraries; no canvas/font
