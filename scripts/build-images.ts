@@ -281,11 +281,16 @@ function buildPreviewAudit(): string {
     }),
   );
   e.push(
-    text(pad, 258, "Upload your Etsy export. Every listing scored. Money-losers flagged, worst-first.", {
-      size: 17,
-      italic: true,
-      fill: BRAND.patinaBlue700,
-    }),
+    text(
+      pad,
+      258,
+      "Upload your Etsy export. Every listing scored. Money-losers flagged, worst-first.",
+      {
+        size: 17,
+        italic: true,
+        fill: BRAND.patinaBlue700,
+      },
+    ),
   );
 
   // Results table

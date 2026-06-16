@@ -3,7 +3,11 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteHeader() {
-  const navLinks = siteConfig.nav.primary;
+  // Hide the audit landing link until the feature is live (the page 404s when
+  // the flag is off, so we don't want a dead nav entry on preview/local).
+  const navLinks = siteConfig.nav.primary.filter(
+    (l) => siteConfig.features.audit.enabled || l.href !== "/etsy-shop-audit",
+  );
 
   return (
     <header className="sticky top-0 z-30 w-full border-b border-(--color-border) bg-(--color-bg)/85 backdrop-blur supports-[backdrop-filter]:bg-(--color-bg)/70">

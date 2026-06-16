@@ -17,6 +17,10 @@
 pnpm-lock.yaml binary
 package-lock.json binary
 
+# Test fixture mirrors a real Etsy export byte-for-byte (CRLF + UTF-8 BOM) —
+# keep git from normalizing line endings so it stays a faithful sample.
+tests/fixtures/*.csv -text
+
 *.png binary
 *.jpg binary
 *.jpeg binary

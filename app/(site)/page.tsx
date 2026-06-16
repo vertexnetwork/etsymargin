@@ -56,31 +56,35 @@ export default function Home() {
 
       <Calculator />
 
-      {/* Whole-shop teaser — the single-listing answer is the hook; the
-          painkiller is auditing the entire catalog at once. Only rendered when
-          the gated audit tool is live. */}
-      {siteConfig.features.audit.enabled && (
-        <Link
-          href="/audit"
-          className="quiet-card mt-10 flex items-center justify-between gap-4 rounded-2xl px-5 py-4 ring-1 ring-patina-200/70 transition hover:ring-patina-300 sm:mt-12"
-        >
-          <span className="text-sm text-patina-800 sm:text-base">
-            <strong className="text-patina-900">This is one listing.</strong> See every listing in
-            your shop at once — find every money-loser.
-          </span>
-          <span aria-hidden="true" className="text-lg text-patina-700">
-            →
-          </span>
-        </Link>
+      {/* Post-results pitch. The moment after the calculator shows a number is
+          peak intent — so this is where the whole-shop hook lives. When the
+          audit tool is live we lead with the painkiller card (→ the landing
+          page, which explains + sells); otherwise we fall back to the inline
+          Gumroad CTA so the page still monetizes. One pitch here, not two. */}
+      {siteConfig.features.audit.enabled ? (
+        <section className="mt-10 rounded-2xl bg-patina-50 p-6 ring-1 ring-patina-200 sm:mt-12 sm:p-8">
+          <p className="text-xs font-semibold uppercase tracking-wider text-patina-700">
+            That was one listing
+          </p>
+          <h2 className="mt-2 text-2xl font-bold leading-tight text-patina-900">
+            How many of your <em>other</em> listings lose money?
+          </h2>
+          <p className="mt-2 max-w-2xl text-patina-800/85">
+            Upload your Etsy export and the bulk audit runs this exact fee math across your whole
+            shop at once — every listing ranked worst-margin-first, money-losers flagged. It&apos;s
+            the thing a one-listing calculator can&apos;t do.
+          </p>
+          <Link
+            href="/etsy-shop-audit"
+            className="mt-4 inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800"
+          >
+            See how the shop audit works
+            <span aria-hidden="true">→</span>
+          </Link>
+        </section>
+      ) : (
+        <GumroadCta variant="inline" source="home" className="mt-10 sm:mt-12" />
       )}
-
-      {/* Inline Pricing Bible CTA — between the calculator and the
-          categories grid, where the eye has just finished processing
-          numbers and is scanning for "what's next". The compact CTA
-          inside the results card alone was too easy to miss.
-          Attribution: utm_source=home so we can compare home-inline
-          vs in-calculator compact tiers. */}
-      <GumroadCta variant="inline" source="home" className="mt-10 sm:mt-12" />
 
       <section id="categories" className="mt-12 scroll-mt-20 sm:mt-16">
         <h2 className="mb-2 text-2xl font-bold text-patina-900">Profit math by Etsy category</h2>

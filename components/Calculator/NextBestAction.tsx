@@ -41,13 +41,13 @@ function pricingLine(
     ? "Print-on-demand pays overhead twice — your supplier and Etsy's full fee stack. "
     : "";
   if (tier === "loss") {
-    return `${podPrefix}You're losing ${usd(Math.abs(netProfit))} on every order at this price.`;
+    return `${podPrefix}You're losing ${usd(Math.abs(netProfit))} on every order at this price — and the listings quietly doing this across a shop are the ones you never think to check.`;
   }
   if (tier === "thin") {
-    return `${podPrefix}Margin under 15% leaves no room for variants, sales, or rising supplier costs.`;
+    return `${podPrefix}Margin under 15% leaves no room for variants, sales, or rising costs — and thin listings like this hide in plain sight across a full shop.`;
   }
   // workable (15–30%) — soft nudge, never alarmist.
-  return "Margin's workable, but tight — there's usually a higher-netting price for a product like this, and the Bible's category cards show where it lands.";
+  return "Margin's workable, but tight — there's usually a higher-netting price for a product like this, and the category cards show where it lands.";
 }
 
 // Renders the one action the seller's own numbers point to. Message + CTA are

@@ -1,5 +1,25 @@
 [
   {
+    "hash": "9ad9e84f86dd9f8d3ae70db77048b68c9197492d",
+    "date": "2026-06-13",
+    "title": "Rebrand Gumroad imagery around the audit tool"
+  },
+  {
+    "hash": "eb7b8f2401829f588b1092fd8949bc32c6a0d64c",
+    "date": "2026-06-13",
+    "title": "Add gated bulk shop-audit tool + pSEO/GEO updates"
+  },
+  {
+    "hash": "5aaceb8083d6d24a3896550e8cc8ef9a8dfb0212",
+    "date": "2026-06-13",
+    "title": "Add real-schema Etsy export fixture + parser validation tests"
+  },
+  {
+    "hash": "e56f5628d31a057f282935f0698aa46f0c55f271",
+    "date": "2026-06-13",
+    "title": "Surface the audit across nav, results, and homepage; align copy"
+  },
+  {
     "hash": "5efcef6a18b907a3a8f02073d092313880557b03",
     "date": "2026-06-08",
     "title": "PDF QA pass: fix glyph/orphan/copy defects found in visual audit"

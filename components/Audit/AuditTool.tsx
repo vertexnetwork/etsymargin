@@ -100,8 +100,10 @@ export function AuditTool() {
   );
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[minmax(0,360px)_minmax(0,1fr)]">
-      <div className="space-y-5">
+    // Settings as a compact top row, results full-width below — a 6-column
+    // results table needs the whole page width, not a cramped sidebar column.
+    <div className="space-y-8">
+      <div className="grid gap-5 md:grid-cols-3 md:items-start">
         <div className="quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6">
           <h2 className="text-lg font-semibold text-patina-900">1. Upload your Etsy export</h2>
           <p className="mt-1 text-sm text-patina-muted">
