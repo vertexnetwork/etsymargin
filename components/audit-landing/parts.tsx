@@ -63,30 +63,38 @@ export function SampleAuditTable() {
   };
   return (
     <figure className="mt-6 overflow-x-auto rounded-2xl ring-1 ring-patina-100/80">
-      <table className="w-full text-sm">
+      <table className="w-full table-fixed text-sm">
         <caption className="sr-only">Example bulk Etsy profit audit output</caption>
         <thead className="bg-cream-100 text-left text-xs uppercase tracking-wide text-patina-700">
           <tr>
             <th className="px-3 py-2 font-semibold">Listing</th>
-            <th className="px-3 py-2 text-right font-semibold">Price</th>
-            <th className="px-3 py-2 text-right font-semibold">Net</th>
-            <th className="px-3 py-2 text-right font-semibold">Margin</th>
-            <th className="px-3 py-2 font-semibold">Status</th>
+            <th className="hidden px-3 py-2 text-right font-semibold sm:table-cell sm:w-[5rem]">
+              Price
+            </th>
+            <th className="w-[5rem] px-3 py-2 text-right font-semibold">Net</th>
+            <th className="w-[4.25rem] px-3 py-2 text-right font-semibold">Margin</th>
+            <th className="w-[6.5rem] px-3 py-2 font-semibold sm:w-[8rem]">Status</th>
           </tr>
         </thead>
         <tbody className="divide-y divide-patina-100/70">
           {rows.map((r) => (
             <tr key={r.title}>
-              <td className="px-3 py-2 text-patina-900">{r.title}</td>
-              <td className="px-3 py-2 text-right tabular-nums">{r.price}</td>
-              <td className={`px-3 py-2 text-right font-medium tabular-nums ${meta[r.band].cls}`}>
+              <td className="truncate px-3 py-2 text-patina-900">{r.title}</td>
+              <td className="hidden whitespace-nowrap px-3 py-2 text-right tabular-nums sm:table-cell">
+                {r.price}
+              </td>
+              <td
+                className={`whitespace-nowrap px-3 py-2 text-right font-medium tabular-nums ${meta[r.band].cls}`}
+              >
                 {r.net}
               </td>
-              <td className="px-3 py-2 text-right tabular-nums">{r.margin}</td>
+              <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums">{r.margin}</td>
               <td className="px-3 py-2">
-                <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs">
-                  <span className={`inline-block h-2 w-2 rounded-full ${meta[r.band].dot}`} />
-                  {meta[r.band].label}
+                <span className="flex items-center gap-1.5 text-xs">
+                  <span
+                    className={`inline-block h-2 w-2 shrink-0 rounded-full ${meta[r.band].dot}`}
+                  />
+                  <span className="truncate">{meta[r.band].label}</span>
                 </span>
               </td>
             </tr>

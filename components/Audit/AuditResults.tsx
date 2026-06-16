@@ -95,16 +95,24 @@ export function AuditResults({ audited }: { audited: AuditedListing[] }) {
         </button>
       </div>
 
+      {/* table-fixed + per-column widths so the whole table fits without
+          horizontal scrolling: the Listing column flexes and truncates, the
+          numbers never wrap, and Price/Fees drop out on phones (Net + Margin +
+          Status carry the verdict). overflow-x-auto is only a safety net. */}
       <div className="overflow-x-auto rounded-2xl ring-1 ring-patina-100/80">
-        <table className="w-full text-sm">
+        <table className="w-full table-fixed text-sm">
           <thead className="bg-cream-100 text-left text-xs uppercase tracking-wide text-patina-700">
             <tr>
               <th className="px-3 py-2 font-semibold">Listing</th>
-              <th className="px-3 py-2 text-right font-semibold">Price</th>
-              <th className="px-3 py-2 text-right font-semibold">Fees</th>
-              <th className="px-3 py-2 text-right font-semibold">Net</th>
-              <th className="px-3 py-2 text-right font-semibold">Margin</th>
-              <th className="px-3 py-2 font-semibold">Status</th>
+              <th className="hidden px-3 py-2 text-right font-semibold sm:table-cell sm:w-[4.5rem]">
+                Price
+              </th>
+              <th className="hidden px-3 py-2 text-right font-semibold sm:table-cell sm:w-20">
+                Fees
+              </th>
+              <th className="w-[5rem] px-3 py-2 text-right font-semibold">Net</th>
+              <th className="w-[4.25rem] px-3 py-2 text-right font-semibold">Margin</th>
+              <th className="w-[6.5rem] px-3 py-2 font-semibold sm:w-[8rem]">Status</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-patina-100/70">
@@ -113,29 +121,33 @@ export function AuditResults({ audited }: { audited: AuditedListing[] }) {
               return (
                 <tr key={`${a.row.sku || a.row.title || "row"}-${i}`} className={meta.row}>
                   <td className="px-3 py-2 text-patina-900">
-                    <span className="block max-w-[22ch] truncate sm:max-w-[40ch]">
+                    <span className="block truncate">
                       {a.row.title || <span className="text-patina-muted">(untitled)</span>}
                     </span>
-                    {a.row.sku && <span className="text-xs text-patina-muted">{a.row.sku}</span>}
+                    {a.row.sku && (
+                      <span className="block truncate text-xs text-patina-muted">{a.row.sku}</span>
+                    )}
                   </td>
-                  <td className="px-3 py-2 text-right tabular-nums">{usd(a.inputs.itemPrice)}</td>
-                  <td className="px-3 py-2 text-right tabular-nums text-patina-700">
+                  <td className="hidden whitespace-nowrap px-3 py-2 text-right tabular-nums sm:table-cell">
+                    {usd(a.inputs.itemPrice)}
+                  </td>
+                  <td className="hidden whitespace-nowrap px-3 py-2 text-right tabular-nums text-patina-700 sm:table-cell">
                     −{usd(a.result.totalFees)}
                   </td>
                   <td
-                    className={`px-3 py-2 text-right font-medium tabular-nums ${
+                    className={`whitespace-nowrap px-3 py-2 text-right font-medium tabular-nums ${
                       a.result.netProfit < 0 ? "text-red-600" : "text-patina-900"
                     }`}
                   >
                     {usd(a.result.netProfit)}
                   </td>
-                  <td className="px-3 py-2 text-right tabular-nums">
+                  <td className="whitespace-nowrap px-3 py-2 text-right tabular-nums">
                     {pct(a.result.marginPercent)}
                   </td>
                   <td className="px-3 py-2">
-                    <span className="inline-flex items-center gap-1.5 whitespace-nowrap text-xs">
-                      <span className={`inline-block h-2 w-2 rounded-full ${meta.dot}`} />
-                      {meta.label}
+                    <span className="flex items-center gap-1.5 text-xs">
+                      <span className={`inline-block h-2 w-2 shrink-0 rounded-full ${meta.dot}`} />
+                      <span className="truncate">{meta.label}</span>
                     </span>
                   </td>
                 </tr>
