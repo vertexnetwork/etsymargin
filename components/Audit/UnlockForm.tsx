@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 const REASONS: Record<string, string> = {
@@ -15,35 +15,54 @@ const REASONS: Record<string, string> = {
   verify_unavailable: "Couldn't reach Gumroad to verify. Try again in a moment.",
 };
 
-export function UnlockForm() {
+export function UnlockForm({ initialKey = "" }: { initialKey?: string }) {
   const router = useRouter();
-  const [key, setKey] = useState("");
+  const [key, setKey] = useState(initialKey);
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  // True while we auto-verify a key handed over by Gumroad's redirect, so the
+  // UI can say "Unlocking…" instead of looking like a stalled empty form.
+  const [autoUnlocking, setAutoUnlocking] = useState(Boolean(initialKey));
 
-  const onSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!key.trim() || loading) return;
-    setLoading(true);
-    setError("");
-    try {
-      const res = await fetch("/api/audit/verify", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ licenseKey: key.trim() }),
-      });
-      const data = (await res.json()) as { ok?: boolean; error?: string };
-      if (res.ok && data.ok) {
-        router.push("/audit");
-        router.refresh();
-        return;
+  const verify = useCallback(
+    async (raw: string) => {
+      const licenseKey = raw.trim();
+      if (!licenseKey || loading) return;
+      setLoading(true);
+      setError("");
+      try {
+        const res = await fetch("/api/audit/verify", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ licenseKey }),
+        });
+        const data = (await res.json()) as { ok?: boolean; error?: string };
+        if (res.ok && data.ok) {
+          router.push("/audit");
+          router.refresh();
+          return;
+        }
+        setError(REASONS[data.error ?? ""] ?? "Couldn't verify that key. Please try again.");
+      } catch {
+        setError("Network error. Please try again.");
+      } finally {
+        setLoading(false);
+        setAutoUnlocking(false);
       }
-      setError(REASONS[data.error ?? ""] ?? "Couldn't verify that key. Please try again.");
-    } catch {
-      setError("Network error. Please try again.");
-    } finally {
-      setLoading(false);
-    }
+    },
+    [loading, router],
+  );
+
+  // Auto-unlock once when arriving from a purchase with the key prefilled.
+  useEffect(() => {
+    if (initialKey.trim()) void verify(initialKey);
+    // Run only on mount for the redirect hand-off; manual edits use the button.
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  const onSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    void verify(key);
   };
 
   return (
@@ -66,7 +85,7 @@ export function UnlockForm() {
         disabled={loading || !key.trim()}
         className="inline-flex min-h-[44px] w-full items-center justify-center rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 disabled:opacity-50"
       >
-        {loading ? "Verifying…" : "Unlock the audit tool"}
+        {autoUnlocking ? "Unlocking your audit…" : loading ? "Verifying…" : "Unlock the audit tool"}
       </button>
       <p className="text-xs text-patina-muted">
         Your key is on your Gumroad receipt and in the confirmation email. One purchase unlocks your

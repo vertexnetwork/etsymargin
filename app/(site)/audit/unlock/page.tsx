@@ -13,12 +13,23 @@ export const metadata: Metadata = {
 
 export const dynamic = "force-dynamic";
 
-export default async function UnlockPage() {
+export default async function UnlockPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ key?: string; license_key?: string }>;
+}) {
   if (!siteConfig.features.audit.enabled) notFound();
 
   // Already unlocked — skip the gate.
   const token = (await cookies()).get(AUDIT_COOKIE)?.value;
   if (verifyToken(token)) redirect("/audit");
+
+  // Gumroad's post-purchase redirect lands buyers here. If it can pass the
+  // license key (?key= / ?license_key=), the form auto-unlocks on arrival so a
+  // purchase flows straight into the tool with no copy-paste. If not, they
+  // still land on the right page and paste the key from their receipt.
+  const sp = await searchParams;
+  const initialKey = (sp.key ?? sp.license_key ?? "").trim();
 
   return (
     <main className="mx-auto max-w-2xl px-5 py-10 sm:py-16">
@@ -37,7 +48,7 @@ export default async function UnlockPage() {
           Enter your Gumroad license key to unlock the tool on this device.
         </p>
         <div className="mt-4">
-          <UnlockForm />
+          <UnlockForm initialKey={initialKey} />
         </div>
       </div>
 

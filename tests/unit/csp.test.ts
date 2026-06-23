@@ -38,6 +38,21 @@ describe("CSP builder", () => {
     expect(buildCSP({})).toContain("object-src 'none'");
   });
 
+  it("allows the Gumroad overlay (script + checkout iframe) when gumroad is on", () => {
+    // The overlay loader is fetched from gumroad.com; the checkout it opens is
+    // iframed from the product URL's origin (here a custom domain). Both must
+    // be allowed or CSP silently kills the in-page checkout in production.
+    const csp = buildCSP({ gumroad: true, gumroadOrigin: "https://audit.etsymargin.tools" });
+    expect(csp).toMatch(/script-src [^;]*https:\/\/gumroad\.com/);
+    expect(csp).toMatch(/frame-src [^;]*'self'/);
+    expect(csp).toMatch(/frame-src [^;]*https:\/\/gumroad\.com/);
+    expect(csp).toMatch(/frame-src [^;]*https:\/\/audit\.etsymargin\.tools/);
+  });
+
+  it("does not allow Gumroad hosts when gumroad is off", () => {
+    expect(buildCSP({})).not.toContain("gumroad.com");
+  });
+
   it("frame-src includes 'self' when adsense is on (embed preview must work)", () => {
     // Regression: when adsense flips on in prod, the CSP previously
     // emitted `frame-src https://googleads.g.doubleclick.net` with no
