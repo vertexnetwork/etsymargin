@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Script from "next/script";
 import { events } from "@/lib/analytics";
 
@@ -28,17 +29,78 @@ type Props = {
 // CTAs a page may render, so it loads exactly once.
 const GUMROAD_OVERLAY_SRC = "https://gumroad.com/js/gumroad.js";
 
-function buildHref(rawUrl: string, source: Source, variant: Variant, content?: string) {
+// --- Founding-price offer (client side) ------------------------------------
+// Shape returned by /api/founding-offer. The server owns the truth (live
+// sales_count vs the cap); the client just reflects it.
+type FoundingOffer = {
+  active: boolean;
+  remaining: number;
+  code: string;
+  discountUsd: number;
+  discountPct: number;
+};
+
+// One fetch per page load, shared across every CTA. Memoizing the promise (not
+// just the result) means N simultaneously-mounting CTAs coalesce into a single
+// request instead of a thundering herd.
+let offerPromise: Promise<FoundingOffer | null> | null = null;
+function loadFoundingOffer(): Promise<FoundingOffer | null> {
+  if (!offerPromise) {
+    offerPromise = fetch("/api/founding-offer")
+      .then((r) => (r.ok ? (r.json() as Promise<FoundingOffer>) : null))
+      .catch(() => null);
+  }
+  return offerPromise;
+}
+
+function useFoundingOffer(): FoundingOffer | null {
+  const [offer, setOffer] = useState<FoundingOffer | null>(null);
+  useEffect(() => {
+    let alive = true;
+    loadFoundingOffer().then((o) => {
+      if (alive) setOffer(o);
+    });
+    return () => {
+      alive = false;
+    };
+  }, []);
+  return offer;
+}
+
+// "$19" for whole numbers, "$11.97" when a percent-off lands on cents — match
+// what Gumroad actually charges rather than rounding to a prettier figure.
+function fmtPrice(n: number): string {
+  return Number.isInteger(n) ? `$${n}` : `$${n.toFixed(2)}`;
+}
+
+function buildHref(
+  rawUrl: string,
+  source: Source,
+  variant: Variant,
+  content?: string,
+  offerCode?: string,
+) {
   try {
     const url = new URL(rawUrl);
     url.searchParams.set("utm_source", source);
     url.searchParams.set("utm_medium", variant);
     url.searchParams.set("utm_campaign", "pricing-bible");
     if (content) url.searchParams.set("utm_content", content);
-    // Skip Gumroad's product/description page and land straight on the payment
-    // form. With the overlay this opens the modal already on checkout; without
-    // JS (the fallback navigation) it still bypasses the redundant re-sell.
-    url.searchParams.set("wanted", "true");
+    // Founding-price code. Gumroad auto-applies a URL `offer_code`, so the
+    // overlay opens already discounted. We only attach it while the offer is
+    // active (server says spots remain) — once exhausted we drop it in the same
+    // render that drops the discounted price, so a buyer never sees a price the
+    // checkout won't honor.
+    if (offerCode) url.searchParams.set("offer_code", offerCode);
+    // NOTE: do NOT add `wanted=true` here. Gumroad's overlay bundle
+    // (assets.gumroad.com/js/gumroad-bundle.js) explicitly REFUSES to bind the
+    // modal to any link whose href already has `wanted=true` — it just rewrites
+    // the href and lets the click navigate away full-page. So `wanted=true` is
+    // mutually exclusive with the on-site overlay. We want the overlay, so we
+    // leave it off: the script then appends `overlay=true` itself and opens the
+    // product in an in-page iframe. The no-JS fallback lands on the product
+    // page (one extra click to pay) — an acceptable trade for keeping buyers
+    // on our domain.
     return url.toString();
   } catch {
     return rawUrl;
@@ -64,13 +126,47 @@ function Check() {
   );
 }
 
+// Inline price: plain when no offer, struck-through original + discounted when
+// the founding price is live.
+function PriceTag({ full, now }: { full: string; now: string | null }) {
+  if (!now) return <>{full}</>;
+  return (
+    <>
+      <s className="opacity-60">{full}</s> {now}
+    </>
+  );
+}
+
 export function GumroadCta({ variant, source, content, label, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
   const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "19";
 
+  const offer = useFoundingOffer();
+  const showOffer = Boolean(offer?.active);
+
   if (!enabled || !productUrl) return null;
-  const href = buildHref(productUrl, source, variant, content);
+
+  const offerCode = showOffer ? offer!.code : undefined;
+  const href = buildHref(productUrl, source, variant, content, offerCode);
+
+  // Pricing: full vs founding. A flat dollars-off discount (not a percentage)
+  // so the displayed price lands on a clean $12 and exactly matches the
+  // checkout. fmtPrice still handles cents if the discount ever isn't whole.
+  const fullPriceNum = Number(price) || 19;
+  const fullPriceStr = `$${price}`;
+  const nowPriceStr = showOffer
+    ? fmtPrice(Math.max(0, fullPriceNum - (offer!.discountUsd ?? 0)))
+    : null;
+  // "X left" — no denominator on purpose: it removes the first-buyer tell, so a
+  // fresh promo reads identically whether 0 or 9 have sold.
+  // Two composable scraps so every variant frames the deal the same way:
+  // a percentage (rule of 100 — below $100 "37% off" reads bigger than "$7
+  // off") plus denominator-free scarcity ("only X left", no "/37" tell). pctOff
+  // is driven by discountPct so it tracks the dashboard even though the coupon
+  // is a flat $7.
+  const pctOff = showOffer ? `${offer!.discountPct}% off` : null;
+  const spotsLeft = showOffer ? `only ${offer!.remaining} left` : null;
 
   // Purchase-intent signal: fired when the buyer opens the overlay / navigates
   // to checkout. `placement` is the variant so we can compare which surface
@@ -85,6 +181,7 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
   // Bare overlay button for custom layouts (sticky header, homepage offer).
   // The caller owns the surrounding copy; this is just the trigger.
   if (variant === "button") {
+    const baseLabel = label ?? `Audit your shop — ${showOffer ? nowPriceStr : fullPriceStr}`;
     return (
       <>
         {overlay}
@@ -95,9 +192,15 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
           target="_blank"
           rel="noopener"
         >
-          {label ?? `Audit your shop — $${price}`}
+          {baseLabel}
           <span aria-hidden="true">→</span>
         </a>
+        {showOffer && (
+          <p className="mt-2 text-xs font-semibold text-patina-700">
+            Founding price — {pctOff}{" "}
+            <span className="font-normal text-patina-muted">· {spotsLeft}</span>
+          </p>
+        )}
       </>
     );
   }
@@ -114,9 +217,11 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
           rel="noopener"
         >
           <span className="rounded bg-patina-700 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
-            ${price}
+            <PriceTag full={fullPriceStr} now={nowPriceStr} />
           </span>
-          Audit your whole shop — find every money-losing listing
+          {showOffer
+            ? `Audit your whole shop — ${pctOff}, ${spotsLeft}`
+            : "Audit your whole shop — find every money-losing listing"}
           <span aria-hidden="true">→</span>
         </a>
       </>
@@ -139,9 +244,16 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
             target="_blank"
             rel="noopener"
           >
-            Get the Etsy Profit Audit — ${price}
+            Get the Etsy Profit Audit — <PriceTag full={fullPriceStr} now={nowPriceStr} />
           </a>
-          . <span className="text-patina-muted">7-day money-back guarantee.</span>
+          .{" "}
+          {showOffer ? (
+            <span className="font-semibold text-patina-700">
+              Founding price — {pctOff}, {spotsLeft}.
+            </span>
+          ) : (
+            <span className="text-patina-muted">7-day money-back guarantee.</span>
+          )}
         </p>
       </>
     );
@@ -154,8 +266,13 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
         className={`quiet-card rounded-2xl p-5 ring-1 ring-patina-100/80 sm:p-6 ${className}`}
       >
         <span className="inline-flex items-center rounded-full bg-lime-cream/70 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
-          Audit tool + downloads · ${price}
+          Audit tool + downloads · <PriceTag full={fullPriceStr} now={nowPriceStr} />
         </span>
+        {showOffer && (
+          <span className="ml-2 inline-flex items-center rounded-full bg-patina-700 px-2.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+            {pctOff} · {spotsLeft}
+          </span>
+        )}
         <h2 className="mt-3 text-lg font-bold text-patina-900 sm:text-xl">The Etsy Profit Audit</h2>
         <p className="mt-2 text-sm text-patina-800/85 sm:text-base">
           Upload your Etsy export and see exactly which listings lose money — your whole shop
@@ -184,7 +301,7 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
           target="_blank"
           rel="noopener"
         >
-          Get it on Gumroad
+          {showOffer ? `Get it for ${nowPriceStr} — founding price` : "Get it on Gumroad"}
           <span aria-hidden="true">→</span>
         </a>
         <p className="mt-3 text-xs text-patina-muted">
