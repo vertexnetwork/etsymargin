@@ -15,6 +15,14 @@ const inferProviders = () => ({
   adsense: process.env.NEXT_PUBLIC_AD_PROVIDER === "adsense",
   mediavine: process.env.NEXT_PUBLIC_AD_PROVIDER === "mediavine",
   carbon: process.env.NEXT_PUBLIC_AD_PROVIDER === "carbon",
+  gumroad: process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1",
+  gumroadOrigin: (() => {
+    try {
+      return new URL(process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL).origin;
+    } catch {
+      return "";
+    }
+  })(),
 });
 
 // Re-implement buildCSP / buildEmbedCSP inline here so next.config.mjs
@@ -74,6 +82,19 @@ const composeCsp = (providers, embed = false) => {
   if (providers.carbon) {
     add("script-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
     add("img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
+  }
+  if (providers.gumroad) {
+    // Mirror lib/csp.ts. gumroad.js loads from gumroad.com; the overlay
+    // checkout iframes the product URL's origin (may be a custom domain).
+    // 'self' must be explicit on frame-src so same-origin framing survives.
+    add("script-src", "https://gumroad.com");
+    add("img-src", "https://gumroad.com");
+    add("frame-src", "'self'", "https://gumroad.com");
+    add("connect-src", "https://gumroad.com");
+    if (providers.gumroadOrigin) {
+      add("frame-src", providers.gumroadOrigin);
+      add("connect-src", providers.gumroadOrigin);
+    }
   }
   return Object.entries(dir)
     .map(([k, s]) => `${k} ${[...s].join(" ")}`)
