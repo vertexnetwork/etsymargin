@@ -2,7 +2,6 @@
 
 import type { CalculatorInputs, CalculatorResult } from "@/lib/fees";
 import { nextBestAction, type AdviceTier } from "@/lib/next-best-action";
-import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
 
 const usd = (n: number) =>
@@ -108,38 +107,24 @@ export function NextBestAction({
 
     case "bundle":
       // Low-priced item → the bundling lever. Opportunity tone (healthy) reads
-      // soft; the problem tiers read as the fix to a real squeeze.
+      // soft; the problem tiers read as the fix to a real squeeze. The Gumroad
+      // conversion lever is no longer here — it's the persistent whole-shop CTA
+      // at the foot of ResultsSummary, shown on every tier.
       return (
-        <>
-          <p
-            className={
-              action.tier === "opportunity" ? "mt-3 text-sm opacity-80" : "mt-3 text-sm font-medium"
-            }
-          >
-            {bundleLine(action.tier, action.itemPrice, category)}
-          </p>
-          <GumroadCta variant="compact" source="calculator" content="calc-bundle" />
-        </>
+        <p
+          className={
+            action.tier === "opportunity" ? "mt-3 text-sm opacity-80" : "mt-3 text-sm font-medium"
+          }
+        >
+          {bundleLine(action.tier, action.itemPrice, category)}
+        </p>
       );
 
     case "pricing":
       return (
-        <>
-          <p className="mt-3 text-sm font-medium">
-            {pricingLine(action.tier, action.netProfit, category)}
-          </p>
-          <GumroadCta
-            variant="compact"
-            source="calculator"
-            content={
-              action.tier === "loss"
-                ? "calc-loss"
-                : action.tier === "thin"
-                  ? "calc-thin"
-                  : "calc-workable"
-            }
-          />
-        </>
+        <p className="mt-3 text-sm font-medium">
+          {pricingLine(action.tier, action.netProfit, category)}
+        </p>
       );
   }
 }
