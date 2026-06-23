@@ -10,6 +10,10 @@
 
 export const serverConfig = {
   gumroadProductId: process.env.GUMROAD_PRODUCT_ID ?? "",
+  // Personal OAuth access token (Gumroad → Settings → Advanced → Applications).
+  // Read-only use here: fetch the product's live sales_count to drive the
+  // founding-price "X left" counter. Server-only — never exposed to the client.
+  gumroadAccessToken: process.env.GUMROAD_ACCESS_TOKEN ?? "",
   auditTokenSecret: process.env.AUDIT_TOKEN_SECRET ?? "",
   // 5 covers a buyer's own laptop + phone plus the occasional re-unlock after a
   // cleared cookie, without leaving room to seed a sharing group. Tunable.
