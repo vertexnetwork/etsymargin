@@ -44,6 +44,10 @@ describe("CSP builder", () => {
     // be allowed or CSP silently kills the in-page checkout in production.
     const csp = buildCSP({ gumroad: true, gumroadOrigin: "https://audit.etsymargin.tools" });
     expect(csp).toMatch(/script-src [^;]*https:\/\/gumroad\.com/);
+    // The loader pulls the real overlay bundle + CSS from assets.gumroad.com;
+    // without these the overlay dies and the button hard-redirects to checkout.
+    expect(csp).toMatch(/script-src [^;]*https:\/\/assets\.gumroad\.com/);
+    expect(csp).toMatch(/style-src [^;]*https:\/\/assets\.gumroad\.com/);
     expect(csp).toMatch(/frame-src [^;]*'self'/);
     expect(csp).toMatch(/frame-src [^;]*https:\/\/gumroad\.com/);
     expect(csp).toMatch(/frame-src [^;]*https:\/\/audit\.etsymargin\.tools/);

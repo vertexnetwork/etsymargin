@@ -84,13 +84,16 @@ const composeCsp = (providers, embed = false) => {
     add("img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
   }
   if (providers.gumroad) {
-    // Mirror lib/csp.ts. gumroad.js loads from gumroad.com; the overlay
-    // checkout iframes the product URL's origin (may be a custom domain).
-    // 'self' must be explicit on frame-src so same-origin framing survives.
-    add("script-src", "https://gumroad.com");
-    add("img-src", "https://gumroad.com");
+    // Mirror lib/csp.ts. gumroad.js is a loader that pulls the real overlay
+    // bundle + CSS from assets.gumroad.com, so both hosts must be allowed or
+    // the overlay fails and the button hard-redirects to checkout. The checkout
+    // iframes the product URL's origin (may be a custom domain). 'self' must be
+    // explicit on frame-src so same-origin framing survives.
+    add("script-src", "https://gumroad.com", "https://assets.gumroad.com");
+    add("style-src", "https://assets.gumroad.com");
+    add("img-src", "https://gumroad.com", "https://assets.gumroad.com");
+    add("connect-src", "https://gumroad.com", "https://assets.gumroad.com");
     add("frame-src", "'self'", "https://gumroad.com");
-    add("connect-src", "https://gumroad.com");
     if (providers.gumroadOrigin) {
       add("frame-src", providers.gumroadOrigin);
       add("connect-src", providers.gumroadOrigin);
