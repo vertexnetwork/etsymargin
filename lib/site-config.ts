@@ -119,8 +119,11 @@ export const siteConfig = {
       route: "/audit",
     },
     email: {
-      enabled: false,
-      leadMagnetName: "",
+      // Free-calculator lead capture → Resend audience. Server secrets
+      // (RESEND_API_KEY / RESEND_AUDIENCE_ID) gate whether the API actually
+      // posts; this public flag gates whether the form renders.
+      enabled: env("NEXT_PUBLIC_EMAIL_ENABLED", "0") === "1",
+      leadMagnetName: env("NEXT_PUBLIC_EMAIL_LEAD_MAGNET", ""),
     },
     ads: {
       // Etsy Margin runs zero on-site display ads — primary revenue is the

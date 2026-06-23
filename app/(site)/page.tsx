@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
+import { EmailCapture } from "@/components/email/EmailCapture";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
@@ -74,13 +75,19 @@ export default function Home() {
             shop at once — every listing ranked worst-margin-first, money-losers flagged. It&apos;s
             the thing a one-listing calculator can&apos;t do.
           </p>
-          <Link
-            href="/etsy-shop-audit"
-            className="mt-4 inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800"
-          >
-            See how the shop audit works
-            <span aria-hidden="true">→</span>
-          </Link>
+          <p className="mt-3 max-w-2xl text-sm text-patina-800/75">
+            ${siteConfig.monetization.gumroad.price} one-time — includes the bulk audit tool, the
+            2026 Pricing Bible PDF, and the Master Pricing Matrix. 7-day money-back guarantee.
+          </p>
+          <div className="mt-4 flex flex-wrap items-center gap-x-5 gap-y-3">
+            <GumroadCta variant="button" source="home" />
+            <Link
+              href="/etsy-shop-audit"
+              className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
+            >
+              See how it works →
+            </Link>
+          </div>
         </section>
       ) : (
         <GumroadCta variant="inline" source="home" className="mt-10 sm:mt-12" />
@@ -109,6 +116,10 @@ export default function Home() {
           ))}
         </ul>
       </section>
+
+      {siteConfig.features.email.enabled && (
+        <EmailCapture source="home" className="mt-12 sm:mt-16" />
+      )}
     </main>
   );
 }

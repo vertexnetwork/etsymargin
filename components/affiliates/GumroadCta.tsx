@@ -1,7 +1,7 @@
 import Script from "next/script";
 
-type Variant = "compact" | "card" | "inline";
-type Source = "calculator" | "recommendations" | "pseo" | "home" | "pillar";
+type Variant = "compact" | "card" | "inline" | "button";
+type Source = "calculator" | "recommendations" | "pseo" | "home" | "pillar" | "header";
 
 type Props = {
   variant: Variant;
@@ -13,6 +13,8 @@ type Props = {
    * across the cohort that hits each.
    */
   content?: string;
+  /** Override the button label (only used by the `button` variant). */
+  label?: string;
   className?: string;
 };
 
@@ -40,7 +42,7 @@ function buildHref(rawUrl: string, source: Source, variant: Variant, content?: s
   }
 }
 
-export function GumroadCta({ variant, source, content, className = "" }: Props) {
+export function GumroadCta({ variant, source, content, label, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
   const price = process.env.NEXT_PUBLIC_GUMROAD_PRICE || "19";
@@ -52,6 +54,25 @@ export function GumroadCta({ variant, source, content, className = "" }: Props) 
   const overlay = (
     <Script id="gumroad-overlay-js" src={GUMROAD_OVERLAY_SRC} strategy="afterInteractive" />
   );
+
+  // Bare overlay button for custom layouts (sticky header, homepage offer).
+  // The caller owns the surrounding copy; this is just the trigger.
+  if (variant === "button") {
+    return (
+      <>
+        {overlay}
+        <a
+          href={href}
+          className={`gumroad-button inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 ${className}`}
+          target="_blank"
+          rel="noopener"
+        >
+          {label ?? `Audit your shop — $${price}`}
+          <span aria-hidden="true">→</span>
+        </a>
+      </>
+    );
+  }
 
   if (variant === "compact") {
     return (
