@@ -140,11 +140,14 @@ export function Calculator({
         <ResultsSummary result={result} inputs={inputs} category={category} embedded={embedded} />
         <WaterfallChart result={result} />
         <div className="flex flex-wrap items-center gap-3">
+          {/* Secondary styling on purpose: sharing is a growth lever, but it
+              shouldn't wear the primary-CTA suit and outshine the audit buy
+              button in the results card above it. */}
           <button
             type="button"
             onClick={onShare}
             aria-live="polite"
-            className="inline-flex min-w-[148px] items-center justify-center rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 focus:outline-none focus:ring-2 focus:ring-patina-300"
+            className="inline-flex min-w-[148px] items-center justify-center rounded-lg border border-patina-200 bg-transparent px-4 py-2 text-sm font-medium text-patina-700 transition hover:border-patina-300 hover:bg-patina-50 focus:outline-none focus:ring-2 focus:ring-patina-300"
           >
             {copied ? "Link copied" : "Copy share link"}
           </button>

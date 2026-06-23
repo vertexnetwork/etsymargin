@@ -4,6 +4,7 @@ import { notFound } from "next/navigation";
 import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { AuditBuyCta, HowItWorks, SampleAuditTable } from "@/components/audit-landing/parts";
+import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { PILLAR_DATE_PUBLISHED, PILLAR_LAST_UPDATED } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -77,6 +78,15 @@ export default function ShopAuditPage() {
           catalog through the 2026 fee stack at once and shows you, ranked worst-first, exactly
           where you&apos;re bleeding.
         </p>
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <GumroadCta variant="button" source="pseo" content="audit-hero" />
+          <a
+            href="#example"
+            className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
+          >
+            See a sample audit ↓
+          </a>
+        </div>
       </header>
 
       <section aria-labelledby="example" className="mb-12 max-w-3xl">

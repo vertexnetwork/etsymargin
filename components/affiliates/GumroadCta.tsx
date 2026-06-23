@@ -1,4 +1,7 @@
+"use client";
+
 import Script from "next/script";
+import { events } from "@/lib/analytics";
 
 type Variant = "compact" | "card" | "inline" | "button";
 type Source = "calculator" | "recommendations" | "pseo" | "home" | "pillar" | "header";
@@ -42,6 +45,25 @@ function buildHref(rawUrl: string, source: Source, variant: Variant, content?: s
   }
 }
 
+function Check() {
+  return (
+    <svg
+      width="16"
+      height="16"
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="var(--color-patina-600)"
+      strokeWidth="2.5"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+      aria-hidden="true"
+      className="mt-0.5 shrink-0"
+    >
+      <polyline points="20 6 9 17 4 12" />
+    </svg>
+  );
+}
+
 export function GumroadCta({ variant, source, content, label, className = "" }: Props) {
   const enabled = process.env.NEXT_PUBLIC_GUMROAD_ENABLED === "1";
   const productUrl = process.env.NEXT_PUBLIC_GUMROAD_PRODUCT_URL;
@@ -49,6 +71,11 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
 
   if (!enabled || !productUrl) return null;
   const href = buildHref(productUrl, source, variant, content);
+
+  // Purchase-intent signal: fired when the buyer opens the overlay / navigates
+  // to checkout. `placement` is the variant so we can compare which surface
+  // converts; `tier` carries the content tag (calculator margin band, etc.).
+  const track = () => events.auditCtaClicked({ source, placement: variant, tier: content });
 
   // `target`/`rel` are the no-JS fallback; the overlay intercepts the click.
   const overlay = (
@@ -63,6 +90,7 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
         {overlay}
         <a
           href={href}
+          onClick={track}
           className={`gumroad-button inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800 ${className}`}
           target="_blank"
           rel="noopener"
@@ -80,6 +108,7 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
         {overlay}
         <a
           href={href}
+          onClick={track}
           className={`gumroad-button mt-4 inline-flex items-center gap-2 rounded-lg bg-cream-100 px-3 py-2 text-xs font-medium text-patina-900 ring-1 ring-patina-200/60 transition hover:ring-patina-300 ${className}`}
           target="_blank"
           rel="noopener"
@@ -105,6 +134,7 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
           the 2026 Pricing Bible PDF + Master Pricing Matrix.{" "}
           <a
             href={href}
+            onClick={track}
             className="gumroad-button font-semibold text-patina-700 underline underline-offset-2 hover:text-patina-900"
             target="_blank"
             rel="noopener"
@@ -129,12 +159,27 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
         <h2 className="mt-3 text-lg font-bold text-patina-900 sm:text-xl">The Etsy Profit Audit</h2>
         <p className="mt-2 text-sm text-patina-800/85 sm:text-base">
           Upload your Etsy export and see exactly which listings lose money — your whole shop
-          audited at once, not one listing at a time. Includes the 2026 Pricing Bible PDF and the
-          1,200-scenario Master Pricing Matrix. One-time purchase. The math pays for itself the
-          first time it catches a mispriced listing.
+          audited at once, not one listing at a time. The math pays for itself the first time it
+          catches a mispriced listing.
         </p>
+        {/* Scannable "what you get" — answers the objection right at the button. */}
+        <ul className="mt-4 space-y-1.5 text-sm text-patina-800/90">
+          <li className="flex gap-2">
+            <Check />
+            Every listing audited and ranked worst-margin-first
+          </li>
+          <li className="flex gap-2">
+            <Check />
+            The 2026 Pricing Bible PDF
+          </li>
+          <li className="flex gap-2">
+            <Check />
+            The 1,200-scenario Master Pricing Matrix
+          </li>
+        </ul>
         <a
           href={href}
+          onClick={track}
           className="gumroad-button mt-4 inline-flex items-center gap-1 rounded-lg bg-patina-700 px-4 py-2 text-sm font-medium text-white shadow-sm transition hover:bg-patina-800"
           target="_blank"
           rel="noopener"
@@ -143,7 +188,8 @@ export function GumroadCta({ variant, source, content, label, className = "" }: 
           <span aria-hidden="true">→</span>
         </a>
         <p className="mt-3 text-xs text-patina-muted">
-          Instant access · 7-day money-back guarantee · secure Gumroad checkout
+          Instant access · works for any shop size · 7-day money-back guarantee · secure Gumroad
+          checkout
         </p>
       </section>
     </>

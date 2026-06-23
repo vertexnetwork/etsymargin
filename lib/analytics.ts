@@ -26,6 +26,15 @@ export const events = {
   countryChanged: (country: string) => safeTrack("country_changed", { country }),
   pseoPageViewed: (slug: string) => safeTrack("pseo_page_viewed", { slug }),
   shareUrlCopied: () => safeTrack("share_url_copied"),
+  // Conversion funnel. `placement` segments which lever fired (header button,
+  // calculator-card strip, pSEO mid-page card, …) so we can compare them;
+  // `tier` carries the margin band / utm_content for the calculator levers.
+  // Fired on click of any audit CTA — i.e. purchase intent (overlay open or
+  // navigation to the offer page), the closest on-site signal to a sale.
+  auditCtaClicked: (params: { source: string; placement: string; tier?: string }) =>
+    safeTrack("audit_cta_clicked", params),
+  // Lead capture succeeded (added to the Resend audience).
+  emailCaptured: (source: string) => safeTrack("email_captured", { source }),
   // Vertex Network — required cross-network event (spec §9).
   vertexFooterOpened: () => safeTrack("vertex_footer_opened"),
 };

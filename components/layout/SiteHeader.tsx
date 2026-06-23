@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { Wordmark } from "@/components/brand/Wordmark";
+import { HeaderAuditCta } from "@/components/layout/HeaderAuditCta";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteHeader() {
@@ -10,20 +11,10 @@ export function SiteHeader() {
   const navLinks = siteConfig.nav.primary.filter((l) => l.href !== "/etsy-shop-audit");
   const price = siteConfig.monetization.gumroad.price;
 
-  // Persistent buy lever. Points at the offer page (which carries the overlay
-  // checkout + full value stack) rather than firing payment from a cold header
-  // click. Stays visible on mobile so the funnel survives any scroll depth.
-  const auditCta = auditOn ? (
-    <Link
-      href="/etsy-shop-audit"
-      className="inline-flex items-center gap-1.5 rounded-full bg-patina-700 px-3 py-1.5 text-xs font-semibold text-white shadow-sm transition hover:bg-patina-800 sm:px-4 sm:py-2 sm:text-sm"
-    >
-      Audit your shop
-      <span className="rounded bg-white/20 px-1.5 py-0.5 text-[10px] font-bold tabular-nums">
-        ${price}
-      </span>
-    </Link>
-  ) : null;
+  // Persistent buy lever (tracked). Points at the offer page rather than firing
+  // payment from a cold header click. Stays visible on mobile so the funnel
+  // survives any scroll depth.
+  const auditCta = auditOn ? <HeaderAuditCta price={price} /> : null;
 
   return (
     <header className="sticky top-0 z-30 w-full border-b border-(--color-border) bg-(--color-bg)/85 backdrop-blur supports-[backdrop-filter]:bg-(--color-bg)/70">

@@ -6,6 +6,7 @@ import { ArticleJsonLd, FaqJsonLd, SoftwareApplicationJsonLd } from "@/component
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { AuditBuyCta, HowItWorks } from "@/components/audit-landing/parts";
+import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { PILLAR_DATE_PUBLISHED, PILLAR_LAST_UPDATED } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -76,6 +77,15 @@ export default function BulkCalculatorPage() {
           for your whole shop at once.
         </p>
         <TrustStrip />
+        <div className="mt-5 flex flex-wrap items-center gap-x-5 gap-y-3">
+          <GumroadCta variant="button" source="pseo" content="bulk-hero" />
+          <a
+            href="#try-one"
+            className="text-sm font-medium text-patina-700 underline underline-offset-4 hover:text-patina-900"
+          >
+            Try it free on one listing ↓
+          </a>
+        </div>
       </header>
 
       <section aria-labelledby="try-one" className="mb-12">
