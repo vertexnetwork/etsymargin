@@ -3,10 +3,11 @@ import { Wordmark } from "@/components/brand/Wordmark";
 import { siteConfig } from "@/lib/site-config";
 
 export function SiteHeader() {
-  // Hide the audit landing link until the feature is live (the page 404s when
-  // the flag is off, so we don't want a dead nav entry on preview/local).
+  // Drop the audit landing link from the nav entirely: when the feature is off
+  // the page 404s, and when it's on the prominent CTA button below already owns
+  // that destination — listing it in the nav too just duplicates it.
   const auditOn = siteConfig.features.audit.enabled;
-  const navLinks = siteConfig.nav.primary.filter((l) => auditOn || l.href !== "/etsy-shop-audit");
+  const navLinks = siteConfig.nav.primary.filter((l) => l.href !== "/etsy-shop-audit");
   const price = siteConfig.monetization.gumroad.price;
 
   // Persistent buy lever. Points at the offer page (which carries the overlay
