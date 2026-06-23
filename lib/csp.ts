@@ -84,14 +84,17 @@ export function buildCSP(providers: CspProviders = {}): string {
     add(d, "img-src", "https://srv.carbonads.net", "https://cdn.carbonads.com");
   }
   if (providers.gumroad) {
-    // gumroad.js (the overlay loader) is always served from gumroad.com; the
-    // checkout it opens runs in an iframe at the product URL's origin. Include
-    // 'self' explicitly — once frame-src is set it stops inheriting default-src,
-    // which would otherwise break same-origin framing (see the adsense note).
-    add(d, "script-src", "https://gumroad.com");
-    add(d, "img-src", "https://gumroad.com");
+    // gumroad.js is only a loader: it injects the real overlay bundle + CSS
+    // from assets.gumroad.com, so BOTH hosts must be allowed or the overlay
+    // silently fails to initialize and the button falls back to a full-page
+    // checkout redirect. The checkout itself runs in an iframe at the product
+    // URL's origin. Include 'self' explicitly on frame-src — once it's set it
+    // stops inheriting default-src, breaking same-origin framing (adsense note).
+    add(d, "script-src", "https://gumroad.com", "https://assets.gumroad.com");
+    add(d, "style-src", "https://assets.gumroad.com");
+    add(d, "img-src", "https://gumroad.com", "https://assets.gumroad.com");
+    add(d, "connect-src", "https://gumroad.com", "https://assets.gumroad.com");
     add(d, "frame-src", "'self'", "https://gumroad.com");
-    add(d, "connect-src", "https://gumroad.com");
     if (providers.gumroadOrigin) {
       add(d, "frame-src", providers.gumroadOrigin);
       add(d, "connect-src", providers.gumroadOrigin);

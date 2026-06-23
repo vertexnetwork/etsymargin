@@ -8,6 +8,7 @@ import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
+import { EmailCapture } from "@/components/email/EmailCapture";
 import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
 import { PseoPageView } from "@/components/analytics/PseoPageView";
@@ -15,6 +16,7 @@ import { TrustStrip } from "@/components/layout/TrustStrip";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, PSEO_LAST_UPDATED, getPseoEntry } from "@/lib/pseo/data";
 import { loadPseoMdx } from "@/lib/mdx";
+import { siteConfig } from "@/lib/site-config";
 
 // Slugs where Printify is a high-fit affiliate match: POD apparel, mugs,
 // baby clothes, stickers (Printify catalog), and pet portraits (sold as
@@ -137,6 +139,16 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
 
       <Calculator initialInputs={entry.prefilledScenario} category={entry.category} />
 
+      {/* Peak-intent CTA. The moment the prefilled calculator shows this
+          category's margin is when "now do this across every listing" lands
+          hardest — so the strong offer card goes here, not only at the foot of
+          the article. A lighter CTA repeats at the bottom (two chances to
+          convert as the reader scrolls). Unconditional, so it also surfaces the
+          owned product on PRINTIFY_FIT pages where the bottom slot is Printify. */}
+      <div className="mt-10">
+        <GumroadCta variant="card" source="pseo" content="pseo-top" />
+      </div>
+
       {mdxSource && (
         <article className="mt-12 max-w-3xl">
           <MDXRemote
@@ -190,6 +202,8 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
       ) : (
         <GumroadCta variant="inline" source="pseo" />
       )}
+
+      {siteConfig.features.email.enabled && <EmailCapture source="pseo" className="mt-12" />}
 
       <section className="mt-16">
         <h2 className="mb-4 text-xl font-bold text-patina-900">More Etsy profit math</h2>
