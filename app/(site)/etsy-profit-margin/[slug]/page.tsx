@@ -7,6 +7,7 @@ import rehypeSlug from "rehype-slug";
 import rehypeAutolinkHeadings from "rehype-autolink-headings";
 import { Calculator } from "@/components/Calculator/Calculator";
 import { PrintifyCard } from "@/components/affiliates/PrintifyCard";
+import { AffiliateCard } from "@/components/affiliates/AffiliateCard";
 import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { EmailCapture } from "@/components/email/EmailCapture";
 import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
@@ -15,6 +16,7 @@ import { PseoPageView } from "@/components/analytics/PseoPageView";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
 import { PSEO_ENTRIES, PSEO_LAST_UPDATED, getPseoEntry } from "@/lib/pseo/data";
+import { affiliateForSlug } from "@/lib/affiliates/partners";
 import { loadPseoMdx } from "@/lib/mdx";
 import { siteConfig } from "@/lib/site-config";
 
@@ -22,6 +24,10 @@ import { siteConfig } from "@/lib/site-config";
 // baby clothes, stickers (Printify catalog), and pet portraits (sold as
 // POD posters/canvas via Printify's wall-art catalog). Everything else
 // hides the card to keep aesthetics + relevance honest.
+//
+// Other intent-matched PartnerStack partners (CustomCat, Gelato, …) are wired
+// per-slug in lib/affiliates/partners.ts and render via AffiliateCard. Printify
+// is checked first below, so a slug listed in both lands on Printify.
 const PRINTIFY_FIT = new Set([
   "custom-t-shirts-shipping-costs",
   "mugs-and-drinkware",
@@ -59,6 +65,11 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
   const entry = getPseoEntry(slug);
   if (!entry) notFound();
   const mdxSource = await loadPseoMdx(slug);
+
+  // Affiliate for the bottom slot. Printify keeps priority (its own card);
+  // otherwise fall to the registry's intent-matched partner if one is live,
+  // else the owned-product CTA. Exactly one affiliate per page — never stacked.
+  const affiliatePartner = PRINTIFY_FIT.has(entry.slug) ? undefined : affiliateForSlug(entry.slug);
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
@@ -198,6 +209,10 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
       {PRINTIFY_FIT.has(entry.slug) ? (
         <div className="mt-12">
           <PrintifyCard source="pseo" campaign={entry.slug} />
+        </div>
+      ) : affiliatePartner ? (
+        <div className="mt-12">
+          <AffiliateCard partner={affiliatePartner} source="pseo" campaign={entry.slug} />
         </div>
       ) : (
         <GumroadCta variant="inline" source="pseo" />
