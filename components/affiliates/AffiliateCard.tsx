@@ -39,6 +39,14 @@ export function AffiliateCard({ partner, source, campaign, className = "" }: Pro
       </span>
       <h2 className="mt-3 text-lg font-bold text-patina-900 sm:text-xl">{partner.headline}</h2>
       <p className="mt-2 text-sm text-patina-800/85 sm:text-base">{partner.body}</p>
+      {partner.offer && (
+        <p className="mt-3 flex items-start gap-2 rounded-lg bg-lime-cream/60 px-3 py-2 text-sm font-medium text-patina-900 ring-1 ring-patina-200/50">
+          <span className="mt-px shrink-0 rounded bg-patina-700 px-1.5 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-white">
+            Offer
+          </span>
+          <span>{partner.offer}</span>
+        </p>
+      )}
       <a
         href={href}
         target="_blank"
