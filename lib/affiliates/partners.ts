@@ -25,6 +25,12 @@ export type AffiliatePartner = {
   eyebrow: string;
   headline: string;
   body: string;
+  /**
+   * Optional promotional hook rendered as a highlighted callout above the CTA —
+   * a time-limited sign-up perk the partner extends to our referrals. Keep it
+   * short and verify it's still live before relying on it (partner promos rotate).
+   */
+  offer?: string;
   /** Button label. */
   cta: string;
   /** pSEO slugs this partner is the intent match for. */
@@ -37,8 +43,11 @@ export const AFFILIATE_PARTNERS: AffiliatePartner[] = [
     affiliateUrl: "https://affiliate.customcat.com/o08hyesj0op2",
     eyebrow: "Recommended · Embroidery print-on-demand",
     headline: "Lower your embroidery cost with CustomCat",
-    body: "If digitizing fees and stitch-count pricing are what's eating the margin in the waterfall above, CustomCat fulfills embroidered hats, sweatshirts, and apparel on demand — no order minimums, per-unit pricing visible up front, so you're not buying a 24-piece run to fill a single order.",
-    cta: "See CustomCat pricing",
+    body: "If digitizing fees and stitch-count pricing are eating the margin in the waterfall above, CustomCat fulfills embroidered hats, sweatshirts, and apparel on demand — no order minimums, per-unit pricing up front.",
+    // Partner promo as of 2024 — verify it's still running before leaning on it.
+    offer:
+      "Sign up through our link and get 90 days of CustomCat PRO free — that's 20–40% off the entire catalog for your first 3 months.",
+    cta: "Claim 90 days of PRO free",
     slugs: ["embroidered-hats", "embroidered-sweatshirts", "embroidery"],
   },
   {
