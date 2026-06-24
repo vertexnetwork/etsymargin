@@ -4,6 +4,7 @@ import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Clarity } from "@/components/analytics/Clarity";
 import { ConsentProvider } from "@/components/consent/ConsentProvider";
 import { CookieConsent } from "@/components/consent/CookieConsent";
+import { FoundingBanner } from "@/components/layout/FoundingBanner";
 import { SiteHeader } from "@/components/layout/SiteHeader";
 import { SiteFooter } from "@/components/layout/SiteFooter";
 import { SiteSchema } from "@/components/seo/SiteSchema";
@@ -16,6 +17,7 @@ export default function SiteLayout({ children }: { children: React.ReactNode }) 
   return (
     <ConsentProvider required={consentRequired}>
       <SiteSchema />
+      <FoundingBanner />
       <SiteHeader />
       {children}
       <SiteFooter />

@@ -18,6 +18,7 @@ temp/
 # Playwright
 playwright-report/
 test-results/
+.playwright-screenshots/
 
 # Lighthouse CI
 .lighthouseci/

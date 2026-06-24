@@ -136,7 +136,7 @@ export function Calculator({
         onCountryChange={(code: CountryCode) => update("country", code)}
       />
 
-      <div id="results" className="space-y-6">
+      <div id="results" className="scroll-mt-20 space-y-6">
         <ResultsSummary result={result} inputs={inputs} category={category} embedded={embedded} />
         <WaterfallChart result={result} />
         <div className="flex flex-wrap items-center gap-3">

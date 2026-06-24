@@ -5,6 +5,7 @@ import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { EmailCapture } from "@/components/email/EmailCapture";
 import { SoftwareApplicationJsonLd } from "@/components/seo/JsonLd";
 import { TrustStrip } from "@/components/layout/TrustStrip";
+import { CategoryIcon } from "@/components/brand/CategoryIcon";
 import { PSEO_ENTRIES } from "@/lib/pseo/data";
 import { siteConfig } from "@/lib/site-config";
 
@@ -36,6 +37,23 @@ export default function Home() {
           charges them, with the loss path visible at a glance.
         </p>
 
+        {/* Value-ladder bridge: the hero sells the free calculator while the
+            header CTA sells the $19 audit — without this line a first-time
+            visitor can't tell how they relate. Shown only when the audit
+            product surfaces (same flag as the header CTA), so the framing never
+            references a price the page isn't presenting. */}
+        {siteConfig.features.audit.enabled && (
+          <p className="mt-3 text-sm text-patina-700">
+            Free for one listing below — or{" "}
+            <Link
+              href="/etsy-shop-audit"
+              className="font-semibold underline underline-offset-4 hover:text-patina-900"
+            >
+              audit your whole shop for ${siteConfig.monetization.gumroad.price} →
+            </Link>
+          </p>
+        )}
+
         <TrustStrip />
 
         <div className="mt-5 flex flex-wrap items-center gap-3">
@@ -52,6 +70,15 @@ export default function Home() {
           >
             How much does Etsy take per sale? Full 2026 fee breakdown →
           </Link>
+        </div>
+
+        {/* Subtle craft-context motif — a quiet maker signal for a seller base
+            that skews creative/handmade. Decorative; the label carries meaning. */}
+        <div className="mt-6 flex items-center gap-3 text-patina-400/80">
+          {["Jewelry", "Beauty", "Apparel", "Art", "Home", "Paper"].map((c) => (
+            <CategoryIcon key={c} category={c} className="h-[18px] w-[18px]" />
+          ))}
+          <span className="ml-0.5 text-xs font-medium text-patina-muted">Built for Etsy makers</span>
         </div>
       </header>
 
@@ -105,7 +132,8 @@ export default function Home() {
                 href={`/etsy-profit-margin/${e.slug}`}
                 className="quiet-card block rounded-xl px-4 py-3.5 ring-1 ring-patina-100/80 transition hover:ring-patina-300"
               >
-                <span className="inline-flex items-center rounded-full bg-lime-cream/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
+                <span className="inline-flex items-center gap-1.5 rounded-full bg-lime-cream/70 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wider text-patina-900 ring-1 ring-patina-200/40">
+                  <CategoryIcon category={e.category} className="h-3 w-3 text-patina-600" />
                   {e.category}
                 </span>
                 <span className="mt-2 block font-semibold text-patina-900">
