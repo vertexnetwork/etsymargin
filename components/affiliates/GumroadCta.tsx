@@ -1,8 +1,8 @@
 "use client";
 
-import { useEffect, useState } from "react";
 import Script from "next/script";
 import { events } from "@/lib/analytics";
+import { useFoundingOffer } from "@/components/affiliates/use-founding-offer";
 
 type Variant = "compact" | "card" | "inline" | "button";
 type Source = "calculator" | "recommendations" | "pseo" | "home" | "pillar" | "header";
@@ -28,44 +28,6 @@ type Props = {
 // domain the buyer already trusts. `id` dedupes the script across the multiple
 // CTAs a page may render, so it loads exactly once.
 const GUMROAD_OVERLAY_SRC = "https://gumroad.com/js/gumroad.js";
-
-// --- Founding-price offer (client side) ------------------------------------
-// Shape returned by /api/founding-offer. The server owns the truth (live
-// sales_count vs the cap); the client just reflects it.
-type FoundingOffer = {
-  active: boolean;
-  remaining: number;
-  code: string;
-  discountUsd: number;
-  discountPct: number;
-};
-
-// One fetch per page load, shared across every CTA. Memoizing the promise (not
-// just the result) means N simultaneously-mounting CTAs coalesce into a single
-// request instead of a thundering herd.
-let offerPromise: Promise<FoundingOffer | null> | null = null;
-function loadFoundingOffer(): Promise<FoundingOffer | null> {
-  if (!offerPromise) {
-    offerPromise = fetch("/api/founding-offer")
-      .then((r) => (r.ok ? (r.json() as Promise<FoundingOffer>) : null))
-      .catch(() => null);
-  }
-  return offerPromise;
-}
-
-function useFoundingOffer(): FoundingOffer | null {
-  const [offer, setOffer] = useState<FoundingOffer | null>(null);
-  useEffect(() => {
-    let alive = true;
-    loadFoundingOffer().then((o) => {
-      if (alive) setOffer(o);
-    });
-    return () => {
-      alive = false;
-    };
-  }, []);
-  return offer;
-}
 
 // "$19" for whole numbers, "$11.97" when a percent-off lands on cents — match
 // what Gumroad actually charges rather than rounding to a prettier figure.
