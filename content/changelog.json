@@ -1,5 +1,55 @@
 [
   {
+    "hash": "5fc71c9c34de780cceb4bba5ca35f5fafdf3154c",
+    "date": "2026-06-24",
+    "title": "Surface CustomCat's 90-day PRO referral offer on the affiliate card"
+  },
+  {
+    "hash": "94a963d4ef09bcc0ed55217740573fd26b8c6f3c",
+    "date": "2026-06-24",
+    "title": "Add founding-price banner, fix conversion blockers, craft iconography"
+  },
+  {
+    "hash": "b3aef957f59bc06e57fc565b7327e4f310d1fc17",
+    "date": "2026-06-23",
+    "title": "Add CustomCat affiliate and pluggable partner registry for pSEO spokes"
+  },
+  {
+    "hash": "088a8e130ac9c2e604f23e6d40a124bfd011ec6a",
+    "date": "2026-06-23",
+    "title": "Fix Gumroad overlay and add founding-price launch promo"
+  },
+  {
+    "hash": "e63f868579d154c8485be023c4ad64532efc924d",
+    "date": "2026-06-23",
+    "title": "Instrument conversion, fix sales-page heroes, sharpen CTAs"
+  },
+  {
+    "hash": "905729efcd1e55043331f70058374636e2b9abe6",
+    "date": "2026-06-23",
+    "title": "Put a conversion lever on the calculator result card (every tier)"
+  },
+  {
+    "hash": "1db5982445f6fd8e2562595ae7821eba2f0b6721",
+    "date": "2026-06-23",
+    "title": "Strengthen conversion funnel: persistent + peak-intent CTAs, lead capture"
+  },
+  {
+    "hash": "9fb74d5ebc350dc9407c7b02d655ecc9b1a441fa",
+    "date": "2026-06-23",
+    "title": "Fix Gumroad overlay: allow assets.gumroad.com in CSP"
+  },
+  {
+    "hash": "7dedfb6dbf8586d18db505cf524fe873e29ec40f",
+    "date": "2026-06-23",
+    "title": "Collapse Gumroad funnel: in-page overlay checkout + auto-unlock"
+  },
+  {
+    "hash": "7b5c8367bff6ca98e1c8e76fbdf7c5b67b7d041a",
+    "date": "2026-06-15",
+    "title": "Fix audit results table: fit at a glance, no horizontal scroll"
+  },
+  {
     "hash": "9ad9e84f86dd9f8d3ae70db77048b68c9197492d",
     "date": "2026-06-13",
     "title": "Rebrand Gumroad imagery around the audit tool"

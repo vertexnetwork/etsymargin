@@ -12,11 +12,13 @@ import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { EmailCapture } from "@/components/email/EmailCapture";
 import { ArticleJsonLd, FaqJsonLd } from "@/components/seo/JsonLd";
 import { BreadcrumbSchema } from "@/components/seo/BreadcrumbSchema";
+import { AuthorByline } from "@/components/seo/AuthorByline";
 import { PseoPageView } from "@/components/analytics/PseoPageView";
 import { TrustStrip } from "@/components/layout/TrustStrip";
 import { mdxComponents } from "@/components/mdx/MdxComponents";
-import { PSEO_ENTRIES, PSEO_LAST_UPDATED, getPseoEntry } from "@/lib/pseo/data";
+import { PSEO_ENTRIES, PSEO_LAST_UPDATED, CATEGORY_META, getPseoEntry } from "@/lib/pseo/data";
 import { affiliateForSlug } from "@/lib/affiliates/partners";
+import { author } from "@/lib/author";
 import { loadPseoMdx } from "@/lib/mdx";
 import { siteConfig } from "@/lib/site-config";
 
@@ -70,6 +72,11 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
   // otherwise fall to the registry's intent-matched partner if one is live,
   // else the owned-product CTA. Exactly one affiliate per page — never stacked.
   const affiliatePartner = PRINTIFY_FIT.has(entry.slug) ? undefined : affiliateForSlug(entry.slug);
+  // Category-specific framing for the embed CTA so this block reads bespoke per
+  // niche instead of one templated line across all 60 spokes.
+  const embedAngle =
+    CATEGORY_META[entry.category]?.embedAngle ??
+    "Writing about this category on Etsy? Let readers run their own margin math right inside your post.";
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
@@ -83,8 +90,9 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         url={`/etsy-profit-margin/${entry.slug}`}
         headline={entry.heroHeadline}
         description={entry.metaDescription}
-        datePublished="2026-04-01"
+        datePublished={entry.datePublished ?? "2026-05-14"}
         dateModified={PSEO_LAST_UPDATED}
+        author={{ name: author.name, url: author.url, image: author.avatar }}
       />
       <BreadcrumbSchema
         crumbs={[
@@ -109,6 +117,7 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
           {entry.heroSubcopy}
         </p>
+        <AuthorByline className="mt-4" />
         <p className="mt-2 text-xs text-patina-muted">
           Updated{" "}
           <time dateTime={PSEO_LAST_UPDATED}>
@@ -180,8 +189,8 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
           Writing about {entry.category.toLowerCase()} on Etsy?
         </h2>
         <p className="mt-2 text-patina-800/85">
-          Drop this exact calculator — pre-filled with the {entry.category.toLowerCase()} scenario
-          above — into your post or supplier page with a single iframe. Free, no signup.
+          {embedAngle} It drops into your post or supplier page with a single iframe, pre-filled
+          with the {entry.category.toLowerCase()} scenario above — free, no signup.
         </p>
         <Link
           href="/embed"

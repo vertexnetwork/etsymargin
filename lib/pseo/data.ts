@@ -1,4 +1,5 @@
 import type { CalculatorInputs } from "@/lib/fees";
+import { pseoFaqBySlug } from "./faqs";
 
 export type PseoFaq = { q: string; a: string };
 
@@ -14,6 +15,9 @@ export type PseoEntry = {
     "itemPrice" | "shippingCharged" | "manufacturingCost" | "actualShippingCost"
   >;
   faq: PseoFaq[];
+  /** Real first-publish date (the git commit that added the MDX). Attached in
+   *  the PSEO_ENTRIES derivation below; feeds Article JSON-LD `datePublished`. */
+  datePublished?: string;
 };
 
 // Last refresh date for the PSEO corpus. Surfaced as an explicit "Updated"
@@ -49,7 +53,7 @@ const baseFaq: PseoFaq[] = [
   },
 ];
 
-export const PSEO_ENTRIES: PseoEntry[] = [
+const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "digital-downloads-profitability",
     category: "Digital",
@@ -1081,6 +1085,95 @@ export const PSEO_ENTRIES: PseoEntry[] = [
     faq: baseFaq,
   },
 ];
+
+// Real first-publish dates pulled from git history (the commit that added each
+// MDX). Surfaced as per-entry `datePublished` on Article JSON-LD so freshness
+// signals are accurate and varied — not one hardcoded date across all 60 spokes
+// (the old "2026-04-01" literal actually predated when the content shipped).
+const PUBLISHED_2026_05_07 = new Set([
+  "baby-clothing", "crochet-items", "custom-t-shirts-shipping-costs",
+  "digital-downloads-profitability", "dog-accessories", "embroidery",
+  "greeting-cards", "handmade-jewelry-fees", "handmade-soap", "leather-goods",
+  "mugs-and-drinkware", "pet-portraits", "printable-art-margins", "resin-art",
+  "soy-candles", "stickers", "svg-files", "wedding-favors", "wedding-invitations",
+  "wood-signs",
+]);
+
+// Each spoke gets its unique, niche-specific FAQ (lib/pseo/faqs.ts) and real
+// publish date attached here. The inline `baseFaq` on the raw entries remains
+// only as a defensive fallback for any slug missing a hand-written set.
+export const PSEO_ENTRIES: PseoEntry[] = RAW_PSEO_ENTRIES.map((entry) => ({
+  ...entry,
+  faq: pseoFaqBySlug[entry.slug] ?? entry.faq,
+  datePublished: PUBLISHED_2026_05_07.has(entry.slug) ? "2026-05-07" : "2026-05-14",
+}));
+
+// Per-category supplementary metadata. Drives (a) the embed-aside angle on each
+// spoke so that block reads category-specific instead of one templated line
+// across all 60 pages, and (b) sitemap priority tiered by evergreen breadth and
+// search volume (broad staples 0.8, narrower niches 0.75, seasonal one-offs
+// 0.7). Priority is only a crawl hint, so this differentiates the previously
+// uniform 0.8 without de-prioritising the core spokes.
+export const CATEGORY_META: Record<
+  string,
+  { embedAngle: string; sitemapPriority: number }
+> = {
+  Digital: {
+    embedAngle:
+      "Running a printables blog or a digital-product roundup? Let readers pressure-test their own download pricing right inside your post.",
+    sitemapPriority: 0.8,
+  },
+  Apparel: {
+    embedAngle:
+      "Writing a print-on-demand or apparel-sourcing guide? Let readers model blank cost, fulfillment, and the Off-Site Ads cut on their own designs.",
+    sitemapPriority: 0.8,
+  },
+  Home: {
+    embedAngle:
+      "Reviewing home-goods suppliers or candle and wood-craft kits? Let readers see real margins on heavy, shipping-sensitive items before they price.",
+    sitemapPriority: 0.8,
+  },
+  Paper: {
+    embedAngle:
+      "Putting together a stationery or paper-goods pricing guide? Let readers run the flat-fee math on low-AOV cards and prints themselves.",
+    sitemapPriority: 0.8,
+  },
+  Jewelry: {
+    embedAngle:
+      "Writing about handmade-jewelry pricing or materials sourcing? Let readers retest their margins as metal and stone costs move.",
+    sitemapPriority: 0.8,
+  },
+  Beauty: {
+    embedAngle:
+      "Covering soap, candle, or bath-and-body formulation? Let readers price around hazmat shipping and batch costs in real time.",
+    sitemapPriority: 0.75,
+  },
+  Art: {
+    embedAngle:
+      "Running an art-print or original-art pricing post? Let readers compare framed, canvas, and shipped margins at a glance.",
+    sitemapPriority: 0.75,
+  },
+  Pet: {
+    embedAngle:
+      "Writing a pet-product sourcing or handmade-pet guide? Let readers model bundles and per-item margins for their own shop.",
+    sitemapPriority: 0.75,
+  },
+  Accessories: {
+    embedAngle:
+      "Putting together an accessories or small-goods pricing guide? Let readers run their own per-unit fee math.",
+    sitemapPriority: 0.75,
+  },
+  Wedding: {
+    embedAngle:
+      "Writing a wedding-stationery or favors pricing guide? Let readers price low-volume, high-touch custom orders accurately.",
+    sitemapPriority: 0.7,
+  },
+  Holiday: {
+    embedAngle:
+      "Covering seasonal or holiday-craft selling? Let readers price for the 8-week rush without handing the margin back in fees.",
+    sitemapPriority: 0.7,
+  },
+};
 
 export function getPseoEntry(slug: string): PseoEntry | undefined {
   return PSEO_ENTRIES.find((e) => e.slug === slug);
