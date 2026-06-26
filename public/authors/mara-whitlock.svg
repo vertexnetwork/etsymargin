@@ -1,0 +1,29 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" role="img" aria-label="Illustrated portrait of Mara Whitlock">
+  <defs>
+    <clipPath id="circ"><circle cx="100" cy="100" r="100"/></clipPath>
+  </defs>
+  <g clip-path="url(#circ)">
+    <rect width="200" height="200" fill="#eaf3f1"/>
+    <!-- shoulders -->
+    <path d="M26 200 C26 150 58 130 100 130 C142 130 174 150 174 200 Z" fill="#3d8389"/>
+    <!-- collar -->
+    <path d="M100 130 L86 162 L100 152 L114 162 Z" fill="#28565b"/>
+    <!-- neck -->
+    <rect x="88" y="110" width="24" height="30" rx="12" fill="#e7d3b6"/>
+    <!-- head -->
+    <circle cx="100" cy="84" r="34" fill="#f1ddc1"/>
+    <!-- hair -->
+    <path d="M63 88 C58 50 92 42 100 42 C112 42 142 50 137 92 C133 72 119 64 100 64 C83 64 70 71 63 88 Z" fill="#28565b"/>
+    <path d="M63 88 C61 102 66 113 71 120 C65 98 69 84 76 77 C70 79 66 83 63 88 Z" fill="#28565b"/>
+    <path d="M137 92 C139 106 134 115 129 122 C135 100 131 86 124 79 C130 81 134 87 137 92 Z" fill="#28565b"/>
+    <!-- brows -->
+    <path d="M82 76 q6 -4 13 0" stroke="#28565b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <path d="M105 76 q6 -4 13 0" stroke="#28565b" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+    <!-- eyes -->
+    <circle cx="88" cy="86" r="3.4" fill="#28565b"/>
+    <circle cx="112" cy="86" r="3.4" fill="#28565b"/>
+    <!-- smile -->
+    <path d="M89 99 q11 9 22 0" stroke="#b06a4a" stroke-width="2.6" fill="none" stroke-linecap="round"/>
+  </g>
+  <circle cx="100" cy="100" r="99" fill="none" stroke="#cfe4e2" stroke-width="2"/>
+</svg>

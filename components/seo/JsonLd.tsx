@@ -54,14 +54,27 @@ export function ArticleJsonLd({
   description,
   datePublished,
   dateModified,
+  author,
 }: {
   url: string;
   headline: string;
   description: string;
   datePublished: string;
   dateModified: string;
+  /** Optional human byline. When omitted, authorship falls back to the
+   *  Organization node (anonymous-brand pages like the fee pillar keep that). */
+  author?: { name: string; url: string; image?: string };
 }) {
   const absoluteUrl = url.startsWith("http") ? url : `${siteConfig.url}${url}`;
+  const abs = (u: string) => (u.startsWith("http") ? u : `${siteConfig.url}${u}`);
+  const authorNode = author
+    ? {
+        "@type": "Person",
+        name: author.name,
+        url: abs(author.url),
+        ...(author.image ? { image: abs(author.image) } : {}),
+      }
+    : { "@id": `${siteConfig.url}#organization` };
   const json = {
     "@context": "https://schema.org",
     "@type": "Article",
@@ -82,7 +95,7 @@ export function ArticleJsonLd({
         cssSelector: ["h1", "[data-speakable]"],
       },
     },
-    author: { "@id": `${siteConfig.url}#organization` },
+    author: authorNode,
     publisher: { "@id": `${siteConfig.url}#organization` },
   };
   return (

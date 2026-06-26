@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PSEO_ENTRIES } from "@/lib/pseo/data";
+import { PSEO_ENTRIES, CATEGORY_META } from "@/lib/pseo/data";
 import { ANSWER_PAGES, DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -39,6 +39,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
     },
     { url: `${BASE_URL}/methodology`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/about`, lastModified, changeFrequency: "monthly", priority: 0.6 },
+    {
+      url: `${BASE_URL}/about/mara-whitlock`,
+      lastModified,
+      changeFrequency: "yearly",
+      priority: 0.4,
+    },
     { url: `${BASE_URL}/contact`, lastModified, changeFrequency: "yearly", priority: 0.4 },
     { url: `${BASE_URL}/embed`, lastModified, changeFrequency: "monthly", priority: 0.6 },
     { url: `${BASE_URL}/recommendations`, lastModified, changeFrequency: "monthly", priority: 0.5 },
@@ -88,7 +94,11 @@ export default function sitemap(): MetadataRoute.Sitemap {
       url: `${BASE_URL}/etsy-profit-margin/${entry.slug}`,
       lastModified,
       changeFrequency: "monthly" as const,
-      priority: 0.8,
+      // Tiered by category breadth/volume (see CATEGORY_META): broad evergreen
+      // staples 0.8, narrower niches 0.75, seasonal one-offs 0.7. Differentiates
+      // the previously-uniform 0.8 without de-prioritising the core spokes —
+      // priority is only a crawl hint, so nothing drops out of the index.
+      priority: CATEGORY_META[entry.category]?.sitemapPriority ?? 0.8,
     })),
   ];
 }
