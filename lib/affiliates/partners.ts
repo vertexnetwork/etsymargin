@@ -11,11 +11,12 @@
 // See app/(site)/etsy-profit-margin/[slug]/page.tsx for the hierarchy.
 //
 // PartnerStack caps us at 4 live partners until our first commission posts, so
-// only Printify + CustomCat are active today. Gelato is approved but awaiting
-// its tracking link — `affiliateUrl: null` keeps it inactive (its slugs fall
-// back to the owned product) until the link is pasted in. The remaining mapped
+// Printify + CustomCat + Gelato are active today (3 of 4). The remaining mapped
 // partners from research (Looka, Gamma, Spocket, Sellfy, ActiveCampaign) are
-// held until the cap lifts; add them here as new entries when unlocked.
+// held until the cap lifts; add them here as new entries when unlocked. When a
+// partner is approved but its tracking link hasn't landed yet, set
+// `affiliateUrl: null` to keep it inactive (its slugs fall back to the owned
+// product) until the link is pasted in.
 
 export type AffiliatePartner = {
   id: string;
@@ -52,7 +53,7 @@ export const AFFILIATE_PARTNERS: AffiliatePartner[] = [
   },
   {
     id: "gelato",
-    affiliateUrl: null, // pending — paste the PartnerStack tracking link to activate
+    affiliateUrl: "https://try.gelato.com/frye9uxornr8",
     eyebrow: "Recommended · Print-on-demand",
     headline: "Lower your production cost with Gelato",
     body: "If manufacturing is what's eating your margin in the waterfall above, Gelato prints posters, canvas, blankets, pillows, totes, cards, and apparel in local production hubs near the buyer — trimming per-unit cost and shipping at once. Free to start, per-unit pricing up front.",
