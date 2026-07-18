@@ -84,11 +84,11 @@ export async function generateMetadata({
   if (amount === null) return {};
   const fees = feeBreakdown(amount);
   return {
-    title: `How Much Does Etsy Take From a $${amount} Sale? (2026)`,
+    title: `Etsy Fees on a $${amount} Sale: What You Keep (2026)`,
     description: `On a $${amount} Etsy sale: baseline fees are $${fees.baseline.toFixed(2)} (~${fees.baselinePct}%). With Off-Site Ads at 15%, total fees rise to $${fees.withAds.toFixed(2)} (~${fees.withAdsPct}%). Full 2026 fee breakdown with calculator.`,
     alternates: { canonical: `/etsy-fees/${slug}` },
     openGraph: {
-      title: `How Much Does Etsy Take From a $${amount} Sale? (2026)`,
+      title: `Etsy Fees on a $${amount} Sale: What You Keep (2026)`,
       description: `Real 2026 numbers: baseline fees, Off-Site Ads scenario, and net profit on a $${amount} Etsy sale.`,
       type: "article",
       publishedTime: PILLAR_DATE_PUBLISHED,
@@ -271,7 +271,7 @@ function DollarAmountPage({ amount, slug }: { amount: number; slug: string }) {
       <FaqJsonLd faq={faq} />
       <ArticleJsonLd
         url={url}
-        headline={`How Much Does Etsy Take From a $${amount} Sale?`}
+        headline={`Etsy Fees on a $${amount} Sale: What You Keep`}
         description={`Baseline fees, Off-Site Ads scenario, and net profit on a $${amount} Etsy sale in 2026.`}
         datePublished={PILLAR_DATE_PUBLISHED}
         dateModified={PILLAR_LAST_UPDATED}
@@ -291,7 +291,7 @@ function DollarAmountPage({ amount, slug }: { amount: number; slug: string }) {
 
       <header className="mb-6 sm:mb-10">
         <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
-          How much does Etsy take from a ${amount} sale?
+          Etsy fees on a ${amount} sale: what you keep
         </h1>
         <p
           className="mt-3 max-w-2xl text-base text-patina-800/85 sm:mt-4 sm:text-lg"

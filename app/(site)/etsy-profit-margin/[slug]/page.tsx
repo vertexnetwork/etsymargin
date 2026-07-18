@@ -77,6 +77,9 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
   const embedAngle =
     CATEGORY_META[entry.category]?.embedAngle ??
     "Writing about this category on Etsy? Let readers run their own margin math right inside your post.";
+  // Per-page freshness: a spoke that got an individual content refresh carries
+  // its own dateModified; the rest fall back to the corpus-wide stamp.
+  const lastUpdated = entry.dateModified ?? PSEO_LAST_UPDATED;
 
   return (
     <main className="mx-auto max-w-5xl px-5 py-6 sm:py-16">
@@ -91,7 +94,7 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         headline={entry.heroHeadline}
         description={entry.metaDescription}
         datePublished={entry.datePublished ?? "2026-05-14"}
-        dateModified={PSEO_LAST_UPDATED}
+        dateModified={lastUpdated}
         author={{ name: author.name, url: author.url, image: author.avatar }}
       />
       <BreadcrumbSchema
@@ -120,8 +123,8 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         <AuthorByline className="mt-4" />
         <p className="mt-2 text-xs text-patina-muted">
           Updated{" "}
-          <time dateTime={PSEO_LAST_UPDATED}>
-            {new Date(PSEO_LAST_UPDATED).toLocaleDateString("en-US", {
+          <time dateTime={lastUpdated}>
+            {new Date(lastUpdated).toLocaleDateString("en-US", {
               year: "numeric",
               month: "long",
               day: "numeric",

@@ -10,13 +10,14 @@
 // secondary lever, never the primary pitch, and never more than one per page.
 // See app/(site)/etsy-profit-margin/[slug]/page.tsx for the hierarchy.
 //
-// PartnerStack caps us at 4 live partners until our first commission posts, so
-// Printify + CustomCat + Gelato are active today (3 of 4). The remaining mapped
-// partners from research (Looka, Gamma, Spocket, Sellfy, ActiveCampaign) are
-// held until the cap lifts; add them here as new entries when unlocked. When a
-// partner is approved but its tracking link hasn't landed yet, set
-// `affiliateUrl: null` to keep it inactive (its slugs fall back to the owned
-// product) until the link is pasted in.
+// PartnerStack caps us at 4 live partners until our first commission posts:
+// Printify + CustomCat + Gelato are live, and Sellfy takes the 4th slot below —
+// env-gated and pending approval, so it stays inactive until its tracking link
+// is set (see NEXT_PUBLIC_SELLFY_AFFILIATE_URL). That fills the cap. Further
+// researched partners (Looka, Gamma, Spocket, ActiveCampaign) wait until our
+// first commission lifts it. When a partner is approved but its tracking link
+// hasn't landed yet, leave `affiliateUrl` null/empty to keep it inactive (its
+// slugs fall back to the owned product) until the link is pasted in.
 
 export type AffiliatePartner = {
   id: string;
@@ -56,7 +57,7 @@ export const AFFILIATE_PARTNERS: AffiliatePartner[] = [
     affiliateUrl: "https://try.gelato.com/frye9uxornr8",
     eyebrow: "Recommended · Print-on-demand",
     headline: "Lower your production cost with Gelato",
-    body: "If manufacturing is what's eating your margin in the waterfall above, Gelato prints posters, canvas, blankets, pillows, totes, cards, and apparel in local production hubs near the buyer — trimming per-unit cost and shipping at once. Free to start, per-unit pricing up front.",
+    body: "If manufacturing is what's eating your margin in the waterfall above, Gelato prints posters, canvas, blankets, pillows, totes, cards, notebooks, and apparel in local production hubs near the buyer — trimming per-unit cost and shipping at once. Free to start, per-unit pricing up front.",
     cta: "See Gelato pricing",
     slugs: [
       "canvas-prints",
@@ -72,8 +73,34 @@ export const AFFILIATE_PARTNERS: AffiliatePartner[] = [
       "greeting-cards",
       "thank-you-cards",
       "planners-physical",
+      "journals-handmade",
       "wedding-invitations",
       "christmas-ornaments-handmade",
+    ],
+  },
+  {
+    id: "sellfy",
+    // PartnerStack — application pending. URL is read from env so going live is a
+    // Vercel env change + redeploy (NEXT_PUBLIC_* is build-time inlined), no code
+    // edit. Empty env → null → inactive → these digital spokes fall back to the
+    // Gumroad CTA until the tracking link lands.
+    affiliateUrl: process.env.NEXT_PUBLIC_SELLFY_AFFILIATE_URL || null,
+    eyebrow: "Recommended · Sell digital downloads fee-free",
+    headline: "Keep more of each digital sale with Sellfy",
+    body: "A digital download has no production cost to absorb the transaction, payment, and Off-Site Ads fees stacking up in the waterfall above — those cuts come straight out of your margin. Sellfy lets you sell the same files from your own storefront with no per-sale marketplace fee. Keep Etsy for reach; add Sellfy to keep more of every sale.",
+    cta: "See Sellfy pricing",
+    slugs: [
+      "svg-files",
+      "printable-planners",
+      "lightroom-presets",
+      "procreate-brushes",
+      "coloring-pages-printable",
+      "digital-stickers",
+      "printable-art-margins",
+      "canva-templates",
+      "logo-templates",
+      "business-card-templates",
+      "digital-downloads-profitability",
     ],
   },
 ];

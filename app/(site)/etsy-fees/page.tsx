@@ -19,12 +19,12 @@ import { siteConfig } from "@/lib/site-config";
 const PAGE_PATH = "/etsy-fees";
 
 export const metadata: Metadata = {
-  title: "How Much Does Etsy Take Per Sale? Complete 2026 Fee Breakdown",
+  title: "Etsy Fees 2026: How Much Does Etsy Take Per Sale?",
   description:
     "Etsy takes 10%–28% of every sale depending on Off-Site Ads attribution. Every 2026 fee — listing, transaction, payment processing, Off-Site Ads, regulatory, currency conversion — explained with worked examples and a live calculator.",
   alternates: { canonical: PAGE_PATH },
   openGraph: {
-    title: "How Much Does Etsy Take Per Sale? Complete 2026 Fee Breakdown",
+    title: "Etsy Fees 2026: How Much Does Etsy Take Per Sale?",
     description:
       "The full 2026 Etsy fee stack: listing, transaction, payment processing, Off-Site Ads, currency, regulatory. Worked examples + live calculator.",
     type: "article",
@@ -48,7 +48,7 @@ export default function EtsyFeesPillarPage() {
       <FaqJsonLd faq={PILLAR_FAQ} />
       <ArticleJsonLd
         url={PAGE_PATH}
-        headline="How Much Does Etsy Take Per Sale? Complete 2026 Fee Breakdown"
+        headline="Etsy Fees 2026: How Much Does Etsy Take Per Sale?"
         description="Every 2026 Etsy fee, layered exactly the way Etsy charges them, with worked examples and a live calculator."
         datePublished={PILLAR_DATE_PUBLISHED}
         dateModified={PILLAR_LAST_UPDATED}
@@ -60,7 +60,7 @@ export default function EtsyFeesPillarPage() {
           2026 Edition
         </span>
         <h1 className="mt-3 text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-5xl">
-          How much does Etsy take per sale? Complete 2026 fee breakdown.
+          Etsy fees 2026: how much does Etsy take per sale?
         </h1>
         <p className="mt-4 max-w-3xl text-base text-patina-800/85 sm:text-lg">
           <strong className="text-patina-900">Etsy takes between 10% and 28% of every sale,</strong>{" "}
@@ -420,6 +420,52 @@ export default function EtsyFeesPillarPage() {
         </p>
       </section>
 
+      <section id="not-fees" className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
+        <h2 className="text-2xl font-bold text-patina-900 sm:text-3xl">
+          Charges sellers confuse with Etsy&apos;s fees
+        </h2>
+        <p>
+          Three things routinely get counted as &quot;Etsy fees&quot; when they aren&apos;t part of
+          the mandatory per-sale stack above. Knowing the difference is usually worth a few points of
+          imagined margin.
+        </p>
+        <h3 className="text-xl font-bold text-patina-900">
+          Etsy Ads (onsite) — optional, pay-per-click
+        </h3>
+        <p>
+          <strong className="text-patina-900">Etsy Ads is not the same as Off-Site Ads.</strong> Etsy
+          Ads is an <em>opt-in</em> product where you set a daily budget (from $1/day) to promote your
+          listings inside Etsy search, and you pay per click — never a percentage of the sale. You
+          control the spend and can pause it anytime. Off-Site Ads (section 4) is the percentage fee
+          on orders that came from Etsy&apos;s <em>external</em> advertising. The two are unrelated,
+          and only Off-Site Ads is charged as a cut of the order.
+        </p>
+        <h3 className="text-xl font-bold text-patina-900">
+          Etsy Plus — a $10/month subscription, not a fee
+        </h3>
+        <p>
+          <strong className="text-patina-900">Etsy Plus is optional.</strong> For $10/month it bundles
+          15 listing credits, $5 in Etsy Ads credit, restock notifications, and some
+          shop-customization features. It&apos;s a subscription you choose, not a per-sale fee — and
+          for most small shops the credits don&apos;t cover the $10, so skipping it is the
+          default-correct move until volume justifies it.
+        </p>
+        <h3 className="text-xl font-bold text-patina-900">
+          Sales tax &amp; VAT — collected from the buyer, not taken from you
+        </h3>
+        <p>
+          The single biggest reason a seller&apos;s cut &quot;looks like 30%&quot; is mistaking sales
+          tax for a fee. In US marketplace-facilitator states, and for EU/UK VAT on digital goods,
+          Etsy calculates, collects, and remits the tax automatically — it&apos;s{" "}
+          <strong className="text-patina-900">
+            added on top of the buyer&apos;s total and never deducted from your payout
+          </strong>
+          , and Etsy doesn&apos;t charge its transaction fee on the tax it collects. It appears in
+          your transaction detail, which is why it gets mistaken for another cut, but it costs you
+          nothing.
+        </p>
+      </section>
+
       <section className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
         <h2 className="text-2xl font-bold text-patina-900 sm:text-3xl">
           Quick answers to the most common Etsy fee questions
@@ -499,6 +545,102 @@ export default function EtsyFeesPillarPage() {
             outside Etsy&apos;s ecosystem avoids the entire fee stack on subsequent orders.
           </li>
         </ol>
+      </section>
+
+      <section id="platform-comparison" className="mt-12 max-w-3xl space-y-4 text-patina-800/85">
+        <h2 className="text-2xl font-bold text-patina-900 sm:text-3xl">
+          Etsy vs Amazon Handmade vs Shopify: total fee comparison
+        </h2>
+        <p>
+          Etsy&apos;s per-sale percentage is actually the lowest of the three — the catch is Off-Site
+          Ads, and that you don&apos;t own the customer. Here&apos;s how the common routes compare on
+          a typical $30 order.
+        </p>
+        <div className="overflow-x-auto rounded-2xl ring-1 ring-patina-100">
+          <table className="w-full border-collapse text-sm">
+            <thead className="bg-cream-100">
+              <tr>
+                <th className="border-b border-patina-200 px-3 py-3 text-left font-semibold text-patina-900">
+                  Platform
+                </th>
+                <th className="border-b border-patina-200 px-3 py-3 text-left font-semibold text-patina-900">
+                  Per-sale fees
+                </th>
+                <th className="border-b border-patina-200 px-3 py-3 text-left font-semibold text-patina-900">
+                  Monthly
+                </th>
+                <th className="border-b border-patina-200 px-3 py-3 text-left font-semibold text-patina-900">
+                  Traffic
+                </th>
+                <th className="border-b border-patina-200 px-3 py-3 text-right font-semibold text-patina-900">
+                  ~Cut of a $30 sale
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr className="even:bg-cream-50/40">
+                <td className="border-b border-patina-100 px-3 py-3 font-semibold text-patina-900">
+                  Etsy
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  $0.20 listing + 6.5% transaction + 3% + $0.25 processing (+12–15% Off-Site Ads if
+                  attributed)
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  $0 (Etsy Plus optional, $10)
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/85">
+                  Built-in marketplace search
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-right font-mono text-patina-800/90">
+                  ~10%, up to ~25% with Off-Site Ads
+                </td>
+              </tr>
+              <tr className="even:bg-cream-50/40">
+                <td className="border-b border-patina-100 px-3 py-3 font-semibold text-patina-900">
+                  Amazon Handmade
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  15% referral fee (min $1), no listing fee
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  $0 (Pro plan $39.99 waived for Handmade)
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/85">
+                  Built-in marketplace search
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-right font-mono text-patina-800/90">
+                  ~15%+
+                </td>
+              </tr>
+              <tr className="even:bg-cream-50/40">
+                <td className="border-b border-patina-100 px-3 py-3 font-semibold text-patina-900">
+                  Shopify
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  2.9% + $0.30 processing; no marketplace cut
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/90">
+                  $39 (Basic)
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-patina-800/85">
+                  None — you drive all traffic
+                </td>
+                <td className="border-b border-patina-100 px-3 py-3 text-right font-mono text-patina-800/90">
+                  ~2.9% + fixed $39/mo
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <p>
+          The honest read: Etsy&apos;s baseline cut is the lowest of the three <em>and</em> it brings
+          the buyers — as long as you opt out of Off-Site Ads while you can. Amazon Handmade takes a
+          bigger flat percentage. Shopify has almost no per-sale cut but charges a fixed monthly fee
+          and sends zero traffic, so it only wins once you have your own audience to point at it. For
+          most sellers it isn&apos;t either/or: Etsy for discovery, your own store for the repeat
+          buyers you&apos;ve already earned.
+        </p>
       </section>
 
       <GumroadCta variant="inline" source="pillar" className="mt-12" />
