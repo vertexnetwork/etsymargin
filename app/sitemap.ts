@@ -1,5 +1,5 @@
 import type { MetadataRoute } from "next";
-import { PSEO_ENTRIES, CATEGORY_META } from "@/lib/pseo/data";
+import { PSEO_ENTRIES, CATEGORY_META, PSEO_LAST_UPDATED } from "@/lib/pseo/data";
 import { ANSWER_PAGES, DOLLAR_AMOUNTS, dollarSlug } from "@/lib/etsy-fees/content";
 import { siteConfig } from "@/lib/site-config";
 
@@ -92,7 +92,10 @@ export default function sitemap(): MetadataRoute.Sitemap {
     })),
     ...PSEO_ENTRIES.map((entry) => ({
       url: `${BASE_URL}/etsy-profit-margin/${entry.slug}`,
-      lastModified,
+      // Per-page lastmod from the entry's own dateModified (falls back to the
+      // corpus stamp) so a single refreshed spoke shows a real diff without
+      // marking all 60 as changed — the honest recrawl signal for GSC.
+      lastModified: new Date(entry.dateModified ?? PSEO_LAST_UPDATED),
       changeFrequency: "monthly" as const,
       // Tiered by category breadth/volume (see CATEGORY_META): broad evergreen
       // staples 0.8, narrower niches 0.75, seasonal one-offs 0.7. Differentiates

@@ -60,6 +60,7 @@ export const siteConfig = {
   nav: {
     primary: [
       { href: "/#categories", label: "Categories" },
+      { href: "/etsy-fees", label: "Etsy fees" },
       // Points at the public landing page, NOT the gated /audit tool — the
       // SiteHeader filters this out when the audit feature flag is off.
       { href: "/etsy-shop-audit", label: "Audit my shop" },
@@ -69,6 +70,7 @@ export const siteConfig = {
     footer: {
       product: [
         { href: "/", label: "Calculator" },
+        { href: "/etsy-fees", label: "Etsy fee guide" },
         // Landing page (not the gated tool); SiteFooter filters when flag off.
         { href: "/etsy-shop-audit", label: "Etsy shop audit" },
         { href: "/embed", label: "Embed on your site" },

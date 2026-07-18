@@ -18,6 +18,11 @@ export type PseoEntry = {
   /** Real first-publish date (the git commit that added the MDX). Attached in
    *  the PSEO_ENTRIES derivation below; feeds Article JSON-LD `datePublished`. */
   datePublished?: string;
+  /** Per-page last-modified override. Set this only on spokes that received an
+   *  individual content refresh, so the Article `dateModified`, the visible
+   *  "Updated" stamp, and the sitemap `lastmod` advance for THIS page alone —
+   *  unchanged spokes keep PSEO_LAST_UPDATED and don't cry-wolf a fresh date. */
+  dateModified?: string;
 };
 
 // Last refresh date for the PSEO corpus. Surfaced as an explicit "Updated"
@@ -148,9 +153,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "stickers",
     category: "Paper",
-    title: "Etsy Sticker Shop Profit Calculator (2026)",
+    title: "Etsy Sticker Profit Margin: Home vs POD (2026)",
     metaDescription:
-      "Cricut and vinyl sticker sellers: see your real margin on Etsy after every fee at typical $4–8 price points.",
+      "What does a sticker cost to make — print-at-home, a pro run, or POD? Real 2026 margin on a $6 pack after Etsy's fees, and which method keeps more.",
     heroHeadline: "Sticker shops live or die on the listing fee.",
     heroSubcopy:
       "At $4 per pack, the $0.20 listing fee + $0.25 payment processing flat fee alone consume 11% of revenue before any percentage fees.",
@@ -160,6 +165,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 0.85,
       actualShippingCost: 1.4,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -199,10 +205,10 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "svg-files",
     category: "Digital",
-    title: "Etsy SVG Files Profit: 12%+ Fees on $4 Sales (2026)",
+    title: "Etsy SVG Profit Margin: What a $4 Sale Nets (2026)",
     metaDescription:
-      "Selling SVG cut files on Etsy at $3–5? Real 2026 math: a $4 SVG nets $3.30 — effective fee rate is north of 12% before Off-Site Ads.",
-    heroHeadline: "SVG sellers, your effective fee rate is north of 12%.",
+      "Is selling SVG files on Etsy profitable? A $4 cut file nets ~$3.17 after fees — a ~21% floor, ~36% with Off-Site Ads. Why bundles and your own store keep more.",
+    heroHeadline: "SVG sellers, your effective fee rate is over 20% — before Off-Site Ads.",
     heroSubcopy:
       "Low-priced digital products get hit hardest by flat fees. The math is unforgiving below the $5 mark.",
     prefilledScenario: {
@@ -211,14 +217,15 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 0,
       actualShippingCost: 0,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
     slug: "pet-portraits",
     category: "Art",
-    title: "Etsy Custom Pet Portrait: Profit Math (2026)",
+    title: "Etsy Pet Portrait Fees: What a $45 Sale Nets (2026)",
     metaDescription:
-      "Pet portrait artists: model your real take-home on Etsy at $35–80 price points after labor and fees.",
+      "How much do Etsy fees take from a pet portrait? A $45 digital portrait nets ~$33.50 — see the digital-vs-printed margin fork and what you keep, with a live calculator.",
     heroHeadline: "Custom pet portraits: where labor is the hidden cost.",
     heroSubcopy:
       "Pet portraits are usually digital delivery (low fee impact) but the sale prices vary wildly — run your number below.",
@@ -228,6 +235,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 0,
       actualShippingCost: 0,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -284,9 +292,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "greeting-cards",
     category: "Paper",
-    title: "Etsy Greeting Card Profit: $8 Sale Nets $3 After Fees (2026)",
+    title: "Selling Greeting Cards on Etsy: $8 Nets $3 After Fees (2026)",
     metaDescription:
-      "Etsy greeting card sellers: real 2026 math on a $6 card with $2 shipping. Effective fee rate hits 30% on single-card orders. Bundle math included.",
+      "Is selling greeting cards on Etsy worth it? Real 2026 fee math on a $6 card (nets ~$3), why singles hit a 30% effective rate, plus pricing tiers and bundle strategy.",
     heroHeadline: "Greeting cards: tiny price tags, outsized fee drag.",
     heroSubcopy:
       "At $6 a card, the $0.20 listing + $0.25 processing flat fees alone are over 7% of revenue before any percentage fee.",
@@ -296,6 +304,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 1,
       actualShippingCost: 1.6,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -509,9 +518,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "printable-planners",
     category: "Digital",
-    title: "Etsy Printable Planner Profit Calculator (2026)",
+    title: "How Much Do Printable Planners Make on Etsy? (2026)",
     metaDescription:
-      "Printable planner sellers: see your real margin on Etsy at typical $7–12 price points after fees.",
+      "How much can you make selling printable planners on Etsy? What a $9 sale keeps after fees, realistic monthly earnings, and where your own store keeps more.",
     heroHeadline: "Printable planners: monthly volume hides the fee drag.",
     heroSubcopy:
       "PDF planners look like pure profit until you stack the listing fee, transaction fee, and processing flat fee on every $9 sale. The calculator shows the real margin per order.",
@@ -521,6 +530,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 0,
       actualShippingCost: 0,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -611,9 +621,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "aprons-handmade",
     category: "Apparel",
-    title: "Etsy Handmade Apron Profit Calculator (2026)",
+    title: "Selling Aprons on Etsy: Profit, Pay & Sewn vs POD (2026)",
     metaDescription:
-      "Handmade apron sellers: model your real take-home on Etsy after fabric, labor, and platform fees.",
+      "See your real net on a $24–48 handmade apron, what that adds up to per month, and whether hand-sewing or print-on-demand actually pays better on Etsy in 2026.",
     heroHeadline: "Handmade aprons: fabric is cheap, labor is the real cost.",
     heroSubcopy:
       "Cotton canvas runs $4–6/yard, but cutting and sewing time isn't free. The fee waterfall shows what's left after the platform takes its cut.",
@@ -623,6 +633,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 7,
       actualShippingCost: 4.5,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -832,9 +843,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "journals-handmade",
     category: "Paper",
-    title: "Etsy Handmade Journal & Notebook Profit (2026)",
+    title: "Handmade vs POD Journals on Etsy: Profit Math (2026)",
     metaDescription:
-      "Handmade journal sellers: see your real margin on a $28 leather journal after materials, time, and Etsy fees.",
+      "Hand-bind, print-on-demand, or printable — which way to sell journals on Etsy actually pays? Real 2026 margin math per route on materials, time, and fees.",
     heroHeadline: "Handmade journals: materials cost more than buyers think.",
     heroSubcopy:
       "Leather, paper, binding thread, time. A $28 journal looks reasonable until you see what Etsy keeps and what shipping consumes.",
@@ -844,6 +855,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 9,
       actualShippingCost: 4.75,
     },
+    dateModified: "2026-07-13",
     faq: baseFaq,
   },
   {
@@ -1106,6 +1118,7 @@ export const PSEO_ENTRIES: PseoEntry[] = RAW_PSEO_ENTRIES.map((entry) => ({
   ...entry,
   faq: pseoFaqBySlug[entry.slug] ?? entry.faq,
   datePublished: PUBLISHED_2026_05_07.has(entry.slug) ? "2026-05-07" : "2026-05-14",
+  dateModified: entry.dateModified ?? PSEO_LAST_UPDATED,
 }));
 
 // Per-category supplementary metadata. Drives (a) the embed-aside angle on each

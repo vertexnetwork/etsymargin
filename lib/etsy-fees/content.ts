@@ -11,7 +11,7 @@
 
 import type { PseoFaq } from "@/lib/pseo/data";
 
-export const PILLAR_LAST_UPDATED = "2026-05-14";
+export const PILLAR_LAST_UPDATED = "2026-07-13";
 export const PILLAR_DATE_PUBLISHED = "2026-05-14";
 
 export type FeeRow = {
