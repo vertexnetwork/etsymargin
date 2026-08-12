@@ -62,7 +62,7 @@ export default function EtsyFeesPillarPage() {
         <h1 className="mt-3 text-balance text-3xl font-bold leading-tight text-patina-900 sm:text-5xl">
           Etsy fees 2026: how much does Etsy take per sale?
         </h1>
-        <p className="mt-4 max-w-3xl text-base text-patina-800/85 sm:text-lg">
+        <p className="mt-4 max-w-3xl text-base text-patina-800/85 sm:text-lg" data-speakable>
           <strong className="text-patina-900">Etsy takes between 10% and 28% of every sale,</strong>{" "}
           depending on whether Off-Site Ads attributed the order. The baseline fee stack — listing,
           transaction, and payment processing — totals about 10% of a typical $30 sale. Off-Site Ads
