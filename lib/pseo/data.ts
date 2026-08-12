@@ -114,6 +114,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 9,
       actualShippingCost: 3.25,
     },
+    dateModified: "2026-08-12",
     faq: baseFaq,
   },
   {
@@ -183,6 +184,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 7.5,
       actualShippingCost: 9,
     },
+    dateModified: "2026-08-12",
     faq: baseFaq,
   },
   {
@@ -253,6 +255,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 14,
       actualShippingCost: 5.5,
     },
+    dateModified: "2026-08-12",
     faq: baseFaq,
   },
   {
@@ -287,14 +290,15 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 2.25,
       actualShippingCost: 5.25,
     },
+    dateModified: "2026-08-12",
     faq: baseFaq,
   },
   {
     slug: "greeting-cards",
     category: "Paper",
-    title: "Selling Greeting Cards on Etsy: $8 Nets $3 After Fees (2026)",
+    title: "Etsy Greeting Card Fees & Profit Margin Calculator (2026)",
     metaDescription:
-      "Is selling greeting cards on Etsy worth it? Real 2026 fee math on a $6 card (nets ~$3), why singles hit a 30% effective rate, plus pricing tiers and bundle strategy.",
+      "See what a $6 Etsy greeting card actually nets after listing, transaction, processing, and Off-Site Ads fees in 2026 — plus the bundle pricing that beats per-card economics.",
     heroHeadline: "Greeting cards: tiny price tags, outsized fee drag.",
     heroSubcopy:
       "At $6 a card, the $0.20 listing + $0.25 processing flat fees alone are over 7% of revenue before any percentage fee.",
@@ -304,7 +308,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 1,
       actualShippingCost: 1.6,
     },
-    dateModified: "2026-07-13",
+    dateModified: "2026-08-11",
     faq: baseFaq,
   },
   {
@@ -339,6 +343,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
       manufacturingCost: 28,
       actualShippingCost: 6.5,
     },
+    dateModified: "2026-08-12",
     faq: baseFaq,
   },
   {
