@@ -117,7 +117,7 @@ export default async function PseoPage({ params }: { params: Promise<{ slug: str
         <h1 className="text-balance text-2xl font-bold leading-tight text-patina-900 sm:text-4xl">
           {entry.heroHeadline}
         </h1>
-        <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg">
+        <p className="mt-3 max-w-2xl text-base text-patina-800/80 sm:mt-4 sm:text-lg" data-speakable>
           {entry.heroSubcopy}
         </p>
         <AuthorByline className="mt-4" />
