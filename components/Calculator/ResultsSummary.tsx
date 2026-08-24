@@ -1,9 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import type { CalculatorInputs, CalculatorResult } from "@/lib/fees";
-import { GumroadCta } from "@/components/affiliates/GumroadCta";
 import { siteConfig } from "@/lib/site-config";
+import { MiniAudit } from "./MiniAudit";
 import { NextBestAction } from "./NextBestAction";
 
 const usd = (n: number) =>
@@ -30,28 +29,6 @@ type Props = {
   embedded?: boolean;
 };
 
-// The single-listing → whole-shop upsell. Orthogonal to this listing's verdict:
-// a healthy listing still sits in a shop full of ones the seller never checks,
-// so this lever shows on every tier. Copy adapts to the band so the hook never
-// contradicts the number on screen.
-function wholeShopHook(result: CalculatorResult): string {
-  if (result.netProfit < 0)
-    return "This one loses money on every order — and the listings quietly doing the same across a shop are the ones you'd never think to check.";
-  const m = result.marginPercent;
-  if (m < 0.15)
-    return "This margin's razor-thin — and listings like it hide in plain sight across a full shop.";
-  if (m < 0.3)
-    return "That's one listing. Across a full shop the money-losers are rarely the ones you'd guess.";
-  return "This one's healthy — but how many of your other listings actually are?";
-}
-
-function marginBand(result: CalculatorResult): "loss" | "thin" | "workable" | "healthy" {
-  if (result.netProfit < 0) return "loss";
-  if (result.marginPercent < 0.15) return "thin";
-  if (result.marginPercent < 0.3) return "workable";
-  return "healthy";
-}
-
 // Verbal status that mirrors the color band. Bands are recalibrated to Etsy
 // reality: a 15–30% net margin is "workable, but tight" (not healthy), and the
 // healthy line only starts at 30%. The label gives the color a voice so the
@@ -66,9 +43,9 @@ function profitStatus(result: CalculatorResult): { label: string; dot: string } 
 
 export function ResultsSummary({ result, inputs, category, embedded = false }: Props) {
   const losing = result.netProfit < 0;
-  // Show the whole-shop lever wherever the audit is live and we're on our own
-  // surface. GumroadCta itself no-ops if Gumroad is disabled, so the secondary
-  // "see how it works" link still carries the lever in that case.
+  // Show the free-listings middle rung wherever the audit is live and we're
+  // on our own surface (not a third-party embed). MiniAudit's own GumroadCta
+  // no-ops if Gumroad is disabled.
   const showWholeShopCta = !embedded && siteConfig.features.audit.enabled;
   const tone = losing
     ? "bg-red-50 text-red-900 ring-red-200"
@@ -82,8 +59,13 @@ export function ResultsSummary({ result, inputs, category, embedded = false }: P
       <p className="text-sm font-medium uppercase tracking-wide opacity-80">True Net Profit</p>
       <div className="mt-1 flex flex-wrap items-baseline gap-x-4 gap-y-1">
         <span className="text-4xl font-bold tabular-nums sm:text-5xl">{usd(result.netProfit)}</span>
+        {/* Parens give the flattened-text extraction (Google's snippet lift,
+            screen readers) a literal separator — these are sibling flex
+            children with only CSS gap between them, no text-level space, and
+            adjacent digits were observed concatenating into e.g. "$2.9549.2%"
+            in a live SERP. */}
         <span className="text-xl font-medium tabular-nums opacity-80">
-          {pct(result.marginPercent)} margin
+          ({pct(result.marginPercent)} margin)
         </span>
       </div>
       <p className="mt-2 flex items-center gap-2 text-sm font-semibold">
@@ -121,28 +103,7 @@ export function ResultsSummary({ result, inputs, category, embedded = false }: P
         </tbody>
       </table>
 
-      {showWholeShopCta && (
-        <div className="mt-5 rounded-xl bg-white/85 p-4 ring-1 ring-patina-200/70">
-          <p className="text-sm font-semibold text-patina-900">You just checked one listing.</p>
-          <p className="mt-1 text-sm text-patina-800/85">
-            {wholeShopHook(result)} The audit runs this exact fee math across every listing in your
-            Etsy export at once — ranked worst-margin-first, money-losers flagged.
-          </p>
-          <div className="mt-3 flex flex-wrap items-center gap-x-5 gap-y-2">
-            <GumroadCta
-              variant="button"
-              source="calculator"
-              content={`calc-${marginBand(result)}`}
-            />
-            <Link
-              href="/etsy-shop-audit"
-              className="text-sm font-medium text-patina-700 underline underline-offset-2 hover:text-patina-900"
-            >
-              See how it works →
-            </Link>
-          </div>
-        </div>
-      )}
+      {showWholeShopCta && <MiniAudit firstResult={result} />}
     </div>
   );
 }

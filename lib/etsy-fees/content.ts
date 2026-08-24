@@ -448,6 +448,167 @@ export const ANSWER_PAGES: AnswerPage[] = [
       { slug: "printable-art-margins", label: "Printable wall art math" },
     ],
   },
+  {
+    slug: "why-did-my-etsy-sales-suddenly-stop",
+    title: "Why Did My Etsy Sales Suddenly Stop?",
+    metaTitle: "Why Did My Etsy Sales Suddenly Stop? 5 Real Causes (2026)",
+    metaDescription:
+      "Etsy sales usually stop for one of five reasons: a listing renewal lapsed, search ranking dropped, seasonality, an algorithm change, or Off-Site Ads attribution shifted. Here's how to check each — and the cause sellers miss.",
+    shortAnswer:
+      "Sales usually stop for one of five reasons: a listing quietly expired without renewing, your search ranking dropped (often after a price change or a run of slow sales), a seasonal dip, an Etsy search algorithm update, or Off-Site Ads attribution changed. Less obvious: sometimes sales didn't stop — they just stopped being profitable, and a demand problem got blamed for what's actually a pricing problem.",
+    sections: [
+      {
+        heading: "Check the mechanical causes first",
+        body: [
+          "Listings expire and renew automatically every 4 months — if a listing lapsed and you didn't notice, it silently stops appearing in search while still showing as \"active\" in your dashboard summary. Check Shop Manager → Listings for anything in an expired or sold-out state.",
+          "Etsy's search ranking rewards recent sales velocity and conversion rate. A slow week compounds: fewer sales → lower ranking → fewer views → fewer sales. This spiral is the most common cause reported in seller forums, and it's also the hardest to fix by waiting — it usually needs a price, photo, or listing refresh to break the cycle.",
+        ],
+      },
+      {
+        heading: "Seasonality and algorithm shifts",
+        body: [
+          "Etsy traffic is seasonal by category: gift categories (jewelry, personalized items, home décor) spike October–December and drop hard in January–February; wedding categories peak spring and summer. A sudden stop that lines up with a seasonal boundary is usually just seasonality, not something broken.",
+          "Etsy also updates its search algorithm without announcement several times a year. If sales dropped shop-wide and across multiple categories at once, with no change on your end, an algorithm shift is more likely than anything listing-specific.",
+        ],
+      },
+      {
+        heading: "The cause sellers miss: a profit problem wearing a sales-drop costume",
+        body: [
+          "Sometimes the sales didn't actually stop — the count looks the same or close to it, but attention moved to the wrong number. A price increase to compensate for rising Off-Site Ads exposure, a shift toward higher-fee categories, or a new bundle that quietly runs thinner margin than the listings it replaced can all make a shop feel like it \"stopped working\" when what actually changed is what's left after fees, not whether the orders came in.",
+          "Before assuming a demand problem, run your current listings through the actual 2026 fee math below — a shop can have completely normal order volume and still feel broken, because the money that's supposed to be left over shrank.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "is-etsy-offsite-ads-worth-it",
+    title: "Is Etsy Offsite Ads Actually Worth It?",
+    metaTitle: "Is Etsy Offsite Ads Worth It? Real 2026 Math",
+    metaDescription:
+      "Off-Site Ads costs 15% (under $10k trailing revenue, opt-out) or 12% (mandatory above $10k) of the order when it attributes a sale. Whether it's worth it depends entirely on your margin per listing — here's how to tell.",
+    shortAnswer:
+      "It depends on your margin, not a fixed answer. Off-Site Ads takes 15% of the order (opt-out, under $10k trailing revenue) or 12% (mandatory, above $10k) when Etsy's ad attributes the sale — capped at $100 per order. On a healthy-margin listing, that's a fair price for incremental traffic. On a thin-margin listing, it can turn a profitable order into a loss. The only way to know which is true for your shop is to run the numbers per listing, not per shop.",
+    sections: [
+      {
+        heading: "What you're actually paying for",
+        body: [
+          "Etsy runs your listings as paid ads on Google Shopping, Pinterest, Facebook, and Instagram at its own expense, then charges you only when a buyer clicks one of those ads and completes a purchase within a 30-day attribution window. You don't pay for impressions or clicks that don't convert — only attributed sales.",
+          "The attribution window is generous enough that it sometimes credits an ad for a sale a buyer was already going to make organically — that's the core objection sellers raise, and it's a legitimate one. There's no way to fully separate \"this ad caused the sale\" from \"this buyer clicked an ad on the way to a purchase they'd already decided on.\"",
+        ],
+      },
+      {
+        heading: "When it's worth it",
+        body: [
+          "If your margin comfortably absorbs 12–15% — think 30%+ net margin categories like handmade jewelry, higher-ticket home décor, or commissioned work — Off-Site Ads is close to free incremental revenue: you only pay on sales that happened, at a rate most paid-acquisition channels would envy.",
+          "It's also close to break-even-or-better for sellers actively trying to grow beyond organic Etsy search reach, since running your own Google or Meta ads usually costs more per sale with far more setup effort.",
+        ],
+      },
+      {
+        heading: "When it isn't",
+        body: [
+          "On thin-margin or flat-fee-dominated categories — sub-$10 items where the $0.20 listing fee and processing flat fee already eat a large share of revenue — the extra 12–15% can turn a workable listing into a money-loser on every attributed order. This is exactly the shape of categories like stickers, digital downloads under $10, and greeting cards.",
+          "If you're under the $10k trailing-revenue threshold, this one is fully in your control: Shop Manager → Marketing → Off-Site Ads lets you opt out entirely, no downside beyond losing that specific traffic channel.",
+        ],
+      },
+    ],
+    relatedSpokes: [
+      { slug: "stickers", label: "Where Off-Site Ads hurts most (stickers)" },
+      { slug: "greeting-cards", label: "Small-ticket fee math (greeting cards)" },
+    ],
+  },
+  {
+    slug: "how-to-opt-out-of-etsy-offsite-ads",
+    title: "How to Opt Out of Etsy Offsite Ads",
+    metaTitle: "How to Opt Out of Etsy Offsite Ads (2026 Guide)",
+    metaDescription:
+      "If your shop is under $10,000 in trailing 12-month revenue, Off-Site Ads is opt-out: Shop Manager → Marketing → Off-Site Ads. Above $10k, it's mandatory at a lower 12% rate. Here's exactly how, and what changes after.",
+    shortAnswer:
+      "If your shop has under $10,000 in trailing 12-month revenue, go to Shop Manager → Marketing → Off-Site Ads and toggle it off — that's the entire process, and it takes effect immediately for new orders. At or above $10,000 in trailing revenue, Off-Site Ads becomes mandatory and the toggle disappears; the rate drops from 15% to 12% instead.",
+    sections: [
+      {
+        heading: "The exact steps",
+        body: [
+          "From your Etsy dashboard: Shop Manager → Marketing → Off-Site Ads. If you're eligible to opt out, you'll see a toggle or an \"Opt out\" link with your current status. Confirm, and it applies going forward — it doesn't retroactively refund fees on past attributed orders.",
+          "Etsy re-checks eligibility periodically based on trailing 12-month revenue. If you cross $10,000 after opting out, Off-Site Ads re-enables automatically at the mandatory 12% rate, and the opt-out option disappears until trailing revenue drops back below the threshold.",
+        ],
+      },
+      {
+        heading: "What actually changes after you opt out",
+        body: [
+          "You stop being charged the 12–15% attribution fee, and your listings stop appearing in Etsy's external ad placements on Google Shopping, Pinterest, Facebook, and Instagram. Your organic Etsy search ranking is unaffected — Off-Site Ads eligibility and on-site search placement are separate systems.",
+          "For sellers who rely heavily on off-Etsy discovery (Pinterest-driven categories especially), the traffic lost is usually smaller than feared — Off-Site Ads mostly amplifies listings that were already getting some organic traction, rather than creating demand from nothing.",
+        ],
+      },
+      {
+        heading: "Is opting out the right call?",
+        body: [
+          "For thin-margin categories — anything where flat fees already dominate, roughly sub-$15 items — opting out is close to a free win: no downside beyond a traffic channel that was often barely profitable to begin with. For healthy-margin categories, it's worth checking the actual math on your specific listings before deciding, since 12–15% of a well-padded margin is a very different decision than 12–15% of a listing already running at 10% net.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "are-etsy-fees-worth-it",
+    title: "Are Etsy Fees Worth It in 2026?",
+    metaTitle: "Are Etsy Fees Worth It? What You Get for 10–28% (2026)",
+    metaDescription:
+      "Etsy's fees run 10% baseline to as much as 28% with Off-Site Ads attributed. Whether that's worth it depends on what you'd pay to reach the same buyers elsewhere — here's the honest comparison.",
+    shortAnswer:
+      "For most sellers, yes — but it depends on the alternative you're comparing against, not the fee percentage alone. Etsy's 10–28% (depending on Off-Site Ads) buys built-in buyer search traffic, trusted checkout, and payment processing in one bundle. Running your own store trades that fee for a flat monthly cost plus finding buyers yourself — which usually costs more per sale unless you already have an audience.",
+    sections: [
+      {
+        heading: "What the fee actually buys",
+        body: [
+          "The baseline ~10% (listing + transaction + payment processing) covers a functioning marketplace: buyer trust, built-in search traffic, payment processing, and dispute handling, bundled into one per-sale charge with no upfront cost. Off-Site Ads on top of that (12–15%) is Etsy paying for buyer acquisition off-platform on your behalf — you're charged only when it converts.",
+          "Compare that to a self-hosted store: Shopify's cheapest plan is $39/month before a single sale, and you're responsible for 100% of your own traffic. For a new or small seller with no existing audience, Etsy's model shifts risk from a fixed monthly cost to a percentage of revenue that only applies when something actually sells.",
+        ],
+      },
+      {
+        heading: "Where the math stops being worth it",
+        body: [
+          "The fee stack is genuinely regressive: flat fees ($0.20 listing + $0.25 processing) consume a much larger share of a $4 sticker than a $50 order, and Off-Site Ads attribution can push total fees to 25–28% on attributed orders. For sellers in low-priced, high-volume categories, the math can tip from worth it to barely surviving — the fix is usually bundling to raise average order value, not leaving the platform.",
+          "For established sellers with an existing customer base, the calculus shifts: once you can drive your own traffic (email list, social following, wholesale accounts), the same buyer purchasing off-Etsy costs a flat payment-processing fee (roughly 2.9% + $0.30 on most platforms) instead of Etsy's full stack.",
+        ],
+      },
+      {
+        heading: "The honest framework",
+        body: [
+          "Ask two questions: could you replace Etsy's organic search traffic on your own within a reasonable timeframe, and does your margin per item comfortably absorb the fee stack at your actual price point? If both answers lean no, Etsy's fees are worth it for now. If both lean yes, the fee stack is what's standing between your current margin and a meaningfully better one.",
+        ],
+      },
+    ],
+  },
+  {
+    slug: "should-i-close-my-etsy-shop",
+    title: "Should I Close My Etsy Shop? Check This First",
+    metaTitle: "Should I Close My Etsy Shop? Check This Before You Do (2026)",
+    metaDescription:
+      "Before closing your Etsy shop, rule out the fixable causes: underpricing against the fee stack, Off-Site Ads eating thin margins, and money-losing listings hiding in a shop that looks fine on average.",
+    shortAnswer:
+      "Before closing your shop, rule out the fixable cause first: a pricing or fee problem that looks like a demand problem. Many shops that \"aren't working\" are actually pricing listings below what the 2026 fee stack can sustain, or letting Off-Site Ads quietly erode margin on categories where it shouldn't be enabled. Run your actual numbers before deciding the business itself doesn't work — the two problems look identical from the outside but have completely different fixes.",
+    sections: [
+      {
+        heading: "The two failures that look the same",
+        body: [
+          "A shop with no real demand for what it sells and a shop with real demand but unsustainable pricing produce the same symptom: it feels like you're working hard for little or no money. The difference matters enormously — one means the product or market is wrong, the other means the numbers are wrong, and only one of those requires starting over.",
+          "The tell: pull up your last 20–30 orders and calculate actual net profit per order after the full 2026 fee stack (listing, transaction, processing, and Off-Site Ads if attributed) and your real cost of goods. If orders are consistently coming in but net profit per order is near zero or negative, that's a pricing/fee problem, not a demand problem — the shop is working, the math underneath it isn't.",
+        ],
+      },
+      {
+        heading: "Common fixable causes",
+        body: [
+          "Underpricing relative to the flat-fee floor: the $0.20 listing fee and $0.25 processing flat fee disproportionately punish anything under about $10 — a shop full of $5–8 listings is fighting a structural headwind that bundling into $20–30 sets usually solves. Off-Site Ads left on for thin-margin categories where 12–15% turns a workable order into a loss. And cost creep: material or supplier costs rising while prices stayed the same for a year or more.",
+          "Any of these can make a genuinely viable shop look like a failing one on a spreadsheet, and all three are fixable in an afternoon without touching what you make or who you sell to.",
+        ],
+      },
+      {
+        heading: "When closing actually is the right call",
+        body: [
+          "If you've corrected pricing and fees and the numbers still don't work — or if the real issue is that too few people want what you're making, not what you're charging for it — that's a different problem, and no amount of pricing math fixes a demand gap. The point of checking the fee math first isn't to talk anyone out of closing a shop that should close; it's to make sure the decision is based on the real cause, not a symptom that's fixable in an afternoon.",
+        ],
+      },
+    ],
+  },
 ];
 
 export function getAnswerPage(slug: string): AnswerPage | undefined {

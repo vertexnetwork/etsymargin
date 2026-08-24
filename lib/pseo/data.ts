@@ -207,9 +207,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "svg-files",
     category: "Digital",
-    title: "Etsy SVG Profit Margin: What a $4 Sale Nets (2026)",
+    title: "Etsy SVG File Profit Margin: Real 2026 Numbers",
     metaDescription:
-      "Is selling SVG files on Etsy profitable? A $4 cut file nets ~$3.17 after fees — a ~21% floor, ~36% with Off-Site Ads. Why bundles and your own store keep more.",
+      "Selling SVG files on Etsy? Fees hit low-priced digital items hardest — a ~21% floor, ~36% with Off-Site Ads. Bundles and your own store keep more.",
     heroHeadline: "SVG sellers, your effective fee rate is over 20% — before Off-Site Ads.",
     heroSubcopy:
       "Low-priced digital products get hit hardest by flat fees. The math is unforgiving below the $5 mark.",
@@ -225,9 +225,9 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "pet-portraits",
     category: "Art",
-    title: "Etsy Pet Portrait Fees: What a $45 Sale Nets (2026)",
+    title: "Etsy Pet Portrait Fees & Profit Margin (2026)",
     metaDescription:
-      "How much do Etsy fees take from a pet portrait? A $45 digital portrait nets ~$33.50 — see the digital-vs-printed margin fork and what you keep, with a live calculator.",
+      "Etsy fees hit pet portraits differently by format — digital nets far more than printed. See the digital-vs-printed margin fork and what you actually keep.",
     heroHeadline: "Custom pet portraits: where labor is the hidden cost.",
     heroSubcopy:
       "Pet portraits are usually digital delivery (low fee impact) but the sale prices vary wildly — run your number below.",
@@ -298,7 +298,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
     category: "Paper",
     title: "Etsy Greeting Card Fees & Profit Margin Calculator (2026)",
     metaDescription:
-      "See what a $6 Etsy greeting card actually nets after listing, transaction, processing, and Off-Site Ads fees in 2026 — plus the bundle pricing that beats per-card economics.",
+      "Etsy's flat fees hit small-ticket greeting cards hardest — see what's actually left after 2026 fees, plus the bundle pricing that beats per-card economics.",
     heroHeadline: "Greeting cards: tiny price tags, outsized fee drag.",
     heroSubcopy:
       "At $6 a card, the $0.20 listing + $0.25 processing flat fees alone are over 7% of revenue before any percentage fee.",
@@ -314,7 +314,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "embroidery",
     category: "Apparel",
-    title: "Etsy Embroidery Profit Margin: $32 Hat Nets $11 in 2026",
+    title: "Etsy Embroidery Profit Margin: Real 2026 Numbers",
     metaDescription:
       "Custom embroidery sellers: real 2026 math on a $32 hat after blanks, thread, time, and fees. Plus the digitizing trap that erases first-design profit.",
     heroHeadline: "Why your $32 embroidered hat nets less than a coffee.",
@@ -628,7 +628,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
     category: "Apparel",
     title: "Selling Aprons on Etsy: Profit, Pay & Sewn vs POD (2026)",
     metaDescription:
-      "See your real net on a $24–48 handmade apron, what that adds up to per month, and whether hand-sewing or print-on-demand actually pays better on Etsy in 2026.",
+      "See your real net on a handmade apron after 2026 fees, what that adds up to monthly, and whether hand-sewing or print-on-demand pays better on Etsy.",
     heroHeadline: "Handmade aprons: fabric is cheap, labor is the real cost.",
     heroSubcopy:
       "Cotton canvas runs $4–6/yard, but cutting and sewing time isn't free. The fee waterfall shows what's left after the platform takes its cut.",
@@ -1036,7 +1036,7 @@ const RAW_PSEO_ENTRIES: PseoEntry[] = [
   {
     slug: "enamel-pins",
     category: "Accessories",
-    title: "Etsy Enamel Pins: $12 Profit After 100-Unit Minimums (2026)",
+    title: "Etsy Enamel Pin Profit Margin: 100-Unit Minimums (2026)",
     metaDescription:
       "Enamel pin sellers: real 2026 math on a $12 pin. Manufacturing minimums lock per-unit cost at $3, Etsy takes ~25% with Off-Site Ads. Run the numbers.",
     heroHeadline: "Enamel pins: minimum-order economics dictate margin.",
